@@ -1,0 +1,12 @@
+node_modules/
+dist/
+dist-modules/
+*.zip
+*.exe
+.env
+.env.local
+.vscode/
+.idea/
+coverage/
+build/
+*.log

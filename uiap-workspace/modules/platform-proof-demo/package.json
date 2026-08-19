@@ -1,0 +1,21 @@
+{
+  "name": "@uiap/platform-proof-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A tiny independent module proving the SDK/event boundary without Core changes.",
+  "main": "./dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "pack": "npm run build && node -e \"const AdmZip = require('adm-zip'); const zip = new AdmZip(); zip.addLocalFolder('dist', 'dist'); zip.addLocalFolder('web', 'web'); zip.addLocalFile('manifest.json'); zip.writeZip('platform-proof-demo.zip');\""
+  },
+  "dependencies": {
+    "@uiap/module-sdk": "*",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "adm-zip": "^0.5.16"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@uiap/dev-harness",
+  "version": "0.1.0",
+  "description": "Standalone Dev Server for UIAP Modules",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --build"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.2.14",
+    "@uiap/module-sdk": "*",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "http-proxy-middleware": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.7",
+    "typescript": "^5.5.4"
+  }
+}

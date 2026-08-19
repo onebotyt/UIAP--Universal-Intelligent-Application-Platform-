@@ -1,0 +1,17 @@
+{
+  "name": "@uiap/sync",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@uiap/core": "*",
+    "@uiap/module-sdk": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}

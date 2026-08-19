@@ -1,0 +1,19 @@
+{
+  "id": "uiap.reports",
+  "name": "Attendance Reports",
+  "version": "0.1.0",
+  "description": "Generates attendance reports across the organization",
+  "platform": "UIAP",
+  "sync": {
+    "strategy": "bidirectional",
+    "tables": ["saved_reports"],
+    "conflict": "latest_wins"
+  },
+  "permissions": [
+    {
+      "module": "reports",
+      "action": "view",
+      "description": "View generated reports"
+    }
+  ]
+}

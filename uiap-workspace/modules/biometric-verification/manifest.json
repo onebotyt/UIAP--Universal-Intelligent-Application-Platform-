@@ -1,0 +1,19 @@
+{
+  "id": "uiap.biometric-verification",
+  "name": "Biometric Verification",
+  "version": "0.1.0",
+  "description": "Manages biometric templates and processes hardware scans",
+  "platform": "UIAP",
+  "sync": {
+    "strategy": "local_only",
+    "tables": ["templates"],
+    "conflict": "server_wins"
+  },
+  "permissions": [
+    {
+      "module": "biometric",
+      "action": "manage",
+      "description": "Manage biometric enrollments"
+    }
+  ]
+}

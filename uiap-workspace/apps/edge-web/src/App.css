@@ -1,0 +1,672 @@
+/* ── UIAP Edge — Shell Layout & Components ───────────────── */
+
+/* ── Layout ──────────────────────────────────────────────── */
+
+.uiap-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+
+.uiap-sidebar {
+  width: var(--uiap-sidebar-width);
+  min-width: var(--uiap-sidebar-width);
+  height: 100vh;
+  background: var(--uiap-surface);
+  border-right: 1px solid var(--uiap-border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  transition: transform var(--uiap-transition);
+  z-index: 200;
+}
+
+.uiap-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--uiap-border);
+}
+
+.uiap-sidebar-logo {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--uiap-accent), var(--uiap-accent-light));
+  border-radius: var(--uiap-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 4px 16px var(--uiap-accent-glow);
+  flex-shrink: 0;
+}
+
+.uiap-sidebar-brand-text h1 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  background: linear-gradient(135deg, var(--uiap-text), var(--uiap-accent-light));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.uiap-sidebar-brand-text span {
+  font-size: 0.65rem;
+  color: var(--uiap-text-muted);
+  letter-spacing: 0.02em;
+}
+
+.uiap-sidebar-nav {
+  flex: 1;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.uiap-nav-section {
+  margin-top: 0.75rem;
+}
+
+.uiap-nav-section:first-child {
+  margin-top: 0;
+}
+
+.uiap-nav-section-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--uiap-text-muted);
+  padding: 0.5rem 0.75rem 0.25rem;
+}
+
+.uiap-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--uiap-radius-sm);
+  font-size: 0.85rem;
+  color: var(--uiap-text-muted);
+  text-decoration: none;
+  transition: all var(--uiap-transition);
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.uiap-nav-link:hover {
+  color: var(--uiap-text);
+  background: rgba(108, 92, 231, 0.08);
+}
+
+.uiap-nav-link.active {
+  color: var(--uiap-accent-light);
+  background: rgba(108, 92, 231, 0.15);
+  font-weight: 500;
+}
+
+.uiap-nav-icon {
+  font-size: 1rem;
+  width: 1.5rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+
+.uiap-header {
+  height: var(--uiap-header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  background: var(--uiap-surface);
+  border-bottom: 1px solid var(--uiap-border);
+}
+
+.uiap-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.uiap-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  color: var(--uiap-text);
+  font-size: 1.25rem;
+  border-radius: var(--uiap-radius-xs);
+  cursor: pointer;
+}
+
+.uiap-hamburger:hover {
+  background: rgba(108, 92, 231, 0.1);
+}
+
+.uiap-page-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--uiap-text-heading);
+}
+
+.uiap-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.uiap-user-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  background: var(--uiap-card);
+  border-radius: var(--uiap-radius-sm);
+  border: 1px solid var(--uiap-border);
+  font-size: 0.8rem;
+  color: var(--uiap-text);
+}
+
+.uiap-user-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--uiap-accent), var(--uiap-accent-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.uiap-logout-btn {
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--uiap-radius-xs);
+  border: 1px solid var(--uiap-border);
+  background: transparent;
+  color: var(--uiap-text-muted);
+  font-size: 0.75rem;
+  transition: all var(--uiap-transition);
+}
+
+.uiap-logout-btn:hover {
+  border-color: var(--uiap-danger);
+  color: var(--uiap-danger);
+  background: rgba(225, 112, 85, 0.1);
+}
+
+/* ── Main Content ────────────────────────────────────────── */
+
+.uiap-content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.uiap-main {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+/* ── Cards & Widgets ─────────────────────────────────────── */
+
+.uiap-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.uiap-stat-card {
+  background: var(--uiap-card);
+  border: 1px solid var(--uiap-border);
+  border-radius: var(--uiap-radius);
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.uiap-stat-card:hover {
+  border-color: var(--uiap-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--uiap-accent-glow);
+}
+
+.uiap-stat-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.uiap-stat-label {
+  font-size: 0.7rem;
+  color: var(--uiap-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.25rem;
+}
+
+.uiap-stat-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--uiap-text-heading);
+}
+
+/* ── Data Tables ─────────────────────────────────────────── */
+
+.uiap-view-panel {
+  background: var(--uiap-card);
+  border: 1px solid var(--uiap-border);
+  border-radius: var(--uiap-radius);
+  padding: 1.5rem;
+}
+
+.uiap-view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.uiap-view-header h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.uiap-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.uiap-table th {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--uiap-text-muted);
+  border-bottom: 1px solid var(--uiap-border);
+  font-weight: 600;
+}
+
+.uiap-table td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid rgba(45, 49, 72, 0.5);
+  color: var(--uiap-text);
+}
+
+.uiap-table tr:last-child td {
+  border-bottom: none;
+}
+
+.uiap-table tr:hover td {
+  background: rgba(108, 92, 231, 0.03);
+}
+
+.uiap-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.uiap-badge-success {
+  background: rgba(0, 206, 201, 0.15);
+  color: var(--uiap-success);
+}
+
+.uiap-badge-muted {
+  background: rgba(139, 144, 165, 0.15);
+  color: var(--uiap-text-muted);
+}
+
+.uiap-badge-danger {
+  background: rgba(225, 112, 85, 0.15);
+  color: var(--uiap-danger);
+}
+
+.uiap-badge-warning {
+  background: rgba(253, 203, 110, 0.15);
+  color: var(--uiap-warning);
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+
+.uiap-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: var(--uiap-radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: all var(--uiap-transition);
+}
+
+.uiap-btn-primary {
+  background: var(--uiap-accent);
+  color: #fff;
+  border-color: var(--uiap-accent);
+}
+
+.uiap-btn-primary:hover {
+  background: var(--uiap-accent-light);
+  box-shadow: 0 4px 16px var(--uiap-accent-glow);
+}
+
+.uiap-btn-outline {
+  background: transparent;
+  color: var(--uiap-text-muted);
+  border-color: var(--uiap-border);
+}
+
+.uiap-btn-outline:hover {
+  color: var(--uiap-text);
+  border-color: var(--uiap-text-muted);
+}
+
+.uiap-btn-sm {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+}
+
+.uiap-btn-danger {
+  background: transparent;
+  color: var(--uiap-danger);
+  border-color: rgba(225, 112, 85, 0.3);
+}
+
+.uiap-btn-danger:hover {
+  background: rgba(225, 112, 85, 0.1);
+  border-color: var(--uiap-danger);
+}
+
+/* ── Module iframe ───────────────────────────────────────── */
+
+.uiap-module-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: var(--uiap-radius);
+  background: #fff;
+}
+
+.uiap-module-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  text-align: center;
+  gap: 1rem;
+}
+
+.uiap-module-error-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.uiap-module-error h2 {
+  font-size: 1.25rem;
+  color: var(--uiap-text);
+}
+
+.uiap-module-error p {
+  color: var(--uiap-text-muted);
+  font-size: 0.9rem;
+}
+
+/* ── Login ────────────────────────────────────────────────── */
+
+.uiap-login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--uiap-bg);
+}
+
+.uiap-login-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--uiap-surface);
+  border: 1px solid var(--uiap-border);
+  border-radius: var(--uiap-radius);
+  padding: 2.5rem 2rem;
+}
+
+.uiap-login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.uiap-login-logo {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--uiap-accent), var(--uiap-accent-light));
+  border-radius: var(--uiap-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 4px 24px var(--uiap-accent-glow);
+}
+
+.uiap-login-brand h1 {
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+}
+
+.uiap-login-brand p {
+  font-size: 0.8rem;
+  color: var(--uiap-text-muted);
+}
+
+.uiap-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.uiap-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.uiap-input-group label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--uiap-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.uiap-input {
+  padding: 0.6rem 0.75rem;
+  background: var(--uiap-card);
+  border: 1px solid var(--uiap-border);
+  border-radius: var(--uiap-radius-sm);
+  color: var(--uiap-text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color var(--uiap-transition);
+  outline: none;
+}
+
+.uiap-input:focus {
+  border-color: var(--uiap-accent);
+  box-shadow: 0 0 0 3px var(--uiap-accent-glow);
+}
+
+.uiap-login-btn {
+  margin-top: 0.5rem;
+  padding: 0.65rem;
+  background: linear-gradient(135deg, var(--uiap-accent), var(--uiap-accent-light));
+  color: #fff;
+  border: none;
+  border-radius: var(--uiap-radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.uiap-login-btn:hover {
+  box-shadow: 0 4px 24px var(--uiap-accent-glow);
+  transform: translateY(-1px);
+}
+
+.uiap-login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.uiap-login-error {
+  padding: 0.5rem 0.75rem;
+  background: rgba(225, 112, 85, 0.12);
+  border: 1px solid rgba(225, 112, 85, 0.3);
+  border-radius: var(--uiap-radius-sm);
+  color: var(--uiap-danger);
+  font-size: 0.8rem;
+}
+
+.uiap-setup-info {
+  padding: 0.75rem;
+  background: rgba(99, 179, 237, 0.08);
+  border: 1px solid rgba(99, 179, 237, 0.2);
+  border-radius: var(--uiap-radius-sm);
+  color: var(--uiap-text-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.uiap-setup-info p {
+  margin: 0;
+}
+
+.uiap-setup-success {
+  padding: 1rem;
+  text-align: center;
+  color: var(--uiap-text-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.uiap-setup-success p:first-child {
+  font-size: 1rem;
+  color: var(--uiap-text);
+  margin-bottom: 0.5rem;
+}
+
+/* ── Loading ─────────────────────────────────────────────── */
+
+.uiap-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: var(--uiap-text-muted);
+  font-size: 0.9rem;
+}
+
+.uiap-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--uiap-border);
+  border-top-color: var(--uiap-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 0.75rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Empty State ─────────────────────────────────────────── */
+
+.uiap-empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--uiap-text-muted);
+  font-size: 0.85rem;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+.uiap-sidebar-overlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .uiap-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%);
+  }
+
+  .uiap-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .uiap-sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 199;
+  }
+
+  .uiap-sidebar-overlay.open {
+    display: block;
+  }
+
+  .uiap-hamburger {
+    display: flex;
+  }
+
+  .uiap-main {
+    padding: 1rem;
+  }
+
+  .uiap-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .uiap-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .uiap-login-card {
+    margin: 1rem;
+  }
+}

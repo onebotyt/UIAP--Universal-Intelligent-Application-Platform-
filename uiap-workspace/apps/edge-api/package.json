@@ -1,0 +1,36 @@
+{
+  "name": "@uiap/edge-api",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "UIAP Edge API — Express server running on the organization PC",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc --build",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.1113.0",
+    "@uiap/core": "*",
+    "@uiap/sync": "*",
+    "cookie-parser": "1.4.7",
+    "dotenv": "17.4.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "8.6.2",
+    "multer": "2.2.0",
+    "node-windows": "1.0.0-beta.8",
+    "otplib": "13.4.1",
+    "speakeasy": "2.0.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "1.4.10",
+    "@types/express": "^5.0.0",
+    "@types/multer": "2.2.0",
+    "@types/speakeasy": "2.0.10",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

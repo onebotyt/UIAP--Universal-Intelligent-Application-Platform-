@@ -1,0 +1,17 @@
+{
+  "name": "@uiap/attendance",
+  "version": "1.0.0",
+  "description": "UIAP Attendance Module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc --build"
+  },
+  "dependencies": {
+    "@uiap/module-sdk": "file:../../packages/module-sdk",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "typescript": "^5.5.4"
+  }
+}

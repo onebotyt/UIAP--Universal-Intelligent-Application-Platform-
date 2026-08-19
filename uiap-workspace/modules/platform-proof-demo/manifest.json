@@ -1,0 +1,39 @@
+{
+  "id": "uiap.platform-proof-demo",
+  "name": "Platform Proof Demo",
+  "version": "0.1.0",
+  "description": "A tiny independent module proving the SDK/event boundary without Core changes.",
+  "platform": "UIAP",
+  "coreVersion": ">=0.1.0",
+  "sync": {
+    "strategy": "local_only",
+    "tables": ["proof_records"],
+    "conflict": "server_wins"
+  },
+  "server": {
+    "entry": "dist/index.js"
+  },
+  "permissions": [
+    {
+      "module": "proof-demo",
+      "action": "view",
+      "description": "View proof demo data"
+    },
+    {
+      "module": "proof-demo",
+      "action": "trigger",
+      "description": "Trigger proof events"
+    }
+  ],
+  "dependencies": {},
+  "ui": {
+    "entry": "web/index.html",
+    "navigation": [
+      {
+        "id": "proof-demo",
+        "label": "Proof Demo",
+        "icon": "🧪"
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "uiap.esp32-driver",
+  "name": "ESP32 Hardware Driver",
+  "version": "0.1.0",
+  "description": "Receives payloads from physical ESP32 biometric scanners",
+  "platform": "UIAP",
+  "sync": {
+    "strategy": "local_only",
+    "tables": [],
+    "conflict": "server_wins"
+  },
+  "permissions": []
+}

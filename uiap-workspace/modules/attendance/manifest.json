@@ -1,0 +1,27 @@
+{
+  "id": "uiap.attendance",
+  "name": "Attendance Manager",
+  "version": "1.0.0",
+  "description": "Core attendance tracking, manual correction, and roll-call system.",
+  "author": "UIAP Core Team",
+  "platform": "UIAP",
+  "sync": {
+    "strategy": "bidirectional",
+    "tables": ["attendance_records"],
+    "conflict": "latest_wins"
+  },
+  "permissions": [
+    {
+      "module": "attendance.records",
+      "action": "view",
+      "description": "View attendance records"
+    },
+    {
+      "module": "attendance.records",
+      "action": "manage",
+      "description": "Manually add, modify, or delete attendance records"
+    }
+  ],
+  "entrypoint": "dist/index.js",
+  "frontend": "web"
+}

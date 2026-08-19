@@ -1,0 +1,6 @@
+{
+  "name": "UIAP Attendance Management System",
+  "description": "Unified Integrated Application Platform - Next-generation Attendance Management & Analytics System",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

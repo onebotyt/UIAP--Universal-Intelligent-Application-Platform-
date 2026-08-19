@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Proof Demo</title>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #ffffff;
+            color: #0f1117;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #0f1117;
+                color: #e1e4ed;
+            }
+            .card {
+                background: #1a1d27 !important;
+                border: 1px solid #2d3148 !important;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+            }
+            p {
+                color: #8b90a5 !important;
+            }
+        }
+        .card {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e4e7;
+            text-align: center;
+            max-width: 400px;
+        }
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        p {
+            margin: 0 0 2rem 0;
+            color: #6b6375;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 16px rgba(108, 92, 231, 0.25);
+        }
+        button:hover {
+            background: #a29bfe;
+            transform: translateY(-1px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        #result {
+            margin-top: 1.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            min-height: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">🧪</div>
+        <h1>Platform Proof Demo</h1>
+        <p>This UI is dynamically loaded from an independent module within a secure iframe sandbox.</p>
+        <button id="testApiBtn">Test Module API</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('testApiBtn').addEventListener('click', async () => {
+            const resDiv = document.getElementById('result');
+            resDiv.textContent = 'Calling API...';
+            resDiv.style.color = 'inherit';
+            
+            try {
+                // Since this iframe is loaded from /api/m/uiap.platform-proof-demo/ui/index.html
+                // The API is at /api/m/uiap.platform-proof-demo/hello
+                const res = await fetch('../hello');
+                const data = await res.json();
+                resDiv.textContent = data.message || JSON.stringify(data);
+                resDiv.style.color = '#00cec9'; // uiap-success
+            } catch (err) {
+                resDiv.textContent = 'Error: ' + err.message;
+                resDiv.style.color = '#e17055'; // uiap-danger
+            }
+        });
+    </script>
+</body>
+</html>

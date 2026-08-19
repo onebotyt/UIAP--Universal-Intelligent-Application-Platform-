@@ -1,0 +1,38 @@
+{
+  "id": "uiap.college-management",
+  "name": "College Management",
+  "version": "1.0.0",
+  "description": "Core system of record for Departments, Classes, Teachers, and Students.",
+  "platform": "UIAP",
+  "coreVersion": ">=0.1.0",
+  "sync": {
+    "strategy": "bidirectional",
+    "tables": ["students", "teachers", "classes", "departments"],
+    "conflict": "latest_wins"
+  },
+  "server": {
+    "entry": "dist/index.js"
+  },
+  "permissions": [
+    {
+      "module": "college",
+      "action": "view",
+      "description": "Can view college records (Students, Teachers, Classes)"
+    },
+    {
+      "module": "college",
+      "action": "manage",
+      "description": "Can create, edit, or delete college records"
+    }
+  ],
+  "ui": {
+    "entry": "web/index.html",
+    "navigation": [
+      {
+        "id": "college-nav",
+        "label": "College",
+        "icon": "🎓"
+      }
+    ]
+  }
+}

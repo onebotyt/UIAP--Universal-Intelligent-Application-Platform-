@@ -1,0 +1,89 @@
+/* ── UIAP Edge — CSS Reset & Design Tokens ───────────────── */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Surface colors */
+  --uiap-bg: #0f1117;
+  --uiap-surface: #1a1d27;
+  --uiap-card: #222639;
+  --uiap-border: #2d3148;
+
+  /* Text */
+  --uiap-text: #e1e4ed;
+  --uiap-text-muted: #8b90a5;
+  --uiap-text-heading: #f0f2f8;
+
+  /* Accent */
+  --uiap-accent: #6c5ce7;
+  --uiap-accent-light: #a29bfe;
+  --uiap-accent-glow: rgba(108, 92, 231, 0.25);
+
+  /* Status */
+  --uiap-success: #00cec9;
+  --uiap-warning: #fdcb6e;
+  --uiap-danger: #e17055;
+
+  /* Radius */
+  --uiap-radius: 12px;
+  --uiap-radius-sm: 8px;
+  --uiap-radius-xs: 4px;
+
+  /* Sidebar */
+  --uiap-sidebar-width: 260px;
+  --uiap-header-height: 56px;
+
+  /* Transitions */
+  --uiap-transition: 0.2s ease;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--uiap-bg);
+  color: var(--uiap-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--uiap-accent-light);
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+h1, h2, h3, h4 {
+  color: var(--uiap-text-heading);
+  font-weight: 600;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--uiap-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--uiap-text-muted);
+}

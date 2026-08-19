@@ -1,0 +1,51 @@
+{
+  "name": "uiap",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "UIAP — Universal Intelligent Application Platform",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "modules/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,magenta \"npm run dev -w @uiap/edge-api\" \"npm run dev -w @uiap/edge-web\"",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "tsc --build tsconfig.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"apps/*/src/**/*.{ts,tsx}\" \"packages/*/src/**/*.ts\" \"modules/*/src/**/*.ts\" \"**/*.{json,md}\"",
+    "format:check": "prettier --check \"apps/*/src/**/*.{ts,tsx}\" \"packages/*/src/**/*.ts\" \"modules/*/src/**/*.ts\" \"**/*.{json,md}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "migrate:core": "node-pg-migrate -j ts -m packages/core/src/db/migrations",
+    "sign:keygen": "tsx scripts/generate-keypair.ts",
+    "sign:module": "tsx scripts/sign-module.ts",
+    "build:desktop": "npm run build -w electron-shell",
+    "dist:desktop": "npm run dist -w electron-shell"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "@types/node": "^22.15.0",
+    "@types/node-windows": "0.1.6",
+    "@types/supertest": "7.2.1",
+    "concurrently": "10.0.5",
+    "eslint": "^9.20.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-react-refresh": "0.5.4",
+    "globals": "^15.15.0",
+    "innosetup-compiler": "6.3.1",
+    "prettier": "^3.5.0",
+    "supertest": "7.2.2",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.25.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "dependencies": {
+    "node-windows": "1.0.0-beta.8"
+  }
+}
