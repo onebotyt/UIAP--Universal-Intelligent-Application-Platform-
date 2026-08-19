@@ -1,0 +1,1486 @@
+# Comprehensive UIAP Project Structure
+
+This document lists **every** tracked file and folder in the UIAP repository and explains what it is used for.
+
+- **📁 sources/** - *Directory containing related project files*
+- **📁 UIAP-cloud-main/** - *Directory containing related project files*
+  - **📁 UIAP-cloud-main/** - *Directory containing related project files*
+    - **📁 public/** - *Directory containing related project files*
+      - **📁 assets/** - *Static assets like images and CSS*
+        - 📄 `index-aLuUDowI.js` - *JavaScript source code file*
+        - 📄 `index-D6SaChW-.css` - *Cascading Style Sheets (styling)*
+      - 📄 `favicon.svg` - *Image asset*
+      - 📄 `icons.svg` - *Image asset*
+      - 📄 `index.html` - *Project file*
+    - **📁 public-legacy/** - *Directory containing related project files*
+      - 📄 `index.html` - *Project file*
+    - **📁 public-web/** - *Public facing website and dashboard*
+      - **📁 public/** - *Directory containing related project files*
+        - 📄 `favicon.svg` - *Image asset*
+        - 📄 `icons.svg` - *Image asset*
+      - **📁 src/** - *Source code files*
+        - **📁 assets/** - *Static assets like images and CSS*
+          - 📄 `hero.png` - *Image asset*
+          - 📄 `react.svg` - *Image asset*
+          - 📄 `vite.svg` - *Image asset*
+        - **📁 pages/** - *React page components for routing*
+          - 📄 `Download.tsx` - *React component (UI element)*
+          - 📄 `Landing.tsx` - *React component (UI element)*
+          - 📄 `Login.tsx` - *React component (UI element)*
+          - 📄 `Register.tsx` - *React component (UI element)*
+          - 📄 `Setup.tsx` - *React component (UI element)*
+        - 📄 `App.css` - *Cascading Style Sheets (styling)*
+        - 📄 `App.tsx` - *Root React component*
+        - 📄 `index.css` - *Cascading Style Sheets (styling)*
+        - 📄 `main.tsx` - *React application bootstrapper*
+      - 📄 `.gitignore` - *Files to ignore in Git version control*
+      - 📄 `index.html` - *Project file*
+      - 📄 `package.json` - *NPM dependencies and project configuration*
+      - 📄 `README.md` - *Project documentation*
+      - 📄 `tsconfig.app.json` - *JSON configuration or data file*
+      - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+      - 📄 `tsconfig.node.json` - *JSON configuration or data file*
+      - 📄 `vite.config.ts` - *Vite bundler configuration*
+    - **📁 src/** - *Source code files*
+      - **📁 db/** - *Database connection and schema definitions*
+        - 📄 `audit.js` - *JavaScript source code file*
+        - 📄 `migrate.js` - *JavaScript source code file*
+        - 📄 `pool.js` - *JavaScript source code file*
+        - 📄 `schema.sql` - *SQL database queries/schema*
+        - 📄 `seed.js` - *JavaScript source code file*
+      - **📁 middleware/** - *Directory containing related project files*
+        - 📄 `requireAuth.js` - *JavaScript source code file*
+      - **📁 routes/** - *API endpoint definitions*
+        - 📄 `auth.js` - *JavaScript source code file*
+        - 📄 `edge.js` - *JavaScript source code file*
+        - 📄 `modules.js` - *JavaScript source code file*
+        - 📄 `organizations.js` - *JavaScript source code file*
+        - 📄 `transactions.js` - *JavaScript source code file*
+        - 📄 `versions.js` - *JavaScript source code file*
+      - 📄 `signing.js` - *JavaScript source code file*
+    - 📄 `.env.example` - *Example environment variables*
+    - 📄 `.gitignore` - *Files to ignore in Git version control*
+    - 📄 `package.json` - *NPM dependencies and project configuration*
+    - 📄 `README.md` - *Project documentation*
+    - 📄 `server.js` - *JavaScript source code file*
+- **📁 uiap-hosting/** - *Directory containing related project files*
+  - **📁 src/** - *Source code files*
+    - 📄 `index.ts` - *Main entry point for this module/folder*
+  - 📄 `package.json` - *NPM dependencies and project configuration*
+  - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+- **📁 uiap-workspace/** - *Directory containing related project files*
+  - **📁 apps/** - *Main runnable applications*
+    - **📁 edge-api/** - *Directory containing related project files*
+      - **📁 src/** - *Source code files*
+        - **📁 middleware/** - *Directory containing related project files*
+          - 📄 `auth.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `deviceAuth.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `errorHandler.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `rate-limiter.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `requestId.ts` - *TypeScript source code file (logic/backend)*
+        - **📁 routes/** - *API endpoint definitions*
+          - 📄 `auth.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `backups.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `cloud.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `dashboard.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `device-api.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `devices.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `events.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `modules.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `permissions.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `roles.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `setup.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `system.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `users.ts` - *TypeScript source code file (logic/backend)*
+        - **📁 services/** - *Directory containing related project files*
+          - 📄 `backup.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `cloud-sync.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `updater.ts` - *TypeScript source code file (logic/backend)*
+        - 📄 `app.ts` - *TypeScript source code file (logic/backend)*
+        - 📄 `config.ts` - *TypeScript source code file (logic/backend)*
+        - 📄 `index.ts` - *Main entry point for this module/folder*
+      - **📁 uiap_dev_db/** - *Directory containing related project files*
+        - **📁 base/** - *Directory containing related project files*
+          - **📁 1/** - *Directory containing related project files*
+            - 📄 `112` - *Project file*
+            - 📄 `113` - *Project file*
+            - 📄 `1247` - *Project file*
+            - 📄 `1247_fsm` - *Project file*
+            - 📄 `1247_vm` - *Project file*
+            - 📄 `1249` - *Project file*
+            - 📄 `1249_fsm` - *Project file*
+            - 📄 `1249_vm` - *Project file*
+            - 📄 `1255` - *Project file*
+            - 📄 `1255_fsm` - *Project file*
+            - 📄 `1255_vm` - *Project file*
+            - 📄 `1259` - *Project file*
+            - 📄 `1259_fsm` - *Project file*
+            - 📄 `1259_vm` - *Project file*
+            - 📄 `12607` - *Project file*
+            - 📄 `12607_fsm` - *Project file*
+            - 📄 `12607_vm` - *Project file*
+            - 📄 `12610` - *Project file*
+            - 📄 `12611` - *Project file*
+            - 📄 `12612` - *Project file*
+            - 📄 `12612_fsm` - *Project file*
+            - 📄 `12612_vm` - *Project file*
+            - 📄 `12615` - *Project file*
+            - 📄 `12616` - *Project file*
+            - 📄 `12617` - *Project file*
+            - 📄 `12617_fsm` - *Project file*
+            - 📄 `12617_vm` - *Project file*
+            - 📄 `12620` - *Project file*
+            - 📄 `12621` - *Project file*
+            - 📄 `12622` - *Project file*
+            - 📄 `12622_fsm` - *Project file*
+            - 📄 `12622_vm` - *Project file*
+            - 📄 `12625` - *Project file*
+            - 📄 `12626` - *Project file*
+            - 📄 `1417` - *Project file*
+            - 📄 `1418` - *Project file*
+            - 📄 `174` - *Project file*
+            - 📄 `175` - *Project file*
+            - 📄 `2187` - *Project file*
+            - 📄 `2224` - *Project file*
+            - 📄 `2228` - *Project file*
+            - 📄 `2328` - *Project file*
+            - 📄 `2336` - *Project file*
+            - 📄 `2337` - *Project file*
+            - 📄 `2579` - *Project file*
+            - 📄 `2600` - *Project file*
+            - 📄 `2600_fsm` - *Project file*
+            - 📄 `2600_vm` - *Project file*
+            - 📄 `2601` - *Project file*
+            - 📄 `2601_fsm` - *Project file*
+            - 📄 `2601_vm` - *Project file*
+            - 📄 `2602` - *Project file*
+            - 📄 `2602_fsm` - *Project file*
+            - 📄 `2602_vm` - *Project file*
+            - 📄 `2603` - *Project file*
+            - 📄 `2603_fsm` - *Project file*
+            - 📄 `2603_vm` - *Project file*
+            - 📄 `2604` - *Project file*
+            - 📄 `2605` - *Project file*
+            - 📄 `2605_fsm` - *Project file*
+            - 📄 `2605_vm` - *Project file*
+            - 📄 `2606` - *Project file*
+            - 📄 `2606_fsm` - *Project file*
+            - 📄 `2606_vm` - *Project file*
+            - 📄 `2607` - *Project file*
+            - 📄 `2607_fsm` - *Project file*
+            - 📄 `2607_vm` - *Project file*
+            - 📄 `2608` - *Project file*
+            - 📄 `2608_fsm` - *Project file*
+            - 📄 `2608_vm` - *Project file*
+            - 📄 `2609` - *Project file*
+            - 📄 `2609_fsm` - *Project file*
+            - 📄 `2609_vm` - *Project file*
+            - 📄 `2610` - *Project file*
+            - 📄 `2610_fsm` - *Project file*
+            - 📄 `2610_vm` - *Project file*
+            - 📄 `2611` - *Project file*
+            - 📄 `2612` - *Project file*
+            - 📄 `2612_fsm` - *Project file*
+            - 📄 `2612_vm` - *Project file*
+            - 📄 `2613` - *Project file*
+            - 📄 `2615` - *Project file*
+            - 📄 `2615_fsm` - *Project file*
+            - 📄 `2615_vm` - *Project file*
+            - 📄 `2616` - *Project file*
+            - 📄 `2616_fsm` - *Project file*
+            - 📄 `2616_vm` - *Project file*
+            - 📄 `2617` - *Project file*
+            - 📄 `2617_fsm` - *Project file*
+            - 📄 `2617_vm` - *Project file*
+            - 📄 `2618` - *Project file*
+            - 📄 `2618_fsm` - *Project file*
+            - 📄 `2618_vm` - *Project file*
+            - 📄 `2619` - *Project file*
+            - 📄 `2619_fsm` - *Project file*
+            - 📄 `2619_vm` - *Project file*
+            - 📄 `2620` - *Project file*
+            - 📄 `2650` - *Project file*
+            - 📄 `2651` - *Project file*
+            - 📄 `2652` - *Project file*
+            - 📄 `2653` - *Project file*
+            - 📄 `2654` - *Project file*
+            - 📄 `2655` - *Project file*
+            - 📄 `2656` - *Project file*
+            - 📄 `2657` - *Project file*
+            - 📄 `2658` - *Project file*
+            - 📄 `2659` - *Project file*
+            - 📄 `2660` - *Project file*
+            - 📄 `2661` - *Project file*
+            - 📄 `2662` - *Project file*
+            - 📄 `2663` - *Project file*
+            - 📄 `2664` - *Project file*
+            - 📄 `2665` - *Project file*
+            - 📄 `2666` - *Project file*
+            - 📄 `2667` - *Project file*
+            - 📄 `2668` - *Project file*
+            - 📄 `2669` - *Project file*
+            - 📄 `2670` - *Project file*
+            - 📄 `2673` - *Project file*
+            - 📄 `2674` - *Project file*
+            - 📄 `2675` - *Project file*
+            - 📄 `2678` - *Project file*
+            - 📄 `2679` - *Project file*
+            - 📄 `2680` - *Project file*
+            - 📄 `2681` - *Project file*
+            - 📄 `2682` - *Project file*
+            - 📄 `2683` - *Project file*
+            - 📄 `2684` - *Project file*
+            - 📄 `2685` - *Project file*
+            - 📄 `2686` - *Project file*
+            - 📄 `2687` - *Project file*
+            - 📄 `2688` - *Project file*
+            - 📄 `2689` - *Project file*
+            - 📄 `2690` - *Project file*
+            - 📄 `2691` - *Project file*
+            - 📄 `2692` - *Project file*
+            - 📄 `2693` - *Project file*
+            - 📄 `2696` - *Project file*
+            - 📄 `2699` - *Project file*
+            - 📄 `2701` - *Project file*
+            - 📄 `2702` - *Project file*
+            - 📄 `2703` - *Project file*
+            - 📄 `2704` - *Project file*
+            - 📄 `2753` - *Project file*
+            - 📄 `2753_fsm` - *Project file*
+            - 📄 `2753_vm` - *Project file*
+            - 📄 `2754` - *Project file*
+            - 📄 `2755` - *Project file*
+            - 📄 `2756` - *Project file*
+            - 📄 `2757` - *Project file*
+            - 📄 `2830` - *Project file*
+            - 📄 `2831` - *Project file*
+            - 📄 `2832` - *Project file*
+            - 📄 `2833` - *Project file*
+            - 📄 `2834` - *Project file*
+            - 📄 `2835` - *Project file*
+            - 📄 `2836` - *Project file*
+            - 📄 `2836_fsm` - *Project file*
+            - 📄 `2836_vm` - *Project file*
+            - 📄 `2837` - *Project file*
+            - 📄 `2838` - *Project file*
+            - 📄 `2838_fsm` - *Project file*
+            - 📄 `2838_vm` - *Project file*
+            - 📄 `2839` - *Project file*
+            - 📄 `2840` - *Project file*
+            - 📄 `2840_fsm` - *Project file*
+            - 📄 `2840_vm` - *Project file*
+            - 📄 `2841` - *Project file*
+            - 📄 `2995` - *Project file*
+            - 📄 `2996` - *Project file*
+            - 📄 `3079` - *Project file*
+            - 📄 `3079_fsm` - *Project file*
+            - 📄 `3079_vm` - *Project file*
+            - 📄 `3080` - *Project file*
+            - 📄 `3081` - *Project file*
+            - 📄 `3085` - *Project file*
+            - 📄 `3118` - *Project file*
+            - 📄 `3119` - *Project file*
+            - 📄 `3164` - *Project file*
+            - 📄 `3256` - *Project file*
+            - 📄 `3257` - *Project file*
+            - 📄 `3258` - *Project file*
+            - 📄 `3350` - *Project file*
+            - 📄 `3351` - *Project file*
+            - 📄 `3379` - *Project file*
+            - 📄 `3380` - *Project file*
+            - 📄 `3381` - *Project file*
+            - 📄 `3394` - *Project file*
+            - 📄 `3394_fsm` - *Project file*
+            - 📄 `3394_vm` - *Project file*
+            - 📄 `3395` - *Project file*
+            - 📄 `3429` - *Project file*
+            - 📄 `3430` - *Project file*
+            - 📄 `3431` - *Project file*
+            - 📄 `3433` - *Project file*
+            - 📄 `3439` - *Project file*
+            - 📄 `3440` - *Project file*
+            - 📄 `3455` - *Project file*
+            - 📄 `3456` - *Project file*
+            - 📄 `3456_fsm` - *Project file*
+            - 📄 `3456_vm` - *Project file*
+            - 📄 `3466` - *Project file*
+            - 📄 `3467` - *Project file*
+            - 📄 `3468` - *Project file*
+            - 📄 `3501` - *Project file*
+            - 📄 `3502` - *Project file*
+            - 📄 `3503` - *Project file*
+            - 📄 `3534` - *Project file*
+            - 📄 `3541` - *Project file*
+            - 📄 `3541_fsm` - *Project file*
+            - 📄 `3541_vm` - *Project file*
+            - 📄 `3542` - *Project file*
+            - 📄 `3574` - *Project file*
+            - 📄 `3575` - *Project file*
+            - 📄 `3576` - *Project file*
+            - 📄 `3596` - *Project file*
+            - 📄 `3597` - *Project file*
+            - 📄 `3598` - *Project file*
+            - 📄 `3599` - *Project file*
+            - 📄 `3600` - *Project file*
+            - 📄 `3600_fsm` - *Project file*
+            - 📄 `3600_vm` - *Project file*
+            - 📄 `3601` - *Project file*
+            - 📄 `3601_fsm` - *Project file*
+            - 📄 `3601_vm` - *Project file*
+            - 📄 `3602` - *Project file*
+            - 📄 `3602_fsm` - *Project file*
+            - 📄 `3602_vm` - *Project file*
+            - 📄 `3603` - *Project file*
+            - 📄 `3603_fsm` - *Project file*
+            - 📄 `3603_vm` - *Project file*
+            - 📄 `3604` - *Project file*
+            - 📄 `3605` - *Project file*
+            - 📄 `3606` - *Project file*
+            - 📄 `3607` - *Project file*
+            - 📄 `3608` - *Project file*
+            - 📄 `3609` - *Project file*
+            - 📄 `3712` - *Project file*
+            - 📄 `3764` - *Project file*
+            - 📄 `3764_fsm` - *Project file*
+            - 📄 `3764_vm` - *Project file*
+            - 📄 `3766` - *Project file*
+            - 📄 `3767` - *Project file*
+            - 📄 `3997` - *Project file*
+            - 📄 `4143` - *Project file*
+            - 📄 `4144` - *Project file*
+            - 📄 `4145` - *Project file*
+            - 📄 `4146` - *Project file*
+            - 📄 `4147` - *Project file*
+            - 📄 `4148` - *Project file*
+            - 📄 `4149` - *Project file*
+            - 📄 `4150` - *Project file*
+            - 📄 `4151` - *Project file*
+            - 📄 `4152` - *Project file*
+            - 📄 `4153` - *Project file*
+            - 📄 `4154` - *Project file*
+            - 📄 `4155` - *Project file*
+            - 📄 `4156` - *Project file*
+            - 📄 `4157` - *Project file*
+            - 📄 `4158` - *Project file*
+            - 📄 `4159` - *Project file*
+            - 📄 `4160` - *Project file*
+            - 📄 `4163` - *Project file*
+            - 📄 `4164` - *Project file*
+            - 📄 `4165` - *Project file*
+            - 📄 `4166` - *Project file*
+            - 📄 `4167` - *Project file*
+            - 📄 `4168` - *Project file*
+            - 📄 `4169` - *Project file*
+            - 📄 `4170` - *Project file*
+            - 📄 `4171` - *Project file*
+            - 📄 `4172` - *Project file*
+            - 📄 `4173` - *Project file*
+            - 📄 `4174` - *Project file*
+            - 📄 `5002` - *Project file*
+            - 📄 `548` - *Project file*
+            - 📄 `549` - *Project file*
+            - 📄 `6102` - *Project file*
+            - 📄 `6104` - *Project file*
+            - 📄 `6106` - *Project file*
+            - 📄 `6110` - *Project file*
+            - 📄 `6111` - *Project file*
+            - 📄 `6112` - *Project file*
+            - 📄 `6113` - *Project file*
+            - 📄 `6116` - *Project file*
+            - 📄 `6117` - *Project file*
+            - 📄 `6175` - *Project file*
+            - 📄 `6176` - *Project file*
+            - 📄 `6228` - *Project file*
+            - 📄 `6229` - *Project file*
+            - 📄 `6237` - *Project file*
+            - 📄 `6238` - *Project file*
+            - 📄 `6239` - *Project file*
+            - 📄 `6351` - *Project file*
+            - 📄 `6352` - *Project file*
+            - 📄 `826` - *Project file*
+            - 📄 `827` - *Project file*
+            - 📄 `828` - *Project file*
+            - 📄 `pg_filenode.map` - *Project file*
+            - 📄 `PG_VERSION` - *Project file*
+          - **📁 4/** - *Directory containing related project files*
+            - 📄 `112` - *Project file*
+            - 📄 `113` - *Project file*
+            - 📄 `1247` - *Project file*
+            - 📄 `1247_fsm` - *Project file*
+            - 📄 `1247_vm` - *Project file*
+            - 📄 `1249` - *Project file*
+            - 📄 `1249_fsm` - *Project file*
+            - 📄 `1249_vm` - *Project file*
+            - 📄 `1255` - *Project file*
+            - 📄 `1255_fsm` - *Project file*
+            - 📄 `1255_vm` - *Project file*
+            - 📄 `1259` - *Project file*
+            - 📄 `1259_fsm` - *Project file*
+            - 📄 `1259_vm` - *Project file*
+            - 📄 `12607` - *Project file*
+            - 📄 `12607_fsm` - *Project file*
+            - 📄 `12607_vm` - *Project file*
+            - 📄 `12610` - *Project file*
+            - 📄 `12611` - *Project file*
+            - 📄 `12612` - *Project file*
+            - 📄 `12612_fsm` - *Project file*
+            - 📄 `12612_vm` - *Project file*
+            - 📄 `12615` - *Project file*
+            - 📄 `12616` - *Project file*
+            - 📄 `12617` - *Project file*
+            - 📄 `12617_fsm` - *Project file*
+            - 📄 `12617_vm` - *Project file*
+            - 📄 `12620` - *Project file*
+            - 📄 `12621` - *Project file*
+            - 📄 `12622` - *Project file*
+            - 📄 `12622_fsm` - *Project file*
+            - 📄 `12622_vm` - *Project file*
+            - 📄 `12625` - *Project file*
+            - 📄 `12626` - *Project file*
+            - 📄 `1417` - *Project file*
+            - 📄 `1418` - *Project file*
+            - 📄 `174` - *Project file*
+            - 📄 `175` - *Project file*
+            - 📄 `2187` - *Project file*
+            - 📄 `2224` - *Project file*
+            - 📄 `2228` - *Project file*
+            - 📄 `2328` - *Project file*
+            - 📄 `2336` - *Project file*
+            - 📄 `2337` - *Project file*
+            - 📄 `2579` - *Project file*
+            - 📄 `2600` - *Project file*
+            - 📄 `2600_fsm` - *Project file*
+            - 📄 `2600_vm` - *Project file*
+            - 📄 `2601` - *Project file*
+            - 📄 `2601_fsm` - *Project file*
+            - 📄 `2601_vm` - *Project file*
+            - 📄 `2602` - *Project file*
+            - 📄 `2602_fsm` - *Project file*
+            - 📄 `2602_vm` - *Project file*
+            - 📄 `2603` - *Project file*
+            - 📄 `2603_fsm` - *Project file*
+            - 📄 `2603_vm` - *Project file*
+            - 📄 `2604` - *Project file*
+            - 📄 `2605` - *Project file*
+            - 📄 `2605_fsm` - *Project file*
+            - 📄 `2605_vm` - *Project file*
+            - 📄 `2606` - *Project file*
+            - 📄 `2606_fsm` - *Project file*
+            - 📄 `2606_vm` - *Project file*
+            - 📄 `2607` - *Project file*
+            - 📄 `2607_fsm` - *Project file*
+            - 📄 `2607_vm` - *Project file*
+            - 📄 `2608` - *Project file*
+            - 📄 `2608_fsm` - *Project file*
+            - 📄 `2608_vm` - *Project file*
+            - 📄 `2609` - *Project file*
+            - 📄 `2609_fsm` - *Project file*
+            - 📄 `2609_vm` - *Project file*
+            - 📄 `2610` - *Project file*
+            - 📄 `2610_fsm` - *Project file*
+            - 📄 `2610_vm` - *Project file*
+            - 📄 `2611` - *Project file*
+            - 📄 `2612` - *Project file*
+            - 📄 `2612_fsm` - *Project file*
+            - 📄 `2612_vm` - *Project file*
+            - 📄 `2613` - *Project file*
+            - 📄 `2615` - *Project file*
+            - 📄 `2615_fsm` - *Project file*
+            - 📄 `2615_vm` - *Project file*
+            - 📄 `2616` - *Project file*
+            - 📄 `2616_fsm` - *Project file*
+            - 📄 `2616_vm` - *Project file*
+            - 📄 `2617` - *Project file*
+            - 📄 `2617_fsm` - *Project file*
+            - 📄 `2617_vm` - *Project file*
+            - 📄 `2618` - *Project file*
+            - 📄 `2618_fsm` - *Project file*
+            - 📄 `2618_vm` - *Project file*
+            - 📄 `2619` - *Project file*
+            - 📄 `2619_fsm` - *Project file*
+            - 📄 `2619_vm` - *Project file*
+            - 📄 `2620` - *Project file*
+            - 📄 `2650` - *Project file*
+            - 📄 `2651` - *Project file*
+            - 📄 `2652` - *Project file*
+            - 📄 `2653` - *Project file*
+            - 📄 `2654` - *Project file*
+            - 📄 `2655` - *Project file*
+            - 📄 `2656` - *Project file*
+            - 📄 `2657` - *Project file*
+            - 📄 `2658` - *Project file*
+            - 📄 `2659` - *Project file*
+            - 📄 `2660` - *Project file*
+            - 📄 `2661` - *Project file*
+            - 📄 `2662` - *Project file*
+            - 📄 `2663` - *Project file*
+            - 📄 `2664` - *Project file*
+            - 📄 `2665` - *Project file*
+            - 📄 `2666` - *Project file*
+            - 📄 `2667` - *Project file*
+            - 📄 `2668` - *Project file*
+            - 📄 `2669` - *Project file*
+            - 📄 `2670` - *Project file*
+            - 📄 `2673` - *Project file*
+            - 📄 `2674` - *Project file*
+            - 📄 `2675` - *Project file*
+            - 📄 `2678` - *Project file*
+            - 📄 `2679` - *Project file*
+            - 📄 `2680` - *Project file*
+            - 📄 `2681` - *Project file*
+            - 📄 `2682` - *Project file*
+            - 📄 `2683` - *Project file*
+            - 📄 `2684` - *Project file*
+            - 📄 `2685` - *Project file*
+            - 📄 `2686` - *Project file*
+            - 📄 `2687` - *Project file*
+            - 📄 `2688` - *Project file*
+            - 📄 `2689` - *Project file*
+            - 📄 `2690` - *Project file*
+            - 📄 `2691` - *Project file*
+            - 📄 `2692` - *Project file*
+            - 📄 `2693` - *Project file*
+            - 📄 `2696` - *Project file*
+            - 📄 `2699` - *Project file*
+            - 📄 `2701` - *Project file*
+            - 📄 `2702` - *Project file*
+            - 📄 `2703` - *Project file*
+            - 📄 `2704` - *Project file*
+            - 📄 `2753` - *Project file*
+            - 📄 `2753_fsm` - *Project file*
+            - 📄 `2753_vm` - *Project file*
+            - 📄 `2754` - *Project file*
+            - 📄 `2755` - *Project file*
+            - 📄 `2756` - *Project file*
+            - 📄 `2757` - *Project file*
+            - 📄 `2830` - *Project file*
+            - 📄 `2831` - *Project file*
+            - 📄 `2832` - *Project file*
+            - 📄 `2833` - *Project file*
+            - 📄 `2834` - *Project file*
+            - 📄 `2835` - *Project file*
+            - 📄 `2836` - *Project file*
+            - 📄 `2836_fsm` - *Project file*
+            - 📄 `2836_vm` - *Project file*
+            - 📄 `2837` - *Project file*
+            - 📄 `2838` - *Project file*
+            - 📄 `2838_fsm` - *Project file*
+            - 📄 `2838_vm` - *Project file*
+            - 📄 `2839` - *Project file*
+            - 📄 `2840` - *Project file*
+            - 📄 `2840_fsm` - *Project file*
+            - 📄 `2840_vm` - *Project file*
+            - 📄 `2841` - *Project file*
+            - 📄 `2995` - *Project file*
+            - 📄 `2996` - *Project file*
+            - 📄 `3079` - *Project file*
+            - 📄 `3079_fsm` - *Project file*
+            - 📄 `3079_vm` - *Project file*
+            - 📄 `3080` - *Project file*
+            - 📄 `3081` - *Project file*
+            - 📄 `3085` - *Project file*
+            - 📄 `3118` - *Project file*
+            - 📄 `3119` - *Project file*
+            - 📄 `3164` - *Project file*
+            - 📄 `3256` - *Project file*
+            - 📄 `3257` - *Project file*
+            - 📄 `3258` - *Project file*
+            - 📄 `3350` - *Project file*
+            - 📄 `3351` - *Project file*
+            - 📄 `3379` - *Project file*
+            - 📄 `3380` - *Project file*
+            - 📄 `3381` - *Project file*
+            - 📄 `3394` - *Project file*
+            - 📄 `3394_fsm` - *Project file*
+            - 📄 `3394_vm` - *Project file*
+            - 📄 `3395` - *Project file*
+            - 📄 `3429` - *Project file*
+            - 📄 `3430` - *Project file*
+            - 📄 `3431` - *Project file*
+            - 📄 `3433` - *Project file*
+            - 📄 `3439` - *Project file*
+            - 📄 `3440` - *Project file*
+            - 📄 `3455` - *Project file*
+            - 📄 `3456` - *Project file*
+            - 📄 `3456_fsm` - *Project file*
+            - 📄 `3456_vm` - *Project file*
+            - 📄 `3466` - *Project file*
+            - 📄 `3467` - *Project file*
+            - 📄 `3468` - *Project file*
+            - 📄 `3501` - *Project file*
+            - 📄 `3502` - *Project file*
+            - 📄 `3503` - *Project file*
+            - 📄 `3534` - *Project file*
+            - 📄 `3541` - *Project file*
+            - 📄 `3541_fsm` - *Project file*
+            - 📄 `3541_vm` - *Project file*
+            - 📄 `3542` - *Project file*
+            - 📄 `3574` - *Project file*
+            - 📄 `3575` - *Project file*
+            - 📄 `3576` - *Project file*
+            - 📄 `3596` - *Project file*
+            - 📄 `3597` - *Project file*
+            - 📄 `3598` - *Project file*
+            - 📄 `3599` - *Project file*
+            - 📄 `3600` - *Project file*
+            - 📄 `3600_fsm` - *Project file*
+            - 📄 `3600_vm` - *Project file*
+            - 📄 `3601` - *Project file*
+            - 📄 `3601_fsm` - *Project file*
+            - 📄 `3601_vm` - *Project file*
+            - 📄 `3602` - *Project file*
+            - 📄 `3602_fsm` - *Project file*
+            - 📄 `3602_vm` - *Project file*
+            - 📄 `3603` - *Project file*
+            - 📄 `3603_fsm` - *Project file*
+            - 📄 `3603_vm` - *Project file*
+            - 📄 `3604` - *Project file*
+            - 📄 `3605` - *Project file*
+            - 📄 `3606` - *Project file*
+            - 📄 `3607` - *Project file*
+            - 📄 `3608` - *Project file*
+            - 📄 `3609` - *Project file*
+            - 📄 `3712` - *Project file*
+            - 📄 `3764` - *Project file*
+            - 📄 `3764_fsm` - *Project file*
+            - 📄 `3764_vm` - *Project file*
+            - 📄 `3766` - *Project file*
+            - 📄 `3767` - *Project file*
+            - 📄 `3997` - *Project file*
+            - 📄 `4143` - *Project file*
+            - 📄 `4144` - *Project file*
+            - 📄 `4145` - *Project file*
+            - 📄 `4146` - *Project file*
+            - 📄 `4147` - *Project file*
+            - 📄 `4148` - *Project file*
+            - 📄 `4149` - *Project file*
+            - 📄 `4150` - *Project file*
+            - 📄 `4151` - *Project file*
+            - 📄 `4152` - *Project file*
+            - 📄 `4153` - *Project file*
+            - 📄 `4154` - *Project file*
+            - 📄 `4155` - *Project file*
+            - 📄 `4156` - *Project file*
+            - 📄 `4157` - *Project file*
+            - 📄 `4158` - *Project file*
+            - 📄 `4159` - *Project file*
+            - 📄 `4160` - *Project file*
+            - 📄 `4163` - *Project file*
+            - 📄 `4164` - *Project file*
+            - 📄 `4165` - *Project file*
+            - 📄 `4166` - *Project file*
+            - 📄 `4167` - *Project file*
+            - 📄 `4168` - *Project file*
+            - 📄 `4169` - *Project file*
+            - 📄 `4170` - *Project file*
+            - 📄 `4171` - *Project file*
+            - 📄 `4172` - *Project file*
+            - 📄 `4173` - *Project file*
+            - 📄 `4174` - *Project file*
+            - 📄 `5002` - *Project file*
+            - 📄 `548` - *Project file*
+            - 📄 `549` - *Project file*
+            - 📄 `6102` - *Project file*
+            - 📄 `6104` - *Project file*
+            - 📄 `6106` - *Project file*
+            - 📄 `6110` - *Project file*
+            - 📄 `6111` - *Project file*
+            - 📄 `6112` - *Project file*
+            - 📄 `6113` - *Project file*
+            - 📄 `6116` - *Project file*
+            - 📄 `6117` - *Project file*
+            - 📄 `6175` - *Project file*
+            - 📄 `6176` - *Project file*
+            - 📄 `6228` - *Project file*
+            - 📄 `6229` - *Project file*
+            - 📄 `6237` - *Project file*
+            - 📄 `6238` - *Project file*
+            - 📄 `6239` - *Project file*
+            - 📄 `6351` - *Project file*
+            - 📄 `6352` - *Project file*
+            - 📄 `826` - *Project file*
+            - 📄 `827` - *Project file*
+            - 📄 `828` - *Project file*
+            - 📄 `pg_filenode.map` - *Project file*
+            - 📄 `PG_VERSION` - *Project file*
+          - **📁 5/** - *Directory containing related project files*
+            - 📄 `112` - *Project file*
+            - 📄 `113` - *Project file*
+            - 📄 `1247` - *Project file*
+            - 📄 `1247_fsm` - *Project file*
+            - 📄 `1247_vm` - *Project file*
+            - 📄 `1249` - *Project file*
+            - 📄 `1249_fsm` - *Project file*
+            - 📄 `1249_vm` - *Project file*
+            - 📄 `1255` - *Project file*
+            - 📄 `1255_fsm` - *Project file*
+            - 📄 `1255_vm` - *Project file*
+            - 📄 `1259` - *Project file*
+            - 📄 `1259_fsm` - *Project file*
+            - 📄 `1259_vm` - *Project file*
+            - 📄 `12607` - *Project file*
+            - 📄 `12607_fsm` - *Project file*
+            - 📄 `12607_vm` - *Project file*
+            - 📄 `12610` - *Project file*
+            - 📄 `12611` - *Project file*
+            - 📄 `12612` - *Project file*
+            - 📄 `12612_fsm` - *Project file*
+            - 📄 `12612_vm` - *Project file*
+            - 📄 `12615` - *Project file*
+            - 📄 `12616` - *Project file*
+            - 📄 `12617` - *Project file*
+            - 📄 `12617_fsm` - *Project file*
+            - 📄 `12617_vm` - *Project file*
+            - 📄 `12620` - *Project file*
+            - 📄 `12621` - *Project file*
+            - 📄 `12622` - *Project file*
+            - 📄 `12622_fsm` - *Project file*
+            - 📄 `12622_vm` - *Project file*
+            - 📄 `12625` - *Project file*
+            - 📄 `12626` - *Project file*
+            - 📄 `1417` - *Project file*
+            - 📄 `1418` - *Project file*
+            - 📄 `16384` - *Project file*
+            - 📄 `16385` - *Project file*
+            - 📄 `16392` - *Project file*
+            - 📄 `16395` - *Project file*
+            - 📄 `16402` - *Project file*
+            - 📄 `16403` - *Project file*
+            - 📄 `16404` - *Project file*
+            - 📄 `16406` - *Project file*
+            - 📄 `16417` - *Project file*
+            - 📄 `16419` - *Project file*
+            - 📄 `16432` - *Project file*
+            - 📄 `16433` - *Project file*
+            - 📄 `16434` - *Project file*
+            - 📄 `16436` - *Project file*
+            - 📄 `16438` - *Project file*
+            - 📄 `16446` - *Project file*
+            - 📄 `16447` - *Project file*
+            - 📄 `16448` - *Project file*
+            - 📄 `16450` - *Project file*
+            - 📄 `16451` - *Project file*
+            - 📄 `16452` - *Project file*
+            - 📄 `16453` - *Project file*
+            - 📄 `16466` - *Project file*
+            - 📄 `16467` - *Project file*
+            - 📄 `16468` - *Project file*
+            - 📄 `16470` - *Project file*
+            - 📄 `16472` - *Project file*
+            - 📄 `16482` - *Project file*
+            - 📄 `16483` - *Project file*
+            - 📄 `16484` - *Project file*
+            - 📄 `16486` - *Project file*
+            - 📄 `16488` - *Project file*
+            - 📄 `16497` - *Project file*
+            - 📄 `16498` - *Project file*
+            - 📄 `16499` - *Project file*
+            - 📄 `16501` - *Project file*
+            - 📄 `16503` - *Project file*
+            - 📄 `16518` - *Project file*
+            - 📄 `16520` - *Project file*
+            - 📄 `16535` - *Project file*
+            - 📄 `16537` - *Project file*
+            - 📄 `16538` - *Project file*
+            - 📄 `16543` - *Project file*
+            - 📄 `16554` - *Project file*
+            - 📄 `16555` - *Project file*
+            - 📄 `16556` - *Project file*
+            - 📄 `16558` - *Project file*
+            - 📄 `16560` - *Project file*
+            - 📄 `16583` - *Project file*
+            - 📄 `16584` - *Project file*
+            - 📄 `16585` - *Project file*
+            - 📄 `16587` - *Project file*
+            - 📄 `16589` - *Project file*
+            - 📄 `174` - *Project file*
+            - 📄 `175` - *Project file*
+            - 📄 `2187` - *Project file*
+            - 📄 `2224` - *Project file*
+            - 📄 `2228` - *Project file*
+            - 📄 `2328` - *Project file*
+            - 📄 `2336` - *Project file*
+            - 📄 `2337` - *Project file*
+            - 📄 `2579` - *Project file*
+            - 📄 `2600` - *Project file*
+            - 📄 `2600_fsm` - *Project file*
+            - 📄 `2600_vm` - *Project file*
+            - 📄 `2601` - *Project file*
+            - 📄 `2601_fsm` - *Project file*
+            - 📄 `2601_vm` - *Project file*
+            - 📄 `2602` - *Project file*
+            - 📄 `2602_fsm` - *Project file*
+            - 📄 `2602_vm` - *Project file*
+            - 📄 `2603` - *Project file*
+            - 📄 `2603_fsm` - *Project file*
+            - 📄 `2603_vm` - *Project file*
+            - 📄 `2604` - *Project file*
+            - 📄 `2604_fsm` - *Project file*
+            - 📄 `2605` - *Project file*
+            - 📄 `2605_fsm` - *Project file*
+            - 📄 `2605_vm` - *Project file*
+            - 📄 `2606` - *Project file*
+            - 📄 `2606_fsm` - *Project file*
+            - 📄 `2606_vm` - *Project file*
+            - 📄 `2607` - *Project file*
+            - 📄 `2607_fsm` - *Project file*
+            - 📄 `2607_vm` - *Project file*
+            - 📄 `2608` - *Project file*
+            - 📄 `2608_fsm` - *Project file*
+            - 📄 `2608_vm` - *Project file*
+            - 📄 `2609` - *Project file*
+            - 📄 `2609_fsm` - *Project file*
+            - 📄 `2609_vm` - *Project file*
+            - 📄 `2610` - *Project file*
+            - 📄 `2610_fsm` - *Project file*
+            - 📄 `2610_vm` - *Project file*
+            - 📄 `2611` - *Project file*
+            - 📄 `2612` - *Project file*
+            - 📄 `2612_fsm` - *Project file*
+            - 📄 `2612_vm` - *Project file*
+            - 📄 `2613` - *Project file*
+            - 📄 `2615` - *Project file*
+            - 📄 `2615_fsm` - *Project file*
+            - 📄 `2615_vm` - *Project file*
+            - 📄 `2616` - *Project file*
+            - 📄 `2616_fsm` - *Project file*
+            - 📄 `2616_vm` - *Project file*
+            - 📄 `2617` - *Project file*
+            - 📄 `2617_fsm` - *Project file*
+            - 📄 `2617_vm` - *Project file*
+            - 📄 `2618` - *Project file*
+            - 📄 `2618_fsm` - *Project file*
+            - 📄 `2618_vm` - *Project file*
+            - 📄 `2619` - *Project file*
+            - 📄 `2619_fsm` - *Project file*
+            - 📄 `2619_vm` - *Project file*
+            - 📄 `2620` - *Project file*
+            - 📄 `2650` - *Project file*
+            - 📄 `2651` - *Project file*
+            - 📄 `2652` - *Project file*
+            - 📄 `2653` - *Project file*
+            - 📄 `2654` - *Project file*
+            - 📄 `2655` - *Project file*
+            - 📄 `2656` - *Project file*
+            - 📄 `2657` - *Project file*
+            - 📄 `2658` - *Project file*
+            - 📄 `2659` - *Project file*
+            - 📄 `2660` - *Project file*
+            - 📄 `2661` - *Project file*
+            - 📄 `2662` - *Project file*
+            - 📄 `2663` - *Project file*
+            - 📄 `2664` - *Project file*
+            - 📄 `2665` - *Project file*
+            - 📄 `2666` - *Project file*
+            - 📄 `2667` - *Project file*
+            - 📄 `2668` - *Project file*
+            - 📄 `2669` - *Project file*
+            - 📄 `2670` - *Project file*
+            - 📄 `2673` - *Project file*
+            - 📄 `2674` - *Project file*
+            - 📄 `2675` - *Project file*
+            - 📄 `2678` - *Project file*
+            - 📄 `2679` - *Project file*
+            - 📄 `2680` - *Project file*
+            - 📄 `2681` - *Project file*
+            - 📄 `2682` - *Project file*
+            - 📄 `2683` - *Project file*
+            - 📄 `2684` - *Project file*
+            - 📄 `2685` - *Project file*
+            - 📄 `2686` - *Project file*
+            - 📄 `2687` - *Project file*
+            - 📄 `2688` - *Project file*
+            - 📄 `2689` - *Project file*
+            - 📄 `2690` - *Project file*
+            - 📄 `2691` - *Project file*
+            - 📄 `2692` - *Project file*
+            - 📄 `2693` - *Project file*
+            - 📄 `2696` - *Project file*
+            - 📄 `2699` - *Project file*
+            - 📄 `2701` - *Project file*
+            - 📄 `2702` - *Project file*
+            - 📄 `2703` - *Project file*
+            - 📄 `2704` - *Project file*
+            - 📄 `2753` - *Project file*
+            - 📄 `2753_fsm` - *Project file*
+            - 📄 `2753_vm` - *Project file*
+            - 📄 `2754` - *Project file*
+            - 📄 `2755` - *Project file*
+            - 📄 `2756` - *Project file*
+            - 📄 `2757` - *Project file*
+            - 📄 `2830` - *Project file*
+            - 📄 `2831` - *Project file*
+            - 📄 `2832` - *Project file*
+            - 📄 `2833` - *Project file*
+            - 📄 `2834` - *Project file*
+            - 📄 `2835` - *Project file*
+            - 📄 `2836` - *Project file*
+            - 📄 `2836_fsm` - *Project file*
+            - 📄 `2836_vm` - *Project file*
+            - 📄 `2837` - *Project file*
+            - 📄 `2838` - *Project file*
+            - 📄 `2838_fsm` - *Project file*
+            - 📄 `2838_vm` - *Project file*
+            - 📄 `2839` - *Project file*
+            - 📄 `2840` - *Project file*
+            - 📄 `2840_fsm` - *Project file*
+            - 📄 `2840_vm` - *Project file*
+            - 📄 `2841` - *Project file*
+            - 📄 `2995` - *Project file*
+            - 📄 `2996` - *Project file*
+            - 📄 `3079` - *Project file*
+            - 📄 `3079_fsm` - *Project file*
+            - 📄 `3079_vm` - *Project file*
+            - 📄 `3080` - *Project file*
+            - 📄 `3081` - *Project file*
+            - 📄 `3085` - *Project file*
+            - 📄 `3118` - *Project file*
+            - 📄 `3119` - *Project file*
+            - 📄 `3164` - *Project file*
+            - 📄 `3256` - *Project file*
+            - 📄 `3257` - *Project file*
+            - 📄 `3258` - *Project file*
+            - 📄 `3350` - *Project file*
+            - 📄 `3351` - *Project file*
+            - 📄 `3379` - *Project file*
+            - 📄 `3380` - *Project file*
+            - 📄 `3381` - *Project file*
+            - 📄 `3394` - *Project file*
+            - 📄 `3394_fsm` - *Project file*
+            - 📄 `3394_vm` - *Project file*
+            - 📄 `3395` - *Project file*
+            - 📄 `3429` - *Project file*
+            - 📄 `3430` - *Project file*
+            - 📄 `3431` - *Project file*
+            - 📄 `3433` - *Project file*
+            - 📄 `3439` - *Project file*
+            - 📄 `3440` - *Project file*
+            - 📄 `3455` - *Project file*
+            - 📄 `3456` - *Project file*
+            - 📄 `3456_fsm` - *Project file*
+            - 📄 `3456_vm` - *Project file*
+            - 📄 `3466` - *Project file*
+            - 📄 `3467` - *Project file*
+            - 📄 `3468` - *Project file*
+            - 📄 `3501` - *Project file*
+            - 📄 `3502` - *Project file*
+            - 📄 `3503` - *Project file*
+            - 📄 `3534` - *Project file*
+            - 📄 `3541` - *Project file*
+            - 📄 `3541_fsm` - *Project file*
+            - 📄 `3541_vm` - *Project file*
+            - 📄 `3542` - *Project file*
+            - 📄 `3574` - *Project file*
+            - 📄 `3575` - *Project file*
+            - 📄 `3576` - *Project file*
+            - 📄 `3596` - *Project file*
+            - 📄 `3597` - *Project file*
+            - 📄 `3598` - *Project file*
+            - 📄 `3599` - *Project file*
+            - 📄 `3600` - *Project file*
+            - 📄 `3600_fsm` - *Project file*
+            - 📄 `3600_vm` - *Project file*
+            - 📄 `3601` - *Project file*
+            - 📄 `3601_fsm` - *Project file*
+            - 📄 `3601_vm` - *Project file*
+            - 📄 `3602` - *Project file*
+            - 📄 `3602_fsm` - *Project file*
+            - 📄 `3602_vm` - *Project file*
+            - 📄 `3603` - *Project file*
+            - 📄 `3603_fsm` - *Project file*
+            - 📄 `3603_vm` - *Project file*
+            - 📄 `3604` - *Project file*
+            - 📄 `3605` - *Project file*
+            - 📄 `3606` - *Project file*
+            - 📄 `3607` - *Project file*
+            - 📄 `3608` - *Project file*
+            - 📄 `3609` - *Project file*
+            - 📄 `3712` - *Project file*
+            - 📄 `3764` - *Project file*
+            - 📄 `3764_fsm` - *Project file*
+            - 📄 `3764_vm` - *Project file*
+            - 📄 `3766` - *Project file*
+            - 📄 `3767` - *Project file*
+            - 📄 `3997` - *Project file*
+            - 📄 `4143` - *Project file*
+            - 📄 `4144` - *Project file*
+            - 📄 `4145` - *Project file*
+            - 📄 `4146` - *Project file*
+            - 📄 `4147` - *Project file*
+            - 📄 `4148` - *Project file*
+            - 📄 `4149` - *Project file*
+            - 📄 `4150` - *Project file*
+            - 📄 `4151` - *Project file*
+            - 📄 `4152` - *Project file*
+            - 📄 `4153` - *Project file*
+            - 📄 `4154` - *Project file*
+            - 📄 `4155` - *Project file*
+            - 📄 `4156` - *Project file*
+            - 📄 `4157` - *Project file*
+            - 📄 `4158` - *Project file*
+            - 📄 `4159` - *Project file*
+            - 📄 `4160` - *Project file*
+            - 📄 `4163` - *Project file*
+            - 📄 `4164` - *Project file*
+            - 📄 `4165` - *Project file*
+            - 📄 `4166` - *Project file*
+            - 📄 `4167` - *Project file*
+            - 📄 `4168` - *Project file*
+            - 📄 `4169` - *Project file*
+            - 📄 `4170` - *Project file*
+            - 📄 `4171` - *Project file*
+            - 📄 `4172` - *Project file*
+            - 📄 `4173` - *Project file*
+            - 📄 `4174` - *Project file*
+            - 📄 `5002` - *Project file*
+            - 📄 `548` - *Project file*
+            - 📄 `549` - *Project file*
+            - 📄 `6102` - *Project file*
+            - 📄 `6104` - *Project file*
+            - 📄 `6106` - *Project file*
+            - 📄 `6110` - *Project file*
+            - 📄 `6111` - *Project file*
+            - 📄 `6112` - *Project file*
+            - 📄 `6113` - *Project file*
+            - 📄 `6116` - *Project file*
+            - 📄 `6117` - *Project file*
+            - 📄 `6175` - *Project file*
+            - 📄 `6176` - *Project file*
+            - 📄 `6228` - *Project file*
+            - 📄 `6229` - *Project file*
+            - 📄 `6237` - *Project file*
+            - 📄 `6238` - *Project file*
+            - 📄 `6239` - *Project file*
+            - 📄 `6351` - *Project file*
+            - 📄 `6352` - *Project file*
+            - 📄 `826` - *Project file*
+            - 📄 `827` - *Project file*
+            - 📄 `828` - *Project file*
+            - 📄 `pg_filenode.map` - *Project file*
+            - 📄 `pg_internal.init` - *Project file*
+            - 📄 `PG_VERSION` - *Project file*
+        - **📁 global/** - *Directory containing related project files*
+          - 📄 `1213` - *Project file*
+          - 📄 `1213_fsm` - *Project file*
+          - 📄 `1213_vm` - *Project file*
+          - 📄 `1214` - *Project file*
+          - 📄 `1232` - *Project file*
+          - 📄 `1233` - *Project file*
+          - 📄 `1260` - *Project file*
+          - 📄 `1260_fsm` - *Project file*
+          - 📄 `1260_vm` - *Project file*
+          - 📄 `1261` - *Project file*
+          - 📄 `1261_fsm` - *Project file*
+          - 📄 `1261_vm` - *Project file*
+          - 📄 `1262` - *Project file*
+          - 📄 `1262_fsm` - *Project file*
+          - 📄 `1262_vm` - *Project file*
+          - 📄 `2396` - *Project file*
+          - 📄 `2396_fsm` - *Project file*
+          - 📄 `2396_vm` - *Project file*
+          - 📄 `2397` - *Project file*
+          - 📄 `2671` - *Project file*
+          - 📄 `2672` - *Project file*
+          - 📄 `2676` - *Project file*
+          - 📄 `2677` - *Project file*
+          - 📄 `2694` - *Project file*
+          - 📄 `2695` - *Project file*
+          - 📄 `2697` - *Project file*
+          - 📄 `2698` - *Project file*
+          - 📄 `2846` - *Project file*
+          - 📄 `2847` - *Project file*
+          - 📄 `2964` - *Project file*
+          - 📄 `2965` - *Project file*
+          - 📄 `2966` - *Project file*
+          - 📄 `2967` - *Project file*
+          - 📄 `3592` - *Project file*
+          - 📄 `3593` - *Project file*
+          - 📄 `4060` - *Project file*
+          - 📄 `4061` - *Project file*
+          - 📄 `4177` - *Project file*
+          - 📄 `4178` - *Project file*
+          - 📄 `4183` - *Project file*
+          - 📄 `4184` - *Project file*
+          - 📄 `4185` - *Project file*
+          - 📄 `4186` - *Project file*
+          - 📄 `6000` - *Project file*
+          - 📄 `6001` - *Project file*
+          - 📄 `6002` - *Project file*
+          - 📄 `6100` - *Project file*
+          - 📄 `6114` - *Project file*
+          - 📄 `6115` - *Project file*
+          - 📄 `6243` - *Project file*
+          - 📄 `6244` - *Project file*
+          - 📄 `6245` - *Project file*
+          - 📄 `6246` - *Project file*
+          - 📄 `6247` - *Project file*
+          - 📄 `6302` - *Project file*
+          - 📄 `6303` - *Project file*
+          - 📄 `pg_control` - *Project file*
+          - 📄 `pg_filenode.map` - *Project file*
+          - 📄 `pg_internal.init` - *Project file*
+        - **📁 pg_commit_ts/** - *Directory containing related project files*
+        - **📁 pg_dynshmem/** - *Directory containing related project files*
+        - **📁 pg_logical/** - *Directory containing related project files*
+          - **📁 mappings/** - *Directory containing related project files*
+          - **📁 snapshots/** - *Directory containing related project files*
+          - 📄 `replorigin_checkpoint` - *Project file*
+        - **📁 pg_multixact/** - *Directory containing related project files*
+          - **📁 members/** - *Directory containing related project files*
+            - 📄 `0000` - *Project file*
+          - **📁 offsets/** - *Directory containing related project files*
+            - 📄 `0000` - *Project file*
+        - **📁 pg_notify/** - *Directory containing related project files*
+        - **📁 pg_replslot/** - *Directory containing related project files*
+        - **📁 pg_serial/** - *Directory containing related project files*
+        - **📁 pg_snapshots/** - *Directory containing related project files*
+        - **📁 pg_stat/** - *Directory containing related project files*
+        - **📁 pg_stat_tmp/** - *Directory containing related project files*
+        - **📁 pg_subtrans/** - *Directory containing related project files*
+          - 📄 `0000` - *Project file*
+        - **📁 pg_tblspc/** - *Directory containing related project files*
+        - **📁 pg_twophase/** - *Directory containing related project files*
+        - **📁 pg_wal/** - *Directory containing related project files*
+          - **📁 archive_status/** - *Directory containing related project files*
+          - **📁 summaries/** - *Directory containing related project files*
+          - 📄 `000000010000000000000001` - *Project file*
+        - **📁 pg_xact/** - *Directory containing related project files*
+          - 📄 `0000` - *Project file*
+        - 📄 `pg_hba.conf` - *Project file*
+        - 📄 `pg_ident.conf` - *Project file*
+        - 📄 `PG_VERSION` - *Project file*
+        - 📄 `postgresql.auto.conf` - *Project file*
+        - 📄 `postgresql.conf` - *Project file*
+        - 📄 `postmaster.pid` - *Project file*
+      - 📄 `package.json` - *NPM dependencies and project configuration*
+      - 📄 `server.js` - *JavaScript source code file*
+      - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+      - 📄 `tsconfig.tsbuildinfo` - *Project file*
+    - **📁 edge-web/** - *Directory containing related project files*
+      - **📁 public/** - *Directory containing related project files*
+        - 📄 `favicon.svg` - *Image asset*
+        - 📄 `icons.svg` - *Image asset*
+        - 📄 `manifest.json` - *UIAP module configuration and metadata*
+        - 📄 `sw.js` - *JavaScript source code file*
+      - **📁 src/** - *Source code files*
+        - **📁 auth/** - *Directory containing related project files*
+          - 📄 `AuthContext.tsx` - *React component (UI element)*
+        - **📁 components/** - *Reusable React UI components*
+          - 📄 `LoginForm.tsx` - *React component (UI element)*
+          - 📄 `ModulesView.tsx` - *React component (UI element)*
+          - 📄 `RolesView.tsx` - *React component (UI element)*
+          - 📄 `SetupWizard.tsx` - *React component (UI element)*
+          - 📄 `UsersView.tsx` - *React component (UI element)*
+        - **📁 config/** - *Directory containing related project files*
+          - 📄 `branding.ts` - *TypeScript source code file (logic/backend)*
+        - **📁 shell/** - *Directory containing related project files*
+          - 📄 `AppShell.tsx` - *React component (UI element)*
+          - 📄 `Header.tsx` - *React component (UI element)*
+          - 📄 `Sidebar.tsx` - *React component (UI element)*
+        - **📁 views/** - *Directory containing related project files*
+          - 📄 `BackupsView.tsx` - *React component (UI element)*
+          - 📄 `CloudView.tsx` - *React component (UI element)*
+          - 📄 `DashboardView.tsx` - *React component (UI element)*
+          - 📄 `DevicesView.tsx` - *React component (UI element)*
+          - 📄 `EventsView.tsx` - *React component (UI element)*
+          - 📄 `ModuleView.tsx` - *React component (UI element)*
+          - 📄 `NotFoundView.tsx` - *React component (UI element)*
+        - 📄 `App.css` - *Cascading Style Sheets (styling)*
+        - 📄 `App.tsx` - *Root React component*
+        - 📄 `index.css` - *Cascading Style Sheets (styling)*
+        - 📄 `main.tsx` - *React application bootstrapper*
+      - 📄 `.gitignore` - *Files to ignore in Git version control*
+      - 📄 `index.html` - *Project file*
+      - 📄 `package.json` - *NPM dependencies and project configuration*
+      - 📄 `README.md` - *Project documentation*
+      - 📄 `tsconfig.app.json` - *JSON configuration or data file*
+      - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+      - 📄 `tsconfig.node.json` - *JSON configuration or data file*
+      - 📄 `vite.config.ts` - *Vite bundler configuration*
+    - **📁 electron-shell/** - *Directory containing related project files*
+      - **📁 public/** - *Directory containing related project files*
+        - 📄 `loading.html` - *Project file*
+      - **📁 release/** - *Directory containing related project files*
+      - **📁 src/** - *Source code files*
+        - 📄 `main.ts` - *TypeScript source code file (logic/backend)*
+        - 📄 `postgres.ts` - *TypeScript source code file (logic/backend)*
+        - 📄 `server.ts` - *TypeScript source code file (logic/backend)*
+      - 📄 `package.json` - *NPM dependencies and project configuration*
+      - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+  - **📁 coordination/** - *Directory containing related project files*
+    - 📄 `ANTIGRAVITY_STATUS.md` - *Markdown documentation file*
+    - 📄 `CODEX_INSTRUCTIONS.md` - *Markdown documentation file*
+    - 📄 `DECISIONS.md` - *Markdown documentation file*
+    - 📄 `PROTOCOL.md` - *Markdown documentation file*
+    - 📄 `TASK_BOARD.md` - *Markdown documentation file*
+  - **📁 docs/** - *Directory containing related project files*
+    - 📄 `DEVELOPMENT.md` - *Markdown documentation file*
+    - 📄 `MODULE_CONTRACT.md` - *Markdown documentation file*
+    - 📄 `MODULE_DEVELOPMENT.md` - *Markdown documentation file*
+    - 📄 `PROJECT_ROADMAP.md` - *Markdown documentation file*
+  - **📁 firmware/** - *Directory containing related project files*
+  - **📁 infrastructure/** - *Directory containing related project files*
+  - **📁 modules/** - *UIAP installable plugins/modules*
+    - **📁 attendance/** - *Directory containing related project files*
+      - **📁 migrations/** - *Database schema migration scripts*
+        - 📄 `001_initial.sql` - *SQL database queries/schema*
+      - **📁 src/** - *Source code files*
+        - 📄 `index.ts` - *Main entry point for this module/folder*
+      - **📁 web/** - *Frontend web application code*
+        - **📁 assets/** - *Static assets like images and CSS*
+          - 📄 `index-CIH349F1.js` - *JavaScript source code file*
+          - 📄 `index-wB0xxvnO.css` - *Cascading Style Sheets (styling)*
+        - 📄 `index.html` - *Project file*
+      - **📁 web-src/** - *Directory containing related project files*
+        - **📁 src/** - *Source code files*
+          - **📁 components/** - *Reusable React UI components*
+            - **📁 common/** - *Directory containing related project files*
+              - 📄 `CommandPalette.tsx` - *React component (UI element)*
+              - 📄 `Modal.tsx` - *React component (UI element)*
+              - 📄 `QrScannerSection.tsx` - *React component (UI element)*
+              - 📄 `StatusLegend.tsx` - *React component (UI element)*
+              - 📄 `Toast.tsx` - *React component (UI element)*
+            - **📁 layout/** - *Directory containing related project files*
+              - 📄 `CustomizationDrawer.tsx` - *React component (UI element)*
+              - 📄 `Navbar.tsx` - *React component (UI element)*
+              - 📄 `Sidebar.tsx` - *React component (UI element)*
+            - **📁 views/** - *Directory containing related project files*
+              - 📄 `AttendanceView.tsx` - *React component (UI element)*
+          - **📁 context/** - *Directory containing related project files*
+            - 📄 `AppContext.tsx` - *React component (UI element)*
+          - **📁 data/** - *Directory containing related project files*
+            - 📄 `mockData.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `App.tsx` - *Root React component*
+          - 📄 `index.css` - *Cascading Style Sheets (styling)*
+          - 📄 `main.tsx` - *React application bootstrapper*
+          - 📄 `types.ts` - *TypeScript source code file (logic/backend)*
+        - 📄 `index.html` - *Project file*
+        - 📄 `metadata.json` - *JSON configuration or data file*
+        - 📄 `package.json` - *NPM dependencies and project configuration*
+        - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+        - 📄 `vite.config.ts` - *Vite bundler configuration*
+      - 📄 `manifest.json` - *UIAP module configuration and metadata*
+      - 📄 `package.json` - *NPM dependencies and project configuration*
+      - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+      - 📄 `tsconfig.tsbuildinfo` - *Project file*
+    - **📁 biometric-verification/** - *Directory containing related project files*
+      - **📁 src/** - *Source code files*
+        - 📄 `index.ts` - *Main entry point for this module/folder*
+      - 📄 `manifest.json` - *UIAP module configuration and metadata*
+    - **📁 college-management/** - *Directory containing related project files*
+      - **📁 migrations/** - *Database schema migration scripts*
+        - 📄 `001_initial.sql` - *SQL database queries/schema*
+      - **📁 src/** - *Source code files*
+        - 📄 `index.ts` - *Main entry point for this module/folder*
+      - **📁 web/** - *Frontend web application code*
+        - **📁 assets/** - *Static assets like images and CSS*
+          - 📄 `index-DC_0EjhR.css` - *Cascading Style Sheets (styling)*
+          - 📄 `index-Zd3BxjmZ.js` - *JavaScript source code file*
+        - 📄 `index.html` - *Project file*
+      - **📁 web-src/** - *Directory containing related project files*
+        - **📁 src/** - *Source code files*
+          - **📁 components/** - *Reusable React UI components*
+            - **📁 common/** - *Directory containing related project files*
+              - 📄 `CommandPalette.tsx` - *React component (UI element)*
+              - 📄 `Modal.tsx` - *React component (UI element)*
+              - 📄 `QrScannerSection.tsx` - *React component (UI element)*
+              - 📄 `StatusLegend.tsx` - *React component (UI element)*
+              - 📄 `Toast.tsx` - *React component (UI element)*
+            - **📁 layout/** - *Directory containing related project files*
+              - 📄 `CustomizationDrawer.tsx` - *React component (UI element)*
+              - 📄 `Navbar.tsx` - *React component (UI element)*
+              - 📄 `Sidebar.tsx` - *React component (UI element)*
+            - **📁 views/** - *Directory containing related project files*
+              - 📄 `ClassesView.tsx` - *React component (UI element)*
+              - 📄 `StudentsView.tsx` - *React component (UI element)*
+              - 📄 `TeachersView.tsx` - *React component (UI element)*
+          - **📁 context/** - *Directory containing related project files*
+            - 📄 `AppContext.tsx` - *React component (UI element)*
+          - **📁 data/** - *Directory containing related project files*
+            - 📄 `mockData.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `App.tsx` - *Root React component*
+          - 📄 `index.css` - *Cascading Style Sheets (styling)*
+          - 📄 `main.tsx` - *React application bootstrapper*
+          - 📄 `types.ts` - *TypeScript source code file (logic/backend)*
+        - 📄 `index.html` - *Project file*
+        - 📄 `metadata.json` - *JSON configuration or data file*
+        - 📄 `package.json` - *NPM dependencies and project configuration*
+        - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+        - 📄 `vite.config.ts` - *Vite bundler configuration*
+      - 📄 `college-management.zip` - *Project file*
+      - 📄 `manifest.json` - *UIAP module configuration and metadata*
+      - 📄 `package.json` - *NPM dependencies and project configuration*
+      - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+      - 📄 `tsconfig.tsbuildinfo` - *Project file*
+    - **📁 esp32-driver/** - *Directory containing related project files*
+      - **📁 src/** - *Source code files*
+        - 📄 `index.ts` - *Main entry point for this module/folder*
+      - 📄 `manifest.json` - *UIAP module configuration and metadata*
+    - **📁 platform-proof-demo/** - *Directory containing related project files*
+      - **📁 migrations/** - *Database schema migration scripts*
+        - 📄 `001_initial.sql` - *SQL database queries/schema*
+      - **📁 src/** - *Source code files*
+        - 📄 `index.ts` - *Main entry point for this module/folder*
+      - **📁 web/** - *Frontend web application code*
+        - 📄 `index.html` - *Project file*
+      - 📄 `manifest.json` - *UIAP module configuration and metadata*
+      - 📄 `package.json` - *NPM dependencies and project configuration*
+      - 📄 `platform-proof-demo.zip` - *Project file*
+      - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+      - 📄 `tsconfig.tsbuildinfo` - *Project file*
+    - **📁 reports/** - *Directory containing related project files*
+      - **📁 src/** - *Source code files*
+        - 📄 `index.ts` - *Main entry point for this module/folder*
+      - 📄 `manifest.json` - *UIAP module configuration and metadata*
+  - **📁 modules_data/** - *Directory containing related project files*
+    - **📁 installed/** - *Directory containing related project files*
+      - **📁 uiap.broken-module/** - *Directory containing related project files*
+        - **📁 1.0.0/** - *Directory containing related project files*
+          - 📄 `manifest.json` - *UIAP module configuration and metadata*
+        - 📄 `manifest.json` - *UIAP module configuration and metadata*
+      - **📁 uiap.platform-proof-demo/** - *Directory containing related project files*
+        - **📁 0.1.0/** - *Directory containing related project files*
+          - **📁 web/** - *Frontend web application code*
+            - 📄 `index.html` - *Project file*
+          - 📄 `manifest.json` - *UIAP module configuration and metadata*
+        - **📁 web/** - *Frontend web application code*
+          - 📄 `index.html` - *Project file*
+        - 📄 `manifest.json` - *UIAP module configuration and metadata*
+      - **📁 uiap.test.dependent/** - *Directory containing related project files*
+        - **📁 1.0.0/** - *Directory containing related project files*
+          - 📄 `manifest.json` - *UIAP module configuration and metadata*
+        - 📄 `manifest.json` - *UIAP module configuration and metadata*
+      - **📁 uiap.test.module/** - *Directory containing related project files*
+        - **📁 1.0.0/** - *Directory containing related project files*
+          - 📄 `index.js` - *Main entry point for this module/folder*
+          - 📄 `manifest.json` - *UIAP module configuration and metadata*
+        - 📄 `index.js` - *Main entry point for this module/folder*
+        - 📄 `manifest.json` - *UIAP module configuration and metadata*
+  - **📁 packages/** - *Core libraries and SDKs*
+    - **📁 core/** - *Directory containing related project files*
+      - **📁 migrations/** - *Database schema migration scripts*
+      - **📁 src/** - *Source code files*
+        - **📁 auth/** - *Directory containing related project files*
+          - 📄 `audit.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `identity.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `index.ts` - *Main entry point for this module/folder*
+          - 📄 `jwt.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `permissions.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `roles.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `users.ts` - *TypeScript source code file (logic/backend)*
+        - **📁 db/** - *Database connection and schema definitions*
+          - **📁 migrations/** - *Database schema migration scripts*
+            - 📄 `1000000000000_core_foundation.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `1000000000001_core_identity.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `1000000000002_core_management_permissions.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `1000000000003_core_module_metadata.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `1000000000004_core_module_permissions.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `1000000000005_core_module_versions.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `1000000000006_core_backup_permissions.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `1000000000007_core_device_registry_extensions.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `1000000000008_core_persistent_events.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `1000000000009_core_audit_logs.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `1000000000010_add_2fa_to_users.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `backup.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `BackupManager.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `config.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `knex-migrations.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `pool.ts` - *TypeScript source code file (logic/backend)*
+        - **📁 devices/** - *Directory containing related project files*
+          - 📄 `authentication.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `events.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `index.ts` - *Main entry point for this module/folder*
+          - 📄 `registry.ts` - *TypeScript source code file (logic/backend)*
+        - **📁 events/** - *Directory containing related project files*
+          - 📄 `EventBus.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `EventDispatcher.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `EventRecovery.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `EventStore.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `types.ts` - *TypeScript source code file (logic/backend)*
+        - **📁 modules/** - *UIAP installable plugins/modules*
+          - **📁 crypto/** - *Directory containing related project files*
+            - 📄 `canonical.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `hash.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `index.ts` - *Main entry point for this module/folder*
+            - 📄 `sign.ts` - *TypeScript source code file (logic/backend)*
+            - 📄 `verify.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `manager.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `PackageVerifier.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `storage.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `testSigningHelper.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `TrustedKeyStore.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `verifier.ts` - *TypeScript source code file (logic/backend)*
+        - **📁 runtime/** - *Directory containing related project files*
+          - 📄 `ModuleContextBuilder.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `ModuleRuntime.ts` - *TypeScript source code file (logic/backend)*
+          - 📄 `tenant.ts` - *TypeScript source code file (logic/backend)*
+        - **📁 scripts/** - *Automation and utility scripts*
+          - 📄 `bootstrap-admin.ts` - *TypeScript source code file (logic/backend)*
+        - **📁 security/** - *Directory containing related project files*
+          - 📄 `audit.ts` - *TypeScript source code file (logic/backend)*
+        - 📄 `index.ts` - *Main entry point for this module/folder*
+      - 📄 `package.json` - *NPM dependencies and project configuration*
+      - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+      - 📄 `tsconfig.tsbuildinfo` - *Project file*
+    - **📁 dev-harness/** - *Directory containing related project files*
+      - **📁 src/** - *Source code files*
+        - 📄 `index.ts` - *Main entry point for this module/folder*
+      - 📄 `package.json` - *NPM dependencies and project configuration*
+      - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+      - 📄 `tsconfig.tsbuildinfo` - *Project file*
+    - **📁 module-sdk/** - *Directory containing related project files*
+      - **📁 src/** - *Source code files*
+        - 📄 `errors.ts` - *TypeScript source code file (logic/backend)*
+        - 📄 `index.ts` - *Main entry point for this module/folder*
+      - 📄 `package.json` - *NPM dependencies and project configuration*
+      - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+      - 📄 `tsconfig.tsbuildinfo` - *Project file*
+    - **📁 sync/** - *Directory containing related project files*
+      - **📁 src/** - *Source code files*
+        - 📄 `index.ts` - *Main entry point for this module/folder*
+        - 📄 `SyncEngine.ts` - *TypeScript source code file (logic/backend)*
+        - 📄 `SyncQueue.ts` - *TypeScript source code file (logic/backend)*
+      - 📄 `package.json` - *NPM dependencies and project configuration*
+      - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+      - 📄 `tsconfig.tsbuildinfo` - *Project file*
+  - **📁 scripts/** - *Automation and utility scripts*
+    - **📁 postgres/** - *Directory containing related project files*
+      - 📄 `database.ts` - *TypeScript source code file (logic/backend)*
+      - 📄 `detect.ts` - *TypeScript source code file (logic/backend)*
+      - 📄 `provision.ts` - *TypeScript source code file (logic/backend)*
+      - 📄 `service.ts` - *TypeScript source code file (logic/backend)*
+      - 📄 `version.ts` - *TypeScript source code file (logic/backend)*
+    - **📁 windows/** - *Directory containing related project files*
+      - 📄 `install-service.ts` - *TypeScript source code file (logic/backend)*
+      - 📄 `service.ts` - *TypeScript source code file (logic/backend)*
+      - 📄 `uninstall-service.ts` - *TypeScript source code file (logic/backend)*
+    - 📄 `generate-keypair.ts` - *TypeScript source code file (logic/backend)*
+    - 📄 `package-demo-modules.ps1` - *PowerShell automation script*
+    - 📄 `package-modules.ps1` - *PowerShell automation script*
+    - 📄 `package-modules.ts` - *TypeScript source code file (logic/backend)*
+    - 📄 `package-windows.ts` - *TypeScript source code file (logic/backend)*
+    - 📄 `sign-module.ts` - *TypeScript source code file (logic/backend)*
+    - 📄 `UIAP-Setup.iss` - *Project file*
+  - **📁 signing-keys/** - *Directory containing related project files*
+    - 📄 `uiap-dev-001.private.pem` - *Project file*
+  - **📁 trusted-keys/** - *Directory containing related project files*
+    - 📄 `README.md` - *Project documentation*
+    - 📄 `uiap-dev-001.pem` - *Project file*
+    - 📄 `uiap-dev-key.pem` - *Project file*
+  - **📁 uiap-core/** - *Directory containing related project files*
+  - 📄 `.env.example` - *Example environment variables*
+  - 📄 `.gitignore` - *Files to ignore in Git version control*
+  - 📄 `eslint.config.js` - *Linting configuration*
+  - 📄 `package.json` - *NPM dependencies and project configuration*
+  - 📄 `PROJECT_IDENTITY.md` - *Markdown documentation file*
+  - 📄 `README.md` - *Project documentation*
+  - 📄 `tsconfig.base.json` - *JSON configuration or data file*
+  - 📄 `tsconfig.json` - *TypeScript compiler configuration*
+  - 📄 `vitest.config.ts` - *TypeScript source code file (logic/backend)*
+  - 📄 `vitest.setup.ts` - *TypeScript source code file (logic/backend)*
+- 📄 `.gitignore` - *Files to ignore in Git version control*
+- 📄 `AGENTS.md` - *Instructions for AI assistants*
+- 📄 `new.md` - *Markdown documentation file*
+- 📄 `PROJECT_STRUCTURE.md` - *Markdown documentation file*
+- 📄 `UIAP_ARCHITECTURE.md` - *Markdown documentation file*
+- 📄 `UIAP_MASTER_PLAN.md` - *Markdown documentation file*
