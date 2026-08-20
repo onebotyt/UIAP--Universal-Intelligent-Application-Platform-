@@ -11,6 +11,11 @@ jobs:
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
+      
+    - name: 🔄 Trigger cPanel Restart
+      run: |
+        mkdir -p UIAP-cloud-main/UIAP-cloud-main/tmp
+        date > UIAP-cloud-main/UIAP-cloud-main/tmp/restart.txt
     
     - name: 📂 Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
