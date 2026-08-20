@@ -8,6 +8,7 @@ const modulesRoutes = require('./src/routes/modules');
 const organizationsRoutes = require('./src/routes/organizations');
 const transactionsRoutes = require('./src/routes/transactions');
 const edgeRoutes = require('./src/routes/edge');
+const analyticsRoutes = require('./src/routes/analytics');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/dashboard/auth', authRoutes);
 app.use('/dashboard/modules', modulesRoutes);
 app.use('/dashboard/organizations', organizationsRoutes);
 app.use('/dashboard/transactions', transactionsRoutes);
+app.use('/dashboard/analytics', analyticsRoutes);
 app.use('/edge/v1', edgeRoutes);
 
 const path = require('path');
@@ -35,6 +37,7 @@ app.get('*', (req, res, next) => {
     '/dashboard/modules',
     '/dashboard/organizations',
     '/dashboard/transactions',
+    '/dashboard/analytics',
     '/edge/v1'
   ];
   

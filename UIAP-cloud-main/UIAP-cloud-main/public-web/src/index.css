@@ -236,13 +236,24 @@ a {
   margin-top: auto;
 }
 
-/* Dashboard Specific Premium CSS */
+/* Dashboard Specific Premium Light CSS */
+:root {
+  --dash-bg: #F8FAFC;
+  --dash-card: #FFFFFF;
+  --dash-text: #1E293B;
+  --dash-text-muted: #64748B;
+  --dash-border: #E2E8F0;
+  --dash-primary: #2563EB;
+  --dash-primary-hover: #1D4ED8;
+  --dash-sidebar: #F1F5F9;
+}
+
 .dashboard-app {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #0B0E14;
-  color: #E4E7EC;
+  background-color: var(--dash-bg);
+  color: var(--dash-text);
   font-family: 'Inter', sans-serif;
 }
 
@@ -251,9 +262,9 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 14px 24px;
-  background-color: rgba(18, 22, 31, 0.7);
+  background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--dash-border);
   z-index: 10;
 }
 
@@ -267,21 +278,22 @@ a {
   width: 24px;
   height: 24px;
   border-radius: 6px;
-  background: linear-gradient(135deg, #4FD1C5, #2B7A72);
+  background: linear-gradient(135deg, var(--dash-primary), #60A5FA);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: monospace;
   font-weight: bold;
-  color: #04211E;
+  color: #FFFFFF;
 }
 
 .dash-brand .brand-name {
   font-weight: 600;
   letter-spacing: 0.2px;
+  color: var(--dash-text);
 }
 .dash-brand .brand-sub {
-  color: #565F73;
+  color: var(--dash-text-muted);
   font-family: monospace;
   font-size: 11px;
   margin-left: 8px;
@@ -294,7 +306,7 @@ a {
 }
 
 .dash-who {
-  color: #8B93A7;
+  color: var(--dash-text-muted);
   font-size: 0.85rem;
   font-family: monospace;
 }
@@ -304,7 +316,7 @@ a {
   align-items: center;
   background: transparent;
   border: none;
-  color: #8B93A7;
+  color: var(--dash-text-muted);
   cursor: pointer;
   padding: 6px 12px;
   border-radius: 6px;
@@ -313,8 +325,48 @@ a {
 }
 
 .dash-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #E4E7EC;
+  background: var(--dash-border);
+  color: var(--dash-text);
+}
+
+.dash-btn-primary {
+  display: flex;
+  align-items: center;
+  background: var(--dash-primary);
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+
+.dash-btn-primary:hover:not(:disabled) {
+  background: var(--dash-primary-hover);
+}
+
+.dash-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dash-input {
+  background: var(--dash-card);
+  border: 1px solid var(--dash-border);
+  padding: 10px 12px;
+  border-radius: 6px;
+  color: var(--dash-text);
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dash-input:focus {
+  outline: none;
+  border-color: var(--dash-primary);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 .dash-layout {
@@ -325,8 +377,8 @@ a {
 
 .dash-sidebar {
   width: 240px;
-  background-color: #12161F;
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: var(--dash-sidebar);
+  border-right: 1px solid var(--dash-border);
   padding: 24px 16px;
   display: flex;
   flex-direction: column;
@@ -338,7 +390,7 @@ a {
   align-items: center;
   gap: 12px;
   padding: 10px 14px;
-  color: #8B93A7;
+  color: var(--dash-text-muted);
   text-decoration: none;
   border-radius: 8px;
   transition: all 0.2s ease;
@@ -347,20 +399,20 @@ a {
 }
 
 .dash-nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.03);
-  color: #E4E7EC;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--dash-text);
 }
 
 .dash-nav-item.active {
-  background-color: rgba(79, 209, 197, 0.1);
-  color: #4FD1C5;
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--dash-primary);
 }
 
 .dash-main {
   flex: 1;
   padding: 32px 48px;
   overflow-y: auto;
-  background: linear-gradient(180deg, #0B0E14 0%, #080A0E 100%);
+  background: var(--dash-bg);
 }
 
 .dash-view-header {
@@ -374,12 +426,12 @@ a {
   margin: 0 0 4px 0;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #FFFFFF;
+  color: var(--dash-text);
 }
 
 .dash-subtitle {
   margin: 0;
-  color: #8B93A7;
+  color: var(--dash-text-muted);
   font-size: 0.9rem;
 }
 
@@ -390,20 +442,20 @@ a {
 }
 
 .dash-card {
-  background-color: rgba(18, 22, 31, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: var(--dash-card);
+  border: 1px solid var(--dash-border);
   border-radius: 12px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
-  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .dash-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(79, 209, 197, 0.3);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .dash-card-header {
@@ -417,20 +469,20 @@ a {
   margin: 0 0 4px 0;
   font-size: 1.1rem;
   font-weight: 500;
-  color: #E4E7EC;
+  color: var(--dash-text);
 }
 
 .dash-card-slug {
   font-family: monospace;
   font-size: 0.8rem;
-  color: #4FD1C5;
-  background: rgba(79, 209, 197, 0.1);
+  color: var(--dash-primary);
+  background: rgba(37, 99, 235, 0.1);
   padding: 2px 6px;
   border-radius: 4px;
 }
 
 .dash-card-desc {
-  color: #8B93A7;
+  color: var(--dash-text-muted);
   font-size: 0.85rem;
   margin: 0 0 16px 0;
   flex: 1;
@@ -439,7 +491,7 @@ a {
 .dash-card-footer {
   display: flex;
   align-items: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--dash-border);
   padding-top: 12px;
   margin-top: auto;
 }
@@ -450,9 +502,9 @@ a {
   font-size: 0.75rem;
   padding: 4px 8px;
   border-radius: 20px;
-  background: rgba(126, 231, 135, 0.1);
-  color: #7EE787;
-  border: 1px solid rgba(126, 231, 135, 0.2);
+  background: rgba(16, 185, 129, 0.1);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .dash-empty {
@@ -461,23 +513,24 @@ a {
   align-items: center;
   justify-content: center;
   padding: 64px;
-  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border: 1px dashed var(--dash-border);
   border-radius: 12px;
   text-align: center;
+  background: var(--dash-card);
 }
 
 .dash-empty-icon {
-  color: #2B7A72;
+  color: var(--dash-primary);
   margin-bottom: 16px;
 }
 
 .dash-empty p {
-  color: #E4E7EC;
+  color: var(--dash-text);
   font-size: 1.1rem;
   margin: 0 0 4px 0;
 }
 
 .dash-empty-sub {
-  color: #8B93A7;
+  color: var(--dash-text-muted);
   font-size: 0.9rem;
 }

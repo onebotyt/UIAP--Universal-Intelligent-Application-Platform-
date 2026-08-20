@@ -10,8 +10,16 @@ async function migrate() {
         t.string('email').unique().notNullable();
         t.string('password_hash').notNullable();
         t.string('display_name');
+        t.string('avatar_url');
         t.timestamp('created_at').defaultTo(db.fn.now());
       });
+    } else {
+      const hasAvatar = await db.schema.hasColumn('admin_users', 'avatar_url');
+      if (!hasAvatar) {
+        await db.schema.alterTable('admin_users', (t) => {
+          t.string('avatar_url');
+        });
+      }
     }
 
     const hasOrgOwners = await db.schema.hasTable('org_owners');
