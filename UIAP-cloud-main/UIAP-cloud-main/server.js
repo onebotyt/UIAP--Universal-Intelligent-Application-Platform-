@@ -29,9 +29,19 @@ app.use('/edge/v1', edgeRoutes);
 const path = require('path');
 
 app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api') || req.path.startsWith('/dashboard') || req.path.startsWith('/edge')) {
+  const apiPrefixes = [
+    '/api/',
+    '/dashboard/auth',
+    '/dashboard/modules',
+    '/dashboard/organizations',
+    '/dashboard/transactions',
+    '/edge/v1'
+  ];
+  
+  if (apiPrefixes.some(prefix => req.path.startsWith(prefix))) {
     return next();
   }
+  
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
