@@ -26,6 +26,15 @@ app.use('/dashboard/organizations', organizationsRoutes);
 app.use('/dashboard/transactions', transactionsRoutes);
 app.use('/edge/v1', edgeRoutes);
 
+const path = require('path');
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/dashboard') || req.path.startsWith('/edge')) {
+    return next();
+  }
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
