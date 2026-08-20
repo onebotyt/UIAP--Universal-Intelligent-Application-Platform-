@@ -21,7 +21,7 @@
     "directories": {
       "output": "release"
     },
-    "win": {
+    "npmRebuild": false, "win": {
       "target": "nsis"
     }
   },
