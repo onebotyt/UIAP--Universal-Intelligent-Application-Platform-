@@ -31,7 +31,7 @@ export function Login() {
       localStorage.setItem('uiap_user', JSON.stringify(data.user));
       
       if (data.user.role === 'admin') {
-        window.location.href = '/dashboard.html'; // Go to Legacy Developer Dashboard
+        navigate('/dashboard'); // Go to new React Developer Dashboard
       } else {
         if (data.user.organization?.status === 'pending_setup') {
           navigate('/setup');
