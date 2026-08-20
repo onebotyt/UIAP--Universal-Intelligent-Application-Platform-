@@ -11,7 +11,7 @@
   },
   "build": {
     "appId": "com.uiap.edge",
-    "productName": "UIAP Edge Server",
+    "productName": "UIAP Edge Application", "artifactName": "UIAP-Edge-v0.1.0.exe",
     "files": [
       "dist/**/*",
       "../edge-api/dist/**/*",
