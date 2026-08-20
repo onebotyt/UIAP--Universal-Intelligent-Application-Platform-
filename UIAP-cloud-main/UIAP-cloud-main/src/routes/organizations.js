@@ -1,6 +1,7 @@
 const express = require('express');
 const { z } = require('zod');
-const pool = require('../db/pool');
+const { randomUUID } = require('crypto');
+const db = require('../db/pool');
 const requireAuth = require('../middleware/requireAuth');
 const { logAction } = require('../db/audit');
 
@@ -18,12 +19,14 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Invalid request body', details: parsed.error.flatten() });
   }
 
-  const result = await pool.query(
-    'INSERT INTO organizations (name, plan) VALUES ($1, $2) RETURNING *',
-    [parsed.data.name, parsed.data.plan]
-  );
+  const orgId = randomUUID();
+  await db('organizations').insert({
+    id: orgId,
+    name: parsed.data.name,
+    plan: parsed.data.plan
+  });
   
-  const org = result.rows[0];
+  const org = await db('organizations').where({ id: orgId }).first();
 
   // If the plan requires cloud hosting, trigger provisioning webhook
   if (org.plan === 'cloud' || org.plan === 'hybrid') {
@@ -47,30 +50,27 @@ router.post('/', async (req, res) => {
 
 // GET /dashboard/organizations
 router.get('/', async (req, res) => {
-  const result = await pool.query('SELECT * FROM organizations ORDER BY created_at DESC');
-  res.json(result.rows);
+  const orgs = await db('organizations').orderBy('created_at', 'desc');
+  res.json(orgs);
 });
 
 // GET /dashboard/organizations/:id
 router.get('/:id', async (req, res) => {
-  const org = await pool.query('SELECT * FROM organizations WHERE id = $1', [req.params.id]);
-  if (org.rows.length === 0) {
+  const org = await db('organizations').where('id', req.params.id).first();
+  if (!org) {
     return res.status(404).json({ error: 'Organization not found' });
   }
 
-  const licenses = await pool.query(
-    `SELECT l.*, m.slug AS module_slug, m.display_name AS module_name
-     FROM licenses l JOIN modules m ON m.id = l.module_id
-     WHERE l.organization_id = $1`,
-    [req.params.id]
-  );
+  const licenses = await db('licenses as l')
+    .join('modules as m', 'm.id', 'l.module_id')
+    .select('l.*', 'm.slug as module_slug', 'm.display_name as module_name')
+    .where('l.organization_id', req.params.id);
 
-  const installations = await pool.query(
-    'SELECT id, name, core_version, last_seen_at, created_at FROM installations WHERE organization_id = $1',
-    [req.params.id]
-  );
+  const installations = await db('installations')
+    .select('id', 'name', 'core_version', 'last_seen_at', 'created_at')
+    .where('organization_id', req.params.id);
 
-  res.json({ ...org.rows[0], licenses: licenses.rows, installations: installations.rows });
+  res.json({ ...org, licenses, installations });
 });
 
 // POST /dashboard/organizations/:id/licenses
@@ -89,17 +89,26 @@ router.post('/:id/licenses', async (req, res) => {
   const { module_id, plan, expires_at } = parsed.data;
   const organizationId = req.params.id;
 
-  const result = await pool.query(
-    `INSERT INTO licenses (organization_id, module_id, plan, status, expires_at)
-     VALUES ($1, $2, $3, 'active', $4)
-     ON CONFLICT (organization_id, module_id)
-     DO UPDATE SET status = 'active', plan = EXCLUDED.plan, expires_at = EXCLUDED.expires_at
-     RETURNING *`,
-    [organizationId, module_id, plan, expires_at || null]
-  );
+  await db('licenses')
+    .insert({
+      id: randomUUID(),
+      organization_id: organizationId,
+      module_id,
+      plan,
+      status: 'active',
+      expires_at: expires_at || null
+    })
+    .onConflict(['organization_id', 'module_id'])
+    .merge({
+      status: 'active',
+      plan,
+      expires_at: expires_at || null
+    });
+
+  const license = await db('licenses').where({ organization_id: organizationId, module_id }).first();
 
   await logAction(req.admin.email, 'license.grant', `${organizationId}/${module_id}`);
-  res.status(201).json(result.rows[0]);
+  res.status(201).json(license);
 });
 
 // POST /dashboard/organizations/:id/licenses/:licenseId/revoke
@@ -107,18 +116,17 @@ router.post('/:id/licenses', async (req, res) => {
 // the org's Edge install will no longer be entitled to pull new versions
 // of that module (enforced by the /edge/v1/entitlements endpoint in phase 2).
 router.post('/:id/licenses/:licenseId/revoke', async (req, res) => {
-  const result = await pool.query(
-    `UPDATE licenses SET status = 'revoked'
-     WHERE id = $1 AND organization_id = $2
-     RETURNING *`,
-    [req.params.licenseId, req.params.id]
-  );
-  if (result.rows.length === 0) {
+  const updated = await db('licenses')
+    .update({ status: 'revoked' })
+    .where({ id: req.params.licenseId, organization_id: req.params.id });
+    
+  if (updated === 0) {
     return res.status(404).json({ error: 'License not found for this organization' });
   }
 
+  const license = await db('licenses').where('id', req.params.licenseId).first();
   await logAction(req.admin.email, 'license.revoke', req.params.licenseId);
-  res.json(result.rows[0]);
+  res.json(license);
 });
 
 // POST /dashboard/organizations/:id/beta
@@ -129,16 +137,18 @@ router.post('/:id/beta', async (req, res) => {
     return res.status(400).json({ error: 'Invalid request body', details: parsed.error.flatten() });
   }
 
-  const result = await pool.query(
-    `INSERT INTO beta_access (organization_id, module_id)
-     VALUES ($1, $2)
-     ON CONFLICT (organization_id, module_id) DO NOTHING
-     RETURNING *`,
-    [req.params.id, parsed.data.module_id]
-  );
+  await db('beta_access')
+    .insert({ 
+      id: randomUUID(), 
+      organization_id: req.params.id, 
+      module_id: parsed.data.module_id 
+    })
+    .onConflict(['organization_id', 'module_id'])
+    .ignore();
 
+  const beta = await db('beta_access').where({ organization_id: req.params.id, module_id: parsed.data.module_id }).first();
   await logAction(req.admin.email, 'beta.grant', `${req.params.id}/${parsed.data.module_id}`);
-  res.status(201).json(result.rows[0] || { message: 'Beta access already granted' });
+  res.status(201).json(beta || { message: 'Beta access already granted' });
 });
 
 module.exports = router;

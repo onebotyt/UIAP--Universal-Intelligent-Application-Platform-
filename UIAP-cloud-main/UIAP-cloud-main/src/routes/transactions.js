@@ -1,6 +1,7 @@
 const express = require('express');
 const { z } = require('zod');
-const pool = require('../db/pool');
+const { randomUUID } = require('crypto');
+const db = require('../db/pool');
 const requireAuth = require('../middleware/requireAuth');
 const { logAction } = require('../db/audit');
 
@@ -10,13 +11,11 @@ router.use(requireAuth);
 // GET /dashboard/transactions
 router.get('/', async (req, res) => {
   try {
-    const result = await pool.query(`
-      SELECT t.*, o.name as org_name
-      FROM transactions t
-      JOIN organizations o ON t.organization_id = o.id
-      ORDER BY t.created_at DESC
-    `);
-    res.json(result.rows);
+    const transactions = await db('transactions as t')
+      .join('organizations as o', 't.organization_id', 'o.id')
+      .select('t.*', 'o.name as org_name')
+      .orderBy('t.created_at', 'desc');
+    res.json(transactions);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch transactions' });
   }
@@ -26,34 +25,35 @@ router.get('/', async (req, res) => {
 router.post('/:id/approve', async (req, res) => {
   try {
     // 1. Mark transaction as approved
-    const txResult = await pool.query(
-      `UPDATE transactions SET status = 'approved' WHERE id = $1 RETURNING *`,
-      [req.params.id]
-    );
+    const updatedRows = await db('transactions')
+      .update({ status: 'approved' })
+      .where({ id: req.params.id });
 
-    if (txResult.rows.length === 0) {
+    if (updatedRows === 0) {
       return res.status(404).json({ error: 'Transaction not found' });
     }
 
-    const tx = txResult.rows[0];
+    const tx = await db('transactions').where('id', req.params.id).first();
 
     // 2. Based on type, activate something
     if (tx.type === 'setup') {
       // Activate the organization
-      await pool.query(
-        `UPDATE organizations SET status = 'active' WHERE id = $1`,
-        [tx.organization_id]
-      );
+      await db('organizations')
+        .update({ status: 'active' })
+        .where('id', tx.organization_id);
       await logAction(req.admin.email, 'organization.activate', tx.organization_id);
     } else if (tx.type === 'module') {
       // Grant license to module
-      await pool.query(
-        `INSERT INTO licenses (organization_id, module_id, plan, status)
-         VALUES ($1, $2, 'standard', 'active')
-         ON CONFLICT (organization_id, module_id)
-         DO UPDATE SET status = 'active'`,
-        [tx.organization_id, tx.target_id]
-      );
+      await db('licenses')
+        .insert({
+          id: randomUUID(),
+          organization_id: tx.organization_id,
+          module_id: tx.target_id,
+          plan: 'standard',
+          status: 'active'
+        })
+        .onConflict(['organization_id', 'module_id'])
+        .merge({ status: 'active' });
       await logAction(req.admin.email, 'license.grant', `${tx.organization_id}/${tx.target_id}`);
     }
 
@@ -68,17 +68,18 @@ router.post('/:id/approve', async (req, res) => {
 // POST /dashboard/transactions/:id/reject
 router.post('/:id/reject', async (req, res) => {
   try {
-    const txResult = await pool.query(
-      `UPDATE transactions SET status = 'rejected' WHERE id = $1 RETURNING *`,
-      [req.params.id]
-    );
+    const updatedRows = await db('transactions')
+      .update({ status: 'rejected' })
+      .where({ id: req.params.id });
 
-    if (txResult.rows.length === 0) {
+    if (updatedRows === 0) {
       return res.status(404).json({ error: 'Transaction not found' });
     }
 
+    const tx = await db('transactions').where('id', req.params.id).first();
+
     await logAction(req.admin.email, 'transaction.reject', req.params.id);
-    res.json({ status: 'ok', transaction: txResult.rows[0] });
+    res.json({ status: 'ok', transaction: tx });
   } catch (err) {
     res.status(500).json({ error: 'Failed to reject transaction' });
   }

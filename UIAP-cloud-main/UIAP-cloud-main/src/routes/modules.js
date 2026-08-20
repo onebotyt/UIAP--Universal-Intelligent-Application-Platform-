@@ -1,6 +1,7 @@
 const express = require('express');
 const { z } = require('zod');
-const pool = require('../db/pool');
+const { randomUUID } = require('crypto');
+const db = require('../db/pool');
 const requireAuth = require('../middleware/requireAuth');
 const { logAction } = require('../db/audit');
 const versionsRouter = require('./versions');
@@ -28,16 +29,25 @@ router.post('/', async (req, res) => {
   const { slug, display_name, description } = parsed.data;
 
   try {
-    const result = await pool.query(
-      `INSERT INTO modules (slug, display_name, description, owner_admin_id)
-       VALUES ($1, $2, $3, $4)
-       RETURNING id, slug, display_name, description, created_at`,
-      [slug, display_name, description || null, req.admin.id]
-    );
+    const moduleId = randomUUID();
+    await db('modules').insert({
+      id: moduleId,
+      slug,
+      display_name,
+      description: description || null,
+      owner_admin_id: req.admin.id
+    });
+    
+    const newModule = await db('modules')
+      .select('id', 'slug', 'display_name', 'description', 'created_at')
+      .where({ id: moduleId })
+      .first();
+
     await logAction(req.admin.email, 'module.create', slug);
-    res.status(201).json(result.rows[0]);
+    res.status(201).json(newModule);
   } catch (err) {
-    if (err.code === '23505') { // unique_violation
+    // 23505 is PostgreSQL, ER_DUP_ENTRY (1062) is MySQL
+    if (err.code === '23505' || err.errno === 1062) {
       return res.status(409).json({ error: `A module with slug "${slug}" already exists` });
     }
     console.error('[modules] create failed:', err);
@@ -47,24 +57,39 @@ router.post('/', async (req, res) => {
 
 // GET /dashboard/modules
 router.get('/', async (req, res) => {
-  const result = await pool.query(
-    `SELECT m.id, m.slug, m.display_name, m.description, m.created_at,
-            COUNT(mv.id)::int AS version_count
-     FROM modules m
-     LEFT JOIN module_versions mv ON mv.module_id = m.id
-     GROUP BY m.id
-     ORDER BY m.created_at DESC`
-  );
-  res.json(result.rows);
+  try {
+    const result = await db('modules as m')
+      .leftJoin('module_versions as mv', 'mv.module_id', 'm.id')
+      .select('m.id', 'm.slug', 'm.display_name', 'm.description', 'm.created_at')
+      .count('mv.id as version_count')
+      .groupBy('m.id')
+      .orderBy('m.created_at', 'desc');
+      
+    // Convert version_count to number if it's returned as string (pg behavior)
+    const formatted = result.map(row => ({
+      ...row,
+      version_count: parseInt(row.version_count, 10)
+    }));
+    
+    res.json(formatted);
+  } catch (err) {
+    console.error('[modules] fetch failed:', err);
+    res.status(500).json({ error: 'Failed to fetch modules' });
+  }
 });
 
 // GET /dashboard/modules/:id
 router.get('/:id', async (req, res) => {
-  const result = await pool.query('SELECT * FROM modules WHERE id = $1', [req.params.id]);
-  if (result.rows.length === 0) {
-    return res.status(404).json({ error: 'Module not found' });
+  try {
+    const mod = await db('modules').where('id', req.params.id).first();
+    if (!mod) {
+      return res.status(404).json({ error: 'Module not found' });
+    }
+    res.json(mod);
+  } catch (err) {
+    console.error('[modules] fetch single failed:', err);
+    res.status(500).json({ error: 'Failed to fetch module' });
   }
-  res.json(result.rows[0]);
 });
 
 // PATCH /dashboard/modules/:id  (edit display name / description only — slug is immutable)
@@ -83,21 +108,20 @@ router.patch('/:id', async (req, res) => {
     return res.status(400).json({ error: 'No fields to update' });
   }
 
-  const setClauses = Object.keys(fields).map((key, i) => `${key} = $${i + 1}`);
-  const values = Object.values(fields);
-  values.push(req.params.id);
-
-  const result = await pool.query(
-    `UPDATE modules SET ${setClauses.join(', ')} WHERE id = $${values.length} RETURNING *`,
-    values
-  );
-
-  if (result.rows.length === 0) {
-    return res.status(404).json({ error: 'Module not found' });
+  try {
+    const updatedRows = await db('modules').update(fields).where('id', req.params.id);
+    
+    if (updatedRows === 0) {
+      return res.status(404).json({ error: 'Module not found' });
+    }
+    
+    const updatedModule = await db('modules').where('id', req.params.id).first();
+    await logAction(req.admin.email, 'module.update', updatedModule.slug);
+    res.json(updatedModule);
+  } catch (err) {
+    console.error('[modules] update failed:', err);
+    res.status(500).json({ error: 'Failed to update module' });
   }
-
-  await logAction(req.admin.email, 'module.update', result.rows[0].slug);
-  res.json(result.rows[0]);
 });
 
 module.exports = router;

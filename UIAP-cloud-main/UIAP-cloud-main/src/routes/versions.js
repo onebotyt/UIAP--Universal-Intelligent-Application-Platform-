@@ -1,7 +1,8 @@
 const express = require('express');
 const { z } = require('zod');
 const multer = require('multer');
-const pool = require('../db/pool');
+const { randomUUID } = require('crypto');
+const db = require('../db/pool');
 const requireAuth = require('../middleware/requireAuth');
 const { logAction } = require('../db/audit');
 const { signPackage } = require('../signing');
@@ -31,22 +32,28 @@ router.post('/', async (req, res) => {
   const { version, changelog, core_compat_range } = parsed.data;
   const { moduleId } = req.params;
 
-  const moduleResult = await pool.query('SELECT id, slug FROM modules WHERE id = $1', [moduleId]);
-  if (moduleResult.rows.length === 0) {
+  const moduleResult = await db('modules').select('id', 'slug').where('id', moduleId).first();
+  if (!moduleResult) {
     return res.status(404).json({ error: 'Module not found' });
   }
 
   try {
-    const result = await pool.query(
-      `INSERT INTO module_versions (module_id, version, changelog, core_compat_range, status)
-       VALUES ($1, $2, $3, $4, 'draft')
-       RETURNING *`,
-      [moduleId, version, changelog || null, core_compat_range || null]
-    );
-    await logAction(req.admin.email, 'version.create', `${moduleResult.rows[0].slug}@${version}`);
-    res.status(201).json(result.rows[0]);
+    const versionId = randomUUID();
+    await db('module_versions').insert({
+      id: versionId,
+      module_id: moduleId,
+      version,
+      changelog: changelog || null,
+      core_compat_range: core_compat_range || null,
+      status: 'draft'
+    });
+    
+    const newVersion = await db('module_versions').where({ id: versionId }).first();
+    await logAction(req.admin.email, 'version.create', `${moduleResult.slug}@${version}`);
+    res.status(201).json(newVersion);
   } catch (err) {
-    if (err.code === '23505') {
+    // 23505 is pg, 1062 is mysql
+    if (err.code === '23505' || err.errno === 1062) {
       return res.status(409).json({ error: `Version ${version} already exists for this module` });
     }
     console.error('[versions] create failed:', err);
@@ -56,11 +63,11 @@ router.post('/', async (req, res) => {
 
 // GET /dashboard/modules/:moduleId/versions
 router.get('/', async (req, res) => {
-  const result = await pool.query(
-    'SELECT id, module_id, version, changelog, core_compat_range, package_hash, signature, status, created_at FROM module_versions WHERE module_id = $1 ORDER BY created_at DESC',
-    [req.params.moduleId]
-  );
-  res.json(result.rows);
+  const versions = await db('module_versions')
+    .select('id', 'module_id', 'version', 'changelog', 'core_compat_range', 'package_hash', 'signature', 'status', 'created_at')
+    .where('module_id', req.params.moduleId)
+    .orderBy('created_at', 'desc');
+  res.json(versions);
 });
 
 const fs = require('fs/promises');
@@ -75,8 +82,8 @@ router.post('/:versionId/package', upload.single('package'), async (req, res) =>
     return res.status(400).json({ error: 'No package file provided' });
   }
 
-  const existing = await pool.query('SELECT * FROM module_versions WHERE id = $1', [req.params.versionId]);
-  if (existing.rows.length === 0) {
+  const existing = await db('module_versions').where('id', req.params.versionId).first();
+  if (!existing) {
     return res.status(404).json({ error: 'Version not found' });
   }
 
@@ -91,14 +98,17 @@ router.post('/:versionId/package', upload.single('package'), async (req, res) =>
     const packagePath = path.join(PACKAGES_DIR, `${req.params.versionId}.zip`);
     await fs.writeFile(packagePath, buffer);
 
-    const result = await pool.query(
-      `UPDATE module_versions 
-       SET package_hash = $1, signature = $2 
-       WHERE id = $3 RETURNING id, version, package_hash, signature`,
-      [hash, signature, req.params.versionId]
-    );
+    await db('module_versions')
+      .update({ package_hash: hash, signature: signature })
+      .where('id', req.params.versionId);
+      
+    const updated = await db('module_versions')
+      .select('id', 'version', 'package_hash', 'signature')
+      .where('id', req.params.versionId)
+      .first();
+
     await logAction(req.admin.email, 'version.package.upload', req.params.versionId);
-    res.json({ status: 'ok', data: result.rows[0] });
+    res.json({ status: 'ok', data: updated });
   } catch (err) {
     console.error('[versions] package upload failed:', err);
     res.status(500).json({ error: 'Failed to save package' });
@@ -107,35 +117,31 @@ router.post('/:versionId/package', upload.single('package'), async (req, res) =>
 
 // POST /dashboard/modules/:moduleId/versions/:versionId/publish
 router.post('/:versionId/publish', async (req, res) => {
-  const existing = await pool.query('SELECT package_hash FROM module_versions WHERE id = $1', [req.params.versionId]);
-  if (existing.rows.length === 0) {
+  const existing = await db('module_versions').select('package_hash').where('id', req.params.versionId).first();
+  if (!existing) {
     return res.status(404).json({ error: 'Version not found' });
   }
 
-  if (!existing.rows[0].package_hash) {
+  if (!existing.package_hash) {
     return res.status(400).json({ error: 'Cannot publish a version with no uploaded package' });
   }
 
-  const result = await pool.query(
-    `UPDATE module_versions SET status = 'published' WHERE id = $1 RETURNING id, version, status`,
-    [req.params.versionId]
-  );
+  await db('module_versions').update({ status: 'published' }).where('id', req.params.versionId);
+  const updated = await db('module_versions').select('id', 'version', 'status').where('id', req.params.versionId).first();
 
   await logAction(req.admin.email, 'version.publish', req.params.versionId);
-  res.json(result.rows[0]);
+  res.json(updated);
 });
 
 // POST /dashboard/modules/:moduleId/versions/:versionId/deprecate
 router.post('/:versionId/deprecate', async (req, res) => {
-  const result = await pool.query(
-    `UPDATE module_versions SET status = 'deprecated' WHERE id = $1 RETURNING id, version, status`,
-    [req.params.versionId]
-  );
-  if (result.rows.length === 0) {
+  const updatedRows = await db('module_versions').update({ status: 'deprecated' }).where('id', req.params.versionId);
+  if (updatedRows === 0) {
     return res.status(404).json({ error: 'Version not found' });
   }
+  const updated = await db('module_versions').select('id', 'version', 'status').where('id', req.params.versionId).first();
   await logAction(req.admin.email, 'version.deprecate', req.params.versionId);
-  res.json(result.rows[0]);
+  res.json(updated);
 });
 
 module.exports = router;
