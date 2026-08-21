@@ -68,17 +68,21 @@ async function bootstrap() {
       isReady = true;
 
       // 7. Start background services
-      import('./services/cloud-sync.js').then(({ startCloudSync }) => {
-        startCloudSync();
-      }).catch(err => {
-        console.error('[UIAP Edge API] Failed to start cloud sync service:', err);
-      });
+      import('./services/cloud-sync.js')
+        .then(({ startCloudSync }) => {
+          startCloudSync();
+        })
+        .catch((err) => {
+          console.error('[UIAP Edge API] Failed to start cloud sync service:', err);
+        });
 
-      import('./services/backup.js').then(({ backupService }) => {
-        backupService.start();
-      }).catch(err => {
-        console.error('[UIAP Edge API] Failed to start backup service:', err);
-      });
+      import('./services/backup.js')
+        .then(({ backupService }) => {
+          backupService.start();
+        })
+        .catch((err) => {
+          console.error('[UIAP Edge API] Failed to start backup service:', err);
+        });
     });
   } catch (error: unknown) {
     if (error instanceof ConfigurationError) {

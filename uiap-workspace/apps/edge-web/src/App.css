@@ -14,13 +14,14 @@
   width: var(--uiap-sidebar-width);
   min-width: var(--uiap-sidebar-width);
   height: 100vh;
-  background: var(--uiap-surface);
-  border-right: 1px solid var(--uiap-border);
+  background: var(--uiap-sidebar-bg);
+  border-right: none;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   transition: transform var(--uiap-transition);
   z-index: 200;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .uiap-sidebar-brand {
@@ -28,7 +29,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1.25rem 1.25rem 1rem;
-  border-bottom: 1px solid var(--uiap-border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .uiap-sidebar-logo {
@@ -50,15 +51,12 @@
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  background: linear-gradient(135deg, var(--uiap-text), var(--uiap-accent-light));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff;
 }
 
 .uiap-sidebar-brand-text span {
   font-size: 0.65rem;
-  color: var(--uiap-text-muted);
+  color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.02em;
 }
 
@@ -83,7 +81,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--uiap-text-muted);
+  color: rgba(255, 255, 255, 0.6);
   padding: 0.5rem 0.75rem 0.25rem;
 }
 
@@ -94,7 +92,7 @@
   padding: 0.55rem 0.75rem;
   border-radius: var(--uiap-radius-sm);
   font-size: 0.85rem;
-  color: var(--uiap-text-muted);
+  color: var(--uiap-sidebar-text);
   text-decoration: none;
   transition: all var(--uiap-transition);
   border: none;
@@ -105,13 +103,13 @@
 }
 
 .uiap-nav-link:hover {
-  color: var(--uiap-text);
-  background: rgba(108, 92, 231, 0.08);
+  color: var(--uiap-sidebar-text-hover);
+  background: var(--uiap-sidebar-active-bg);
 }
 
 .uiap-nav-link.active {
-  color: var(--uiap-accent-light);
-  background: rgba(108, 92, 231, 0.15);
+  color: var(--uiap-sidebar-text-hover);
+  background: var(--uiap-sidebar-active-bg);
   font-weight: 500;
 }
 
@@ -241,12 +239,13 @@
   border-radius: var(--uiap-radius);
   padding: 1.25rem;
   transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .uiap-stat-card:hover {
-  border-color: var(--uiap-accent);
+  border-color: var(--uiap-accent-light);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px var(--uiap-accent-glow);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .uiap-stat-icon {
@@ -275,6 +274,7 @@
   border: 1px solid var(--uiap-border);
   border-radius: var(--uiap-radius);
   padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .uiap-view-header {

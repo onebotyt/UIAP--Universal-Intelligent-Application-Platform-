@@ -45,7 +45,11 @@ export const coreMigrations = [
       await knex.schema.createTable('core_role_permissions', (table) => {
         table.uuid('id').primary();
         table.uuid('role_id').references('id').inTable('core_roles').onDelete('CASCADE');
-        table.uuid('permission_id').references('id').inTable('core_permissions').onDelete('CASCADE');
+        table
+          .uuid('permission_id')
+          .references('id')
+          .inTable('core_permissions')
+          .onDelete('CASCADE');
         table.unique(['role_id', 'permission_id']);
       });
 
@@ -133,6 +137,6 @@ export const coreMigrations = [
       await knex.schema.dropTableIfExists('core_user_roles');
       await knex.schema.dropTableIfExists('core_roles');
       await knex.schema.dropTableIfExists('core_users');
-    }
-  }
+    },
+  },
 ];

@@ -13,7 +13,7 @@ export async function startPostgres(): Promise<string> {
   // In a real production build using embedded-postgres, we would unpack the binaries.
   // For this mock, we will just pretend we are managing PostgreSQL.
   // We'll return the DATABASE_URL so the API can connect to it.
-  
+
   // Real implementation would look like:
   /*
   const embedded = require('embedded-postgres');

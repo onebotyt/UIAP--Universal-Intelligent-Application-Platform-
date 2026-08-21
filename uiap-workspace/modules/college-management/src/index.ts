@@ -36,7 +36,7 @@ export default class CollegeManagementModule implements UIAPModule {
         res.status(500).json({ success: false, error: err.message });
       }
     });
-    
+
     router.delete('/departments/:id', requireManage, async (req, res) => {
       try {
         const db = context.db.getBuilder();
@@ -115,7 +115,7 @@ export default class CollegeManagementModule implements UIAPModule {
         res.status(500).json({ success: false, error: err.message });
       }
     });
-    
+
     router.delete('/teachers/:id', requireManage, async (req, res) => {
       try {
         const db = context.db.getBuilder();
@@ -155,7 +155,7 @@ export default class CollegeManagementModule implements UIAPModule {
         res.status(500).json({ success: false, error: err.message });
       }
     });
-    
+
     router.delete('/students/:id', requireManage, async (req, res) => {
       try {
         const db = context.db.getBuilder();

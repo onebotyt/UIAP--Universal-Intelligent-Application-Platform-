@@ -5,13 +5,13 @@ import * as path from 'path';
 import * as fs from 'fs/promises';
 import { existsSync } from 'fs';
 import { spawn } from 'child_process';
-import type { 
-  ModuleContext, 
-  ModuleManifest, 
+import type {
+  ModuleContext,
+  ModuleManifest,
   UIAPModule,
   AuthenticatedUser,
   UIAPEvent,
-  EventSubscriber
+  EventSubscriber,
 } from '@uiap/module-sdk';
 
 async function bootstrap() {
@@ -37,8 +37,8 @@ async function bootstrap() {
   if (existsSync(migrationsDir)) {
     console.log(`[Dev Harness] Running migrations...`);
     const files = await fs.readdir(migrationsDir);
-    const sqlFiles = files.filter(f => f.endsWith('.sql')).sort();
-    
+    const sqlFiles = files.filter((f) => f.endsWith('.sql')).sort();
+
     for (const file of sqlFiles) {
       console.log(`[Dev Harness] Executing ${file}...`);
       const sql = await fs.readFile(path.join(migrationsDir, file), 'utf8');
@@ -53,19 +53,21 @@ async function bootstrap() {
 
   // 4. Create Mock Context
   const subscribers: Record<string, EventSubscriber<any>[]> = {};
-  
+
   const mockContext: ModuleContext = {
     module: { id: manifest.id, version: manifest.version, manifest },
     auth: {
       async getUserFromRequest() {
         return { id: 'dev-admin', username: 'Dev Admin', permissions: [] };
-      }
+      },
     },
     rbac: {
       require() {
         return (req: any, res: any, next: any) => next();
       },
-      async check() { return true; }
+      async check() {
+        return true;
+      },
     },
     db: {
       schema: 'public',
@@ -74,7 +76,7 @@ async function bootstrap() {
       },
       async transaction(callback: any) {
         return db.transaction(callback);
-      }
+      },
     },
     events: {
       publish: async (event: any) => {
@@ -83,15 +85,20 @@ async function bootstrap() {
         for (const handler of handlers) {
           handler({ ...event, source: manifest.id });
         }
-        return { success: true, receivers: handlers.length, delivered: handlers.length, errors: [] };
+        return {
+          success: true,
+          receivers: handlers.length,
+          delivered: handlers.length,
+          errors: [],
+        };
       },
       subscribe: (type: string, handler: any) => {
         if (!subscribers[type]) subscribers[type] = [];
         subscribers[type].push(handler);
         return () => {
-          subscribers[type] = subscribers[type].filter(h => h !== handler);
+          subscribers[type] = subscribers[type].filter((h) => h !== handler);
         };
-      }
+      },
     },
     logger: {
       info: (...args) => console.log(`[${manifest.id}]`, ...args),
@@ -101,7 +108,9 @@ async function bootstrap() {
     },
     config: {
       coreVersion: '0.1.0-dev',
-      async get(key: string) { return undefined; }
+      async get(key: string) {
+        return undefined;
+      },
     },
     organization: { id: 'dev-org', name: 'Dev Organization' },
     deployment: { type: 'local' },
@@ -112,7 +121,7 @@ async function bootstrap() {
     subscribe: (type: string, handler: any) => {
       return () => {};
     },
-    registerApiRouter: () => {} // Overridden below
+    registerApiRouter: () => {}, // Overridden below
   };
 
   // 5. Express App
@@ -129,7 +138,7 @@ async function bootstrap() {
   const mainFile = (manifest as any).main || 'dist/index.js';
   const moduleIndexPath = path.join(cwd, mainFile);
   console.log(`[Dev Harness] Loading module from ${moduleIndexPath}`);
-  
+
   // Use a dynamic import
   let moduleImport: any;
   try {
@@ -144,7 +153,7 @@ async function bootstrap() {
     ModuleClass = ModuleClass.default;
   }
   const instance: UIAPModule = new ModuleClass();
-  
+
   console.log(`[Dev Harness] Activating module...`);
   await instance.activate(mockContext);
 
@@ -158,16 +167,16 @@ async function bootstrap() {
   if (existsSync(webSrcPath)) {
     console.log(`[Dev Harness] Starting Vite frontend...`);
     const vitePort = process.env.VITE_PORT || 3000;
-    
+
     // We need to pass the API port to Vite so it knows where to proxy, but normally Vite config handles it.
-    // For this project, Vite is configured to proxy to 3000, so we should actually listen on 3000, 
+    // For this project, Vite is configured to proxy to 3000, so we should actually listen on 3000,
     // or tell the user to adjust the port. But wait, if Vite is on 3000, and backend is on 3000, they conflict.
     // Let's spawn Vite on its default or provided port.
     const npmCmd = process.platform === 'win32' ? 'npm.cmd' : 'npm';
     const viteProcess = spawn(npmCmd, ['run', 'dev', '--', '--port', vitePort.toString()], {
       cwd: webSrcPath,
       stdio: 'inherit',
-      shell: true
+      shell: true,
     });
 
     viteProcess.on('error', (err) => {

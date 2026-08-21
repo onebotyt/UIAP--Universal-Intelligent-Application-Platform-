@@ -19,11 +19,11 @@ export class AuditLogger {
     try {
       const db = getDb();
       await db('core_audit_logs').insert({
-          user_id: options.userId || null,
-          action: options.action,
-          resource: options.resource || null,
-          ip_address: options.ipAddress || null,
-          details: options.details ? JSON.stringify(options.details) : null
+        user_id: options.userId || null,
+        action: options.action,
+        resource: options.resource || null,
+        ip_address: options.ipAddress || null,
+        details: options.details ? JSON.stringify(options.details) : null,
       });
     } catch (err) {
       console.error('[AuditLogger] Failed to write audit log:', err);

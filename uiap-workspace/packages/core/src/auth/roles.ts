@@ -11,7 +11,7 @@ export interface RoleRecord {
 
 export async function getRoles(): Promise<RoleRecord[]> {
   const db = getDb();
-  
+
   // To remain DB-agnostic, we avoid dialect-specific JSON_AGG functions
   const rolesData = await db('core_roles as r')
     .leftJoin('core_role_permissions as rp', 'r.id', 'rp.role_id')
@@ -19,7 +19,7 @@ export async function getRoles(): Promise<RoleRecord[]> {
     .orderBy('r.name');
 
   const roleMap = new Map<string, RoleRecord>();
-  
+
   for (const row of rolesData) {
     if (!roleMap.has(row.id)) {
       roleMap.set(row.id, {
@@ -27,7 +27,7 @@ export async function getRoles(): Promise<RoleRecord[]> {
         name: row.name,
         description: row.description,
         is_system: row.is_system,
-        permissions: []
+        permissions: [],
       });
     }
     if (row.permission_id) {
@@ -45,17 +45,17 @@ export async function createRole(
 ): Promise<RoleRecord> {
   const db = getDb();
   const id = crypto.randomUUID(); // Need to generate UUIDs in Node for agnostic insert
-  
+
   await db('core_roles').insert({
     id,
     name,
     description,
-    is_system: false
+    is_system: false,
   });
 
   const newRole = await db('core_roles').where({ id }).first();
   await logAuthAction('role.created', actorId, null, { role_id: id, name });
-  
+
   return newRole;
 }
 
@@ -65,15 +65,15 @@ export async function assignRolePermissions(
   actorId: string,
 ): Promise<void> {
   const db = getDb();
-  
+
   await db.transaction(async (trx) => {
     await trx('core_role_permissions').where({ role_id: roleId }).delete();
-    
+
     if (permissionIds.length > 0) {
-      const inserts = permissionIds.map(permId => ({
+      const inserts = permissionIds.map((permId) => ({
         id: crypto.randomUUID(),
         role_id: roleId,
-        permission_id: permId
+        permission_id: permId,
       }));
       await trx('core_role_permissions').insert(inserts);
     }

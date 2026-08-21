@@ -38,13 +38,16 @@ export class SyncQueue {
     const res = await this.pool.raw(
       `INSERT INTO core_sync_queue (module_id, table_name, operation, record_id, data)
        VALUES ($1, $2, $3, $4, $5) RETURNING id`,
-      [payload.moduleId, payload.table, payload.operation, payload.recordId, payload.data]
+      [payload.moduleId, payload.table, payload.operation, payload.recordId, payload.data],
     );
     return (res.rows ?? res)[0].id;
   }
 
   async getPending(limit: number = 100): Promise<SyncPayload[]> {
-    const res = await this.pool.raw('SELECT * FROM core_sync_queue WHERE status = $1 ORDER BY timestamp ASC LIMIT $2', ['PENDING', limit]);
+    const res = await this.pool.raw(
+      'SELECT * FROM core_sync_queue WHERE status = $1 ORDER BY timestamp ASC LIMIT $2',
+      ['PENDING', limit],
+    );
     return (res.rows ?? res).map((row: any) => ({
       id: row.id,
       moduleId: row.module_id,
@@ -53,7 +56,7 @@ export class SyncQueue {
       recordId: row.record_id,
       data: row.data,
       timestamp: row.timestamp,
-      status: row.status
+      status: row.status,
     }));
   }
 

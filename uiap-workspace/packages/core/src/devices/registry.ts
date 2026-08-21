@@ -52,7 +52,17 @@ export class DeviceRegistry {
   static async getDevice(id: string): Promise<DeviceRecord | null> {
     const db = getDb();
     const device = await db('core_device_registry')
-      .select('id', 'hardware_id', 'name', 'type', 'status', 'enabled', 'last_heartbeat_at', 'created_at', 'updated_at')
+      .select(
+        'id',
+        'hardware_id',
+        'name',
+        'type',
+        'status',
+        'enabled',
+        'last_heartbeat_at',
+        'created_at',
+        'updated_at',
+      )
       .where({ id })
       .first();
 
@@ -62,7 +72,17 @@ export class DeviceRegistry {
   static async getDeviceByHardwareId(hardwareId: string): Promise<DeviceRecord | null> {
     const db = getDb();
     const device = await db('core_device_registry')
-      .select('id', 'hardware_id', 'name', 'type', 'status', 'enabled', 'last_heartbeat_at', 'created_at', 'updated_at')
+      .select(
+        'id',
+        'hardware_id',
+        'name',
+        'type',
+        'status',
+        'enabled',
+        'last_heartbeat_at',
+        'created_at',
+        'updated_at',
+      )
       .where({ hardware_id: hardwareId })
       .first();
 
@@ -72,39 +92,43 @@ export class DeviceRegistry {
   static async listDevices(): Promise<DeviceRecord[]> {
     const db = getDb();
     return await db('core_device_registry')
-      .select('id', 'hardware_id', 'name', 'type', 'status', 'enabled', 'last_heartbeat_at', 'created_at', 'updated_at')
+      .select(
+        'id',
+        'hardware_id',
+        'name',
+        'type',
+        'status',
+        'enabled',
+        'last_heartbeat_at',
+        'created_at',
+        'updated_at',
+      )
       .orderBy('created_at', 'desc');
   }
 
   static async enableDevice(id: string): Promise<void> {
     const db = getDb();
-    await db('core_device_registry')
-      .where({ id })
-      .update({
-        enabled: true,
-        updated_at: db.fn.now()
-      });
+    await db('core_device_registry').where({ id }).update({
+      enabled: true,
+      updated_at: db.fn.now(),
+    });
   }
 
   static async disableDevice(id: string): Promise<void> {
     const db = getDb();
-    await db('core_device_registry')
-      .where({ id })
-      .update({
-        enabled: false,
-        status: 'DISABLED',
-        updated_at: db.fn.now()
-      });
+    await db('core_device_registry').where({ id }).update({
+      enabled: false,
+      status: 'DISABLED',
+      updated_at: db.fn.now(),
+    });
   }
 
   static async updateHeartbeat(id: string): Promise<void> {
     const db = getDb();
-    await db('core_device_registry')
-      .where({ id, enabled: true })
-      .update({
-        last_heartbeat_at: db.fn.now(),
-        status: 'ONLINE',
-        updated_at: db.fn.now()
-      });
+    await db('core_device_registry').where({ id, enabled: true }).update({
+      last_heartbeat_at: db.fn.now(),
+      status: 'ONLINE',
+      updated_at: db.fn.now(),
+    });
   }
 }

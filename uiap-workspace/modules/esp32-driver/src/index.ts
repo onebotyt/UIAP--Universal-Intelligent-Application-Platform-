@@ -15,12 +15,12 @@ export default {
     context.logger.info('Activating ESP32 Driver module...');
 
     const router = Router();
-    
+
     // Webhook for the ESP32 to push scan results
     router.post('/webhook/scan', async (req, res) => {
       // Typically there would be a device API key verification here
       const { device_id, slot_id, timestamp } = req.body;
-      
+
       if (!device_id || slot_id === undefined) {
         return res.status(400).json({ error: 'Missing device_id or slot_id' });
       }
@@ -33,8 +33,8 @@ export default {
           occurredAt: timestamp || new Date().toISOString(),
           payload: {
             device_id,
-            slot_id
-          }
+            slot_id,
+          },
         });
         res.json({ success: true, message: 'Scan processed' });
       } catch (err: any) {

@@ -4,7 +4,14 @@ import { tmpdir } from 'node:os';
 import { createWriteStream, readFileSync } from 'node:fs';
 import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
-import { CORE_VERSION, getPool, installModule, updateModule, disableModule, getModuleStatus } from '@uiap/core';
+import {
+  CORE_VERSION,
+  getPool,
+  installModule,
+  updateModule,
+  disableModule,
+  getModuleStatus,
+} from '@uiap/core';
 import { getConfig } from '../config.js';
 import { SyncEngine } from '@uiap/sync';
 
@@ -22,7 +29,7 @@ export class CloudSyncService {
 
   constructor(
     private readonly cloudUrl: string,
-    private readonly installKey: string
+    private readonly installKey: string,
   ) {}
 
   start(intervalMs = 5 * 60 * 1000) {
@@ -53,18 +60,18 @@ export class CloudSyncService {
       console.log('[CloudSync] Fetching entitlements from cloud...');
       const response = await fetch(`${this.cloudUrl}/edge/v1/entitlements`, {
         headers: {
-          'Authorization': `Bearer ${this.installKey}`,
-          'Accept': 'application/json'
-        }
+          Authorization: `Bearer ${this.installKey}`,
+          Accept: 'application/json',
+        },
       });
 
       if (!response.ok) {
         throw new Error(`Cloud API error: ${response.statusText}`);
       }
 
-      const data = await response.json() as { status: string, entitlements: Entitlement[] };
+      const data = (await response.json()) as { status: string; entitlements: Entitlement[] };
       const entitlements = data.entitlements;
-      
+
       await this.processEntitlements(entitlements);
       console.log(`[CloudSync] Sync complete. Processed ${entitlements.length} entitlements.`);
     } catch (error) {
@@ -77,14 +84,16 @@ export class CloudSyncService {
   private async processEntitlements(entitlements: Entitlement[]) {
     // We would cache these in the local DB for offline checks
     const pool = getPool();
-    await pool.raw('CREATE TABLE IF NOT EXISTS cloud_entitlements (slug TEXT PRIMARY KEY, version TEXT, status TEXT)');
-    
+    await pool.raw(
+      'CREATE TABLE IF NOT EXISTS cloud_entitlements (slug TEXT PRIMARY KEY, version TEXT, status TEXT)',
+    );
+
     // Process each entitlement
     for (const ent of entitlements) {
       // Upsert local cache
       await pool.raw(
         'INSERT INTO cloud_entitlements (slug, version, status) VALUES ($1, $2, $3) ON CONFLICT (slug) DO UPDATE SET version = EXCLUDED.version, status = EXCLUDED.status',
-        [ent.slug, ent.version, ent.status]
+        [ent.slug, ent.version, ent.status],
       );
 
       if (ent.status === 'active' && ent.version) {
@@ -113,11 +122,11 @@ export class CloudSyncService {
 
   private async downloadAndInstallModule(slug: string, version: string) {
     const tempPath = join(tmpdir(), `module-${slug}-${version}.zip`);
-    
+
     const response = await fetch(`${this.cloudUrl}/edge/v1/packages/${slug}/${version}`, {
       headers: {
-        'Authorization': `Bearer ${this.installKey}`
-      }
+        Authorization: `Bearer ${this.installKey}`,
+      },
     });
 
     if (!response.ok) {
@@ -126,14 +135,14 @@ export class CloudSyncService {
 
     const packageHash = response.headers.get('X-Package-Hash');
     const signature = response.headers.get('X-Package-Signature');
-    
+
     console.log(`[CloudSync] Saving package to ${tempPath}`);
     const fileStream = createWriteStream(tempPath);
     // @ts-ignore
     await pipeline(Readable.fromWeb(response.body), fileStream);
 
     console.log(`[CloudSync] Calling module manager to install ${slug}`);
-    
+
     // In a real system, Core ModuleManager should handle signature verification using a built-in public key.
     // For now we just pass the ZIP.
     const zipBuffer = readFileSync(tempPath);
@@ -154,7 +163,7 @@ let dataSyncEngine: SyncEngine | null = null;
 
 export function startCloudSync() {
   if (cloudSyncInstance) return;
-  
+
   const config = getConfig();
   if (config.cloudUrl && config.installKey) {
     cloudSyncInstance = new CloudSyncService(config.cloudUrl, config.installKey);
@@ -168,10 +177,10 @@ export function startCloudSync() {
     dataSyncEngine = new SyncEngine(getPool(), {
       wsUrl,
       installKey: config.installKey,
-      tenantId: 'mock-tenant-id'
+      tenantId: 'mock-tenant-id',
     });
-    
-    dataSyncEngine.start().catch(err => {
+
+    dataSyncEngine.start().catch((err) => {
       console.error('[CloudSync] Failed to start data SyncEngine:', err);
     });
   }

@@ -12,6 +12,6 @@ export async function logAuthAction(
     action,
     actor_id: actorId || null,
     ip_address: ipAddress || null,
-    details: details ? JSON.stringify(details) : null
+    details: details ? JSON.stringify(details) : null,
   });
 }

@@ -30,7 +30,7 @@ export default {
 
     // 2. Setup API Router
     const router = Router();
-    
+
     // Enroll a student (maps a device slot to a student_id)
     router.post('/enroll', context.rbac.require('biometric', 'manage'), async (req, res) => {
       const { student_id, device_id, slot_id } = req.body;
@@ -66,8 +66,10 @@ export default {
 
       if (enrollment) {
         const studentId = enrollment.student_id;
-        context.logger.info(`Matched slot ${slot_id} to student ${studentId}. Requesting check-in...`);
-        
+        context.logger.info(
+          `Matched slot ${slot_id} to student ${studentId}. Requesting check-in...`,
+        );
+
         // Fire attendance request
         await context.events.publish({
           type: 'attendance.checkin.request',
@@ -75,8 +77,8 @@ export default {
           payload: {
             student_id: studentId,
             source: 'biometric',
-            device_id
-          }
+            device_id,
+          },
         });
       } else {
         context.logger.warn(`Unregistered scan: device ${device_id} slot ${slot_id}`);

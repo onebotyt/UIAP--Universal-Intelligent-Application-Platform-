@@ -7,8 +7,8 @@ export const apiLimiter = rateLimit({
   standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
   message: {
-    error: 'Too many requests, please try again later.'
-  }
+    error: 'Too many requests, please try again later.',
+  },
 });
 
 // Stricter rate limiter for sensitive routes like login (5 requests per 15 minutes)
@@ -18,6 +18,6 @@ export const loginLimiter = rateLimit({
   standardHeaders: 'draft-7',
   legacyHeaders: false,
   message: {
-    error: 'Too many login attempts, please try again after 15 minutes.'
-  }
+    error: 'Too many login attempts, please try again after 15 minutes.',
+  },
 });

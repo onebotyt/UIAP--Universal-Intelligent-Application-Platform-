@@ -40,16 +40,16 @@ export class EventRecovery {
    */
   async recoverStaleEvents(): Promise<number> {
     const db = getDb();
-    
+
     // DB agnostic date math
-    const cutoffDate = new Date(Date.now() - (this.staleTimeoutSeconds * 1000));
-    
+    const cutoffDate = new Date(Date.now() - this.staleTimeoutSeconds * 1000);
+
     const updatedCount = await db('core_event_inbox')
       .where('status', 'PROCESSING')
       .andWhere('updated_at', '<', cutoffDate)
       .update({
         status: 'PENDING',
-        updated_at: db.fn.now()
+        updated_at: db.fn.now(),
       });
 
     return updatedCount;

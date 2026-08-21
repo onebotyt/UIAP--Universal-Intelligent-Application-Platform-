@@ -16,7 +16,18 @@ eventsRouter.get(
       const db = getDb();
 
       const events = await db('core_event_inbox')
-        .select('id', 'event_id', 'event_type', 'source', 'source_id', 'status', 'attempt_count', 'received_at', 'processed_at', 'last_error')
+        .select(
+          'id',
+          'event_id',
+          'event_type',
+          'source',
+          'source_id',
+          'status',
+          'attempt_count',
+          'received_at',
+          'processed_at',
+          'last_error',
+        )
         .orderBy('created_at', 'desc')
         .limit(limit)
         .offset(offset);

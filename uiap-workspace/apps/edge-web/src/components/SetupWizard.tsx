@@ -6,7 +6,8 @@ export function SetupWizard() {
   const [plan, setPlan] = useState('local');
   const [dbType, setDbType] = useState('sqlite');
   const [transactionRef, setTransactionRef] = useState('');
-  
+  const [screenshot, setScreenshot] = useState<File | null>(null);
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -29,14 +30,21 @@ export function SetupWizard() {
     setError('');
     setLoading(true);
     try {
-      // Setup payload for edge-api which finalizes local configuration
+      const formData = new FormData();
+      formData.append('plan', plan);
+      formData.append('dbType', dbType);
+      formData.append('transactionRef', transactionRef);
+      if (screenshot) {
+        formData.append('screenshot', screenshot);
+      }
+
       const res = await fetch('/api/setup/finalize', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan, dbType, transactionRef }),
+        body: formData,
       });
-      const data = await res.json();
       
+      const data = await res.json();
+
       if (!res.ok) {
         throw new Error(data.error?.message || 'Setup failed.');
       }
@@ -64,7 +72,7 @@ export function SetupWizard() {
           <div className="uiap-setup-success" style={{ textAlign: 'center', padding: '20px' }}>
             <h2 style={{ color: '#F0B429' }}>⏳ Verification Pending</h2>
             <p style={{ marginTop: '10px', color: 'var(--uiap-text-muted)' }}>
-              {plan === 'local' 
+              {plan === 'local'
                 ? 'Your local setup is complete. You may refresh the page to log in.'
                 : 'Your payment is awaiting developer approval. Please check back later.'}
             </p>
@@ -73,7 +81,11 @@ export function SetupWizard() {
                 Transaction Ref: {transactionRef}
               </p>
             )}
-            <button className="uiap-login-btn" style={{ marginTop: '20px' }} onClick={() => window.location.reload()}>
+            <button
+              className="uiap-login-btn"
+              style={{ marginTop: '20px' }}
+              onClick={() => window.location.reload()}
+            >
               Refresh Status
             </button>
           </div>
@@ -102,13 +114,15 @@ export function SetupWizard() {
             </div>
             <div className="uiap-input-group">
               <label>Select your plan:</label>
-              <select value={plan} onChange={e => setPlan(e.target.value)} className="uiap-input">
+              <select value={plan} onChange={(e) => setPlan(e.target.value)} className="uiap-input">
                 <option value="local">Local Only - Free</option>
                 <option value="cloud">Cloud Basic - $9.99/mo</option>
                 <option value="hybrid">Hybrid Pro - $29.99/mo</option>
               </select>
             </div>
-            <button type="submit" className="uiap-login-btn">Next</button>
+            <button type="submit" className="uiap-login-btn">
+              Next
+            </button>
           </form>
         )}
 
@@ -119,7 +133,11 @@ export function SetupWizard() {
             </div>
             <div className="uiap-input-group">
               <label>Database Type for Local Storage</label>
-              <select value={dbType} onChange={e => setDbType(e.target.value)} className="uiap-input">
+              <select
+                value={dbType}
+                onChange={(e) => setDbType(e.target.value)}
+                className="uiap-input"
+              >
                 <option value="sqlite">SQLite (Built-in)</option>
                 <option value="mysql">MySQL</option>
                 <option value="postgresql">PostgreSQL</option>
@@ -129,21 +147,50 @@ export function SetupWizard() {
               Select the database engine to use for local offline storage.
             </p>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button type="button" className="uiap-login-btn ghost" style={{ background: 'transparent', border: '1px solid var(--uiap-border)' }} onClick={() => setStep(1)}>Back</button>
-              <button type="submit" className="uiap-login-btn">{plan === 'local' ? 'Complete Setup' : 'Next: Payment'}</button>
+              <button
+                type="button"
+                className="uiap-login-btn ghost"
+                style={{ background: 'transparent', border: '1px solid var(--uiap-border)', color: 'var(--uiap-text-muted)' }}
+                onClick={() => setStep(1)}
+              >
+                Back
+              </button>
+              <button type="submit" className="uiap-login-btn">
+                {plan === 'local' ? 'Complete Setup' : 'Next: Payment'}
+              </button>
             </div>
           </form>
         )}
 
         {step === 3 && (
-          <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="uiap-login-form">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            className="uiap-login-form"
+          >
             <div className="uiap-setup-info">
               <p>Step 3: Manual Payment</p>
             </div>
-            
-            <div style={{ background: 'var(--uiap-panel-raised)', padding: '20px', borderRadius: '8px', textAlign: 'center', marginBottom: '15px' }}>
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=pay-uiap" alt="Payment QR" style={{ borderRadius: '8px' }} />
-              <p style={{ marginTop: '10px', fontWeight: 'bold' }}>Scan to pay {plan === 'cloud' ? '$9.99' : '$29.99'}</p>
+
+            <div
+              style={{
+                background: 'var(--uiap-panel-raised)',
+                padding: '20px',
+                borderRadius: '8px',
+                textAlign: 'center',
+                marginBottom: '15px',
+              }}
+            >
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=pay-uiap"
+                alt="Payment QR"
+                style={{ borderRadius: '8px' }}
+              />
+              <p style={{ marginTop: '10px', fontWeight: 'bold' }}>
+                Scan to pay {plan === 'cloud' ? '$9.99' : '$29.99'}
+              </p>
             </div>
 
             <div className="uiap-input-group">
@@ -158,8 +205,28 @@ export function SetupWizard() {
                 disabled={loading}
               />
             </div>
+            
+            <div className="uiap-input-group" style={{ marginTop: '10px', marginBottom: '15px' }}>
+              <label>Payment Screenshot (Optional)</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setScreenshot(e.target.files?.[0] || null)}
+                className="uiap-input"
+                style={{ padding: '0.4rem 0.5rem', cursor: 'pointer' }}
+                disabled={loading}
+              />
+            </div>
+
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button type="button" className="uiap-login-btn ghost" style={{ background: 'transparent', border: '1px solid var(--uiap-border)' }} onClick={() => setStep(2)}>Back</button>
+              <button
+                type="button"
+                className="uiap-login-btn ghost"
+                style={{ background: 'transparent', border: '1px solid var(--uiap-border)', color: 'var(--uiap-text-muted)' }}
+                onClick={() => setStep(2)}
+              >
+                Back
+              </button>
               <button type="submit" className="uiap-login-btn" disabled={loading}>
                 {loading ? 'Submitting...' : 'Submit Payment'}
               </button>

@@ -9,7 +9,6 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import { existsSync } from 'fs';
 
-
 const keyStore = new TrustedKeyStore();
 const verifier = new PackageVerifier(keyStore);
 
@@ -333,7 +332,9 @@ export async function enableModule(moduleId: string, actorId: string): Promise<M
         'SELECT id, is_enabled FROM core.module_installations WHERE id = ANY($1)',
         [deps],
       );
-      const enabledDeps = new Set(depResult.rows.filter((r: any) => r.is_enabled).map((r: any) => r.id));
+      const enabledDeps = new Set(
+        depResult.rows.filter((r: any) => r.is_enabled).map((r: any) => r.id),
+      );
       for (const dep of deps) {
         if (!enabledDeps.has(dep))
           throw new Error(`Cannot enable module: missing or disabled dependency '${dep}'`);

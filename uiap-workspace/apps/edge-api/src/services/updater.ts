@@ -36,7 +36,7 @@ export async function checkForUpdates(currentVersion: string): Promise<UpdateInf
 
     const release: any = await response.json();
     let latestVersion = release.tag_name;
-    
+
     // Strip leading 'v' if present (e.g. 'v0.2.0' -> '0.2.0')
     if (latestVersion.startsWith('v')) {
       latestVersion = latestVersion.substring(1);
@@ -47,7 +47,7 @@ export async function checkForUpdates(currentVersion: string): Promise<UpdateInf
     if (latestVersion !== currentVersion) {
       // Find the .exe asset
       const setupAsset = release.assets?.find((a: any) => a.name.endsWith('.exe'));
-      
+
       if (setupAsset) {
         return {
           updateAvailable: true,
@@ -85,11 +85,11 @@ export async function downloadUpdate(assetUrl: string): Promise<string> {
   }
 
   const fileStream = createWriteStream(tempPath);
-  
+
   // Convert Web stream to Node readable stream
   // @ts-ignore
   const readable = Readable.fromWeb(response.body);
-  
+
   return new Promise((resolve, reject) => {
     readable.pipe(fileStream);
     readable.on('error', reject);
@@ -103,15 +103,18 @@ export async function downloadUpdate(assetUrl: string): Promise<string> {
  */
 export function applyUpdate(installerPath: string): void {
   console.log(`[Updater] Launching installer: ${installerPath}`);
-  
+
   // Launch detached process
-  const child = exec(`"${installerPath}" /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS /LOG`, {
-    windowsHide: true,
-  });
+  const child = exec(
+    `"${installerPath}" /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS /LOG`,
+    {
+      windowsHide: true,
+    },
+  );
 
   child.unref();
 
-  // The installer will forcefully close this node process, 
+  // The installer will forcefully close this node process,
   // but we can proactively exit if we want, or just wait to be killed.
   // Wait a moment before exiting to ensure the installer has time to launch.
   setTimeout(() => {

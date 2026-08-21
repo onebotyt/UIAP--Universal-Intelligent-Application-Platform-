@@ -31,7 +31,12 @@ const coreNavItems = [
   },
   { path: '/backups', icon: '💾', label: 'Backups', perm: { module: 'backup', action: 'view' } },
   { path: '/events', icon: '⚡', label: 'Events', perm: { module: 'events', action: 'view' } },
-  { path: '/cloud', icon: '☁️', label: 'Cloud Sync', perm: { module: 'core.modules', action: 'manage' } },
+  {
+    path: '/cloud',
+    icon: '☁️',
+    label: 'Cloud Sync',
+    perm: { module: 'core.modules', action: 'manage' },
+  },
 ];
 
 export function Sidebar({ open, onClose, moduleNavItems }: SidebarProps) {

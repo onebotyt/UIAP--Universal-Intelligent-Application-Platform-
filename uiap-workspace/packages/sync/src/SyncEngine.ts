@@ -13,14 +13,17 @@ export class SyncEngine {
   private ws: any; // We will use a websocket client like 'ws' in actual implementation
   private connected = false;
 
-  constructor(private pool: any, private config: SyncEngineConfig) {
+  constructor(
+    private pool: any,
+    private config: SyncEngineConfig,
+  ) {
     this.queue = new SyncQueue(pool);
   }
 
   async start() {
     await this.queue.initialize();
     this.connectWs();
-    
+
     // Poll the queue every 5 seconds to flush pending changes if connected
     setInterval(() => {
       if (this.connected) {
@@ -34,7 +37,7 @@ export class SyncEngine {
     // Mock WebSocket connection
     this.connected = true;
     console.log(`[SyncEngine] Connected.`);
-    
+
     // In a real implementation:
     // this.ws = new WebSocket(this.config.wsUrl, { headers: { 'x-tenant-id': this.config.tenantId, 'Authorization': `Bearer ${this.config.installKey}` } });
     // this.ws.on('open', () => { this.connected = true; this.flushQueue(); });
@@ -45,11 +48,17 @@ export class SyncEngine {
   /**
    * Called by modules via triggers/events when local data changes.
    */
-  async trackLocalChange(manifest: ModuleManifest, table: string, operation: 'INSERT'|'UPDATE'|'DELETE', recordId: string, data: any) {
+  async trackLocalChange(
+    manifest: ModuleManifest,
+    table: string,
+    operation: 'INSERT' | 'UPDATE' | 'DELETE',
+    recordId: string,
+    data: any,
+  ) {
     if (!manifest.sync || manifest.sync.strategy === 'local_only') {
       return; // Do not sync
     }
-    
+
     if (!manifest.sync.tables.includes(table)) {
       return; // Table not marked for sync
     }
@@ -60,7 +69,7 @@ export class SyncEngine {
       table,
       operation,
       recordId,
-      data
+      data,
     });
 
     if (this.connected) {
@@ -73,12 +82,12 @@ export class SyncEngine {
     if (pending.length === 0) return;
 
     console.log(`[SyncEngine] Flushing ${pending.length} changes to Cloud...`);
-    
+
     for (const item of pending) {
       try {
         // Mock push to Cloud
         // this.ws.send(JSON.stringify({ type: 'SYNC_PUSH', payload: item }));
-        
+
         // Mark as synced
         await this.queue.markSynced(item.id);
       } catch (err) {
@@ -96,7 +105,7 @@ export class SyncEngine {
     console.log(`[SyncEngine] Applying incoming sync for ${payload.moduleId}.${payload.table}`);
 
     const schema = payload.moduleId.replace(/[^a-zA-Z0-9_]/g, '_');
-    
+
     if (payload.operation === 'INSERT') {
       // In a real app we'd construct a dynamic INSERT ON CONFLICT DO UPDATE
       // handling the 'latest_wins' conflict resolution by comparing 'updated_at'.

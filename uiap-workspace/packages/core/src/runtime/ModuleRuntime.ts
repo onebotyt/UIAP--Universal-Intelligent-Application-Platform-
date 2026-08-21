@@ -61,7 +61,10 @@ export class ModuleRuntime {
       } else {
         // Get active version from DB
         const db = getDb();
-        const moduleRow = await db('core_module_installations').select('version').where({ id: moduleId }).first();
+        const moduleRow = await db('core_module_installations')
+          .select('version')
+          .where({ id: moduleId })
+          .first();
         if (!moduleRow) {
           throw new Error(`Module ${moduleId} not found in database`);
         }

@@ -37,13 +37,13 @@ export class DeviceEventRouter {
         event_id: eventId,
         device_id: deviceId,
         event_type: eventType,
-        occurred_at: new Date(occurredAt)
+        occurred_at: new Date(occurredAt),
       });
     } catch (err: any) {
       // 23505 is PostgreSQL unique_violation, 1062 is MySQL, SQLITE_CONSTRAINT is SQLite
-      const isDuplicate = 
-        err.code === '23505' || 
-        err.code === 'ER_DUP_ENTRY' || 
+      const isDuplicate =
+        err.code === '23505' ||
+        err.code === 'ER_DUP_ENTRY' ||
         err.errno === 1062 ||
         (err.code && err.code.includes('SQLITE_CONSTRAINT'));
 

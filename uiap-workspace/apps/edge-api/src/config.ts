@@ -60,7 +60,7 @@ export function parseConfig(env: NodeJS.ProcessEnv): Config {
   activeConfig = {
     ...result.data,
     cloudUrl: result.data.UIAP_CLOUD_URL,
-    installKey: result.data.UIAP_INSTALL_KEY
+    installKey: result.data.UIAP_INSTALL_KEY,
   };
   return activeConfig;
 }

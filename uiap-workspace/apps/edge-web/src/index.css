@@ -10,20 +10,26 @@
 
 :root {
   /* Surface colors */
-  --uiap-bg: #0f1117;
-  --uiap-surface: #1a1d27;
-  --uiap-card: #222639;
-  --uiap-border: #2d3148;
+  --uiap-bg: #F4F7F9;
+  --uiap-surface: #ffffff;
+  --uiap-card: #ffffff;
+  --uiap-border: #E2E8F0;
+  
+  /* Sidebar Specific */
+  --uiap-sidebar-bg: #14A6DF; /* Wink Reports Blue */
+  --uiap-sidebar-text: rgba(255, 255, 255, 0.9);
+  --uiap-sidebar-text-hover: #ffffff;
+  --uiap-sidebar-active-bg: rgba(255, 255, 255, 0.15);
 
   /* Text */
-  --uiap-text: #e1e4ed;
-  --uiap-text-muted: #8b90a5;
-  --uiap-text-heading: #f0f2f8;
+  --uiap-text: #1E293B;
+  --uiap-text-muted: #64748B;
+  --uiap-text-heading: #0F172A;
 
   /* Accent */
-  --uiap-accent: #6c5ce7;
-  --uiap-accent-light: #a29bfe;
-  --uiap-accent-glow: rgba(108, 92, 231, 0.25);
+  --uiap-accent: #14A6DF;
+  --uiap-accent-light: #38bdf8;
+  --uiap-accent-glow: rgba(20, 166, 223, 0.25);
 
   /* Status */
   --uiap-success: #00cec9;

@@ -10,7 +10,11 @@ export class BackupService {
   private timer: NodeJS.Timeout | null = null;
 
   constructor() {
-    if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY && process.env.S3_BUCKET_NAME) {
+    if (
+      process.env.AWS_ACCESS_KEY_ID &&
+      process.env.AWS_SECRET_ACCESS_KEY &&
+      process.env.S3_BUCKET_NAME
+    ) {
       this.s3Client = new S3Client({
         region: process.env.AWS_REGION || 'us-east-1',
         credentials: {
@@ -21,7 +25,8 @@ export class BackupService {
     }
   }
 
-  start(intervalMs = 24 * 60 * 60 * 1000) { // Daily
+  start(intervalMs = 24 * 60 * 60 * 1000) {
+    // Daily
     if (this.timer) return;
     this.timer = setInterval(() => this.runBackup(), intervalMs);
     console.log(`[BackupService] Scheduled automated backups every ${intervalMs}ms`);
@@ -44,7 +49,7 @@ export class BackupService {
       // Execute pg_dump
       // Assumes pg_dump is in the system PATH.
       const pgDumpCmd = `pg_dump ${getConfig().DATABASE_URL} -F p -f ${localFilePath}`;
-      
+
       exec(pgDumpCmd, async (error, stdout, stderr) => {
         if (error) {
           console.error('[BackupService] pg_dump failed:', error);
@@ -57,12 +62,14 @@ export class BackupService {
           try {
             console.log('[BackupService] Uploading to S3...');
             const fileStream = createReadStream(localFilePath);
-            
-            await this.s3Client.send(new PutObjectCommand({
-              Bucket: process.env.S3_BUCKET_NAME,
-              Key: `backups/${fileName}`,
-              Body: fileStream,
-            }));
+
+            await this.s3Client.send(
+              new PutObjectCommand({
+                Bucket: process.env.S3_BUCKET_NAME,
+                Key: `backups/${fileName}`,
+                Body: fileStream,
+              }),
+            );
 
             console.log('[BackupService] Upload complete.');
           } catch (uploadError) {

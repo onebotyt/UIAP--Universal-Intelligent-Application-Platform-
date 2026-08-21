@@ -32,11 +32,11 @@ systemRouter.get('/update', requireAuth, async (req, res) => {
   try {
     const currentVersion = getCurrentVersion();
     const updateInfo = await checkForUpdates(currentVersion);
-    
+
     res.json({
       success: true,
       currentVersion,
-      ...updateInfo
+      ...updateInfo,
     });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
@@ -58,9 +58,10 @@ systemRouter.post('/update/apply', requireAuth, async (req, res) => {
     }
 
     // Acknowledge the request immediately before starting the long download
-    res.json({ 
-      success: true, 
-      message: 'Update download started. The system will restart shortly when the update is applied.' 
+    res.json({
+      success: true,
+      message:
+        'Update download started. The system will restart shortly when the update is applied.',
     });
 
     // Start background download and apply
@@ -73,7 +74,6 @@ systemRouter.post('/update/apply', requireAuth, async (req, res) => {
         console.error('[Updater] Failed to apply update in background:', err);
       }
     })();
-
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
   }

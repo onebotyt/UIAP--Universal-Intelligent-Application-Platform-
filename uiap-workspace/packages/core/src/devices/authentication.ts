@@ -13,7 +13,7 @@ export class DeviceAuthenticator {
     secret: string,
   ): Promise<AuthenticatedDeviceContext> {
     const db = getDb();
-    
+
     const device = await db('core_device_registry')
       .select('id', 'hardware_id', 'type', 'enabled', 'credential_hash')
       .where({ hardware_id: hardwareId })

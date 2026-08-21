@@ -10,21 +10,24 @@ export function initDatabase(envOrConfig?: Record<string, string | undefined>): 
     dbInstance = null;
   }
 
-  const env = envOrConfig ?? process.env as Record<string, string | undefined>;
+  const env = envOrConfig ?? (process.env as Record<string, string | undefined>);
   const client = env.UIAP_DB_CLIENT ?? process.env.UIAP_DB_CLIENT ?? 'sqlite3';
 
   if (client === 'sqlite3') {
     dbInstance = knex({
       client: 'sqlite3',
       connection: {
-        filename: env.UIAP_DB_FILE ?? process.env.UIAP_DB_FILE ?? path.join(process.cwd(), 'uiap_data.sqlite')
+        filename:
+          env.UIAP_DB_FILE ??
+          process.env.UIAP_DB_FILE ??
+          path.join(process.cwd(), 'uiap_data.sqlite'),
       },
       useNullAsDefault: true,
       pool: {
         afterCreate: (conn: any, cb: any) => {
           conn.run('PRAGMA foreign_keys = ON', cb);
-        }
-      }
+        },
+      },
     });
   } else {
     let dbUrl: string;
@@ -37,7 +40,7 @@ export function initDatabase(envOrConfig?: Record<string, string | undefined>): 
     dbInstance = knex({
       client: client,
       connection: dbUrl,
-      pool: { min: 2, max: 10 }
+      pool: { min: 2, max: 10 },
     });
   }
 
@@ -51,16 +54,16 @@ export function initDb(envOrConfig?: Record<string, string | undefined>): void {
 
 export async function runMigrations(): Promise<void> {
   if (!dbInstance) initDatabase();
-  
+
   const { coreMigrations } = await import('./knex-migrations.js');
-  
+
   console.log('[DB] Running migrations...');
-  
+
   const db = dbInstance!;
-  
+
   const hasTable = await db.schema.hasTable('knex_migrations');
   if (!hasTable) {
-    await db.schema.createTable('knex_migrations', table => {
+    await db.schema.createTable('knex_migrations', (table) => {
       table.string('name').primary();
       table.timestamp('run_at').defaultTo(db.fn.now());
     });
@@ -76,7 +79,7 @@ export async function runMigrations(): Promise<void> {
       await db('knex_migrations').insert({ name: migration.name });
     }
   }
-  
+
   console.log('[DB] Migrations complete');
 }
 
@@ -97,14 +100,17 @@ export function getBuilder(): Knex {
 }
 
 // Keep legacy query wrapper for backward compatibility
-export async function query(text: string, params?: any[]): Promise<{ rows: any[], rowCount: number }> {
+export async function query(
+  text: string,
+  params?: any[],
+): Promise<{ rows: any[]; rowCount: number }> {
   if (!dbInstance) {
     initDatabase();
   }
-  
+
   try {
     const result = await dbInstance!.raw(text, params || []);
-    
+
     const clientType = dbInstance!.client.config.client;
     if (clientType === 'sqlite3') {
       return { rows: result, rowCount: result.length };

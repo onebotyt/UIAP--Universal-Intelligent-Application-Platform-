@@ -47,10 +47,10 @@ authRouter.post('/login', loginLimiter, async (req: Request, res, next) => {
       const cloudRes = await fetch(`${cloudApiUrl}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: username, password })
+        body: JSON.stringify({ email: username, password }),
       });
       if (cloudRes.ok) {
-        const data = await cloudRes.json() as any;
+        const data = (await cloudRes.json()) as any;
         cloudUser = data.user;
       }
     } catch (e) {
@@ -69,7 +69,7 @@ authRouter.post('/login', loginLimiter, async (req: Request, res, next) => {
         await knex('users').withSchema('core').insert({
           username: username,
           password_hash: hash,
-          is_active: true
+          is_active: true,
         });
         user = await getUserByUsername(username);
       }
@@ -88,15 +88,17 @@ authRouter.post('/login', loginLimiter, async (req: Request, res, next) => {
     }
 
     if (!user) {
-       res.status(401).json({ error: { message: 'User not synced locally properly', code: 'UNAUTHORIZED' }});
-       return;
+      res
+        .status(401)
+        .json({ error: { message: 'User not synced locally properly', code: 'UNAUTHORIZED' } });
+      return;
     }
 
     if (user.requires_2fa && user.totp_secret) {
       const token2fa = signToken(
         { userId: user.id, type: '2fa_pending' },
         process.env.JWT_SECRET || 'local_dev_secret_uiap_2026',
-        '5m'
+        '5m',
       );
       await logAuthAction('2fa_prompted', user.id, req.ip);
       res.json({ status: 'ok', requires2FA: true, token2fa });
@@ -133,14 +135,16 @@ authRouter.post('/2fa/verify', loginLimiter, async (req: Request, res, next) => 
     }
 
     const { token, code } = parseResult.data;
-    
+
     // Verify the temporary 2FA token
     const secret = process.env.JWT_SECRET || 'local_dev_secret_uiap_2026';
     let decoded: any;
     try {
       decoded = jwt.verify(token, secret);
     } catch (err) {
-      res.status(401).json({ error: { message: 'Invalid or expired 2FA token', code: 'UNAUTHORIZED' } });
+      res
+        .status(401)
+        .json({ error: { message: 'Invalid or expired 2FA token', code: 'UNAUTHORIZED' } });
       return;
     }
 
@@ -160,7 +164,7 @@ authRouter.post('/2fa/verify', loginLimiter, async (req: Request, res, next) => 
       secret: user.totp_secret,
       encoding: 'base32',
       token: code,
-      window: 1 // allow 1 step before/after (30s)
+      window: 1, // allow 1 step before/after (30s)
     });
     if (!isValid) {
       await logAuthAction('2fa_failed', user.id, req.ip);
@@ -169,11 +173,7 @@ authRouter.post('/2fa/verify', loginLimiter, async (req: Request, res, next) => 
     }
 
     // Success - issue real token
-    const sessionToken = signToken(
-      { userId: user.id },
-      secret,
-      process.env.JWT_EXPIRES_IN || '8h',
-    );
+    const sessionToken = signToken({ userId: user.id }, secret, process.env.JWT_EXPIRES_IN || '8h');
 
     await logAuthAction('login_success', user.id, req.ip);
 

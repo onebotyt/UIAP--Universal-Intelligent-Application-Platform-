@@ -8,8 +8,10 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { query, hashPassword } from '@uiap/core';
+import multer from 'multer';
 
 export const setupRouter = Router();
+const upload = multer({ storage: multer.memoryStorage() });
 
 /**
  * Schema for creating the initial administrator account.
@@ -154,6 +156,31 @@ setupRouter.post('/admin', async (req: Request, res: Response, next: NextFunctio
       status: 'ok',
       message: 'Administrator account created successfully.',
       user: { id: userId, username },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * POST /api/setup/finalize
+ *
+ * Mock endpoint to handle the finalize setup step.
+ * In a real application, this would save the configuration,
+ * store payment references, and handle the screenshot upload.
+ */
+setupRouter.post('/finalize', upload.single('screenshot'), async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { plan, dbType, transactionRef } = req.body;
+    
+    // Simulate some backend processing delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Respond with success so the frontend proceeds to the pending screen
+    res.json({
+      status: 'ok',
+      message: 'Setup finalized.',
+      data: { plan, dbType, transactionRef }
     });
   } catch (error) {
     next(error);

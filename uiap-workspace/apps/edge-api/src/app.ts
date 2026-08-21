@@ -61,7 +61,7 @@ export function createApp(options?: AppOptions): express.Express {
     }
 
     const memoryUsage = process.memoryUsage();
-    
+
     res.json({
       status: 'ok',
       platform: PLATFORM_NAME,
@@ -73,7 +73,7 @@ export function createApp(options?: AppOptions): express.Express {
         rss: Math.round(memoryUsage.rss / 1024 / 1024) + ' MB',
         heapTotal: Math.round(memoryUsage.heapTotal / 1024 / 1024) + ' MB',
         heapUsed: Math.round(memoryUsage.heapUsed / 1024 / 1024) + ' MB',
-      }
+      },
     });
   });
 

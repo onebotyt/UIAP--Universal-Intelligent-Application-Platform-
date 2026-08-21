@@ -15,9 +15,9 @@ export default {
     context.logger.info('Activating Reports module...');
 
     const router = Router();
-    
+
     // In a real module, this would query the DB. Since modules are schema-isolated,
-    // how does it query attendance data? 
+    // how does it query attendance data?
     // Option A: The attendance module exposes an API or database view.
     // Option B: The reports module subscribes to 'attendance.recorded' events and builds its own reporting database.
     // We'll use Option B for true micro-module isolation.
@@ -43,7 +43,10 @@ export default {
       // In PostgreSQL we could technically do a cross schema query if permissions allow:
       // SELECT * FROM "uiap.attendance".attendance_records
       // But standard practice in UIAP is Event Sourcing.
-      res.json({ success: true, message: 'Daily report generation not fully implemented in demo.' });
+      res.json({
+        success: true,
+        message: 'Daily report generation not fully implemented in demo.',
+      });
     });
 
     context.registerApiRouter(router);

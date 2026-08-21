@@ -35,8 +35,8 @@ export function DashboardView() {
 
     // Check for OTA updates
     fetch('/api/system/update')
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (mounted && data.success && data.updateAvailable) {
           setUpdateInfo(data);
         }
@@ -49,10 +49,14 @@ export function DashboardView() {
   }, []);
 
   const applyUpdate = async () => {
-    if (!window.confirm(`Are you sure you want to install version ${updateInfo.version}? The system will restart automatically.`)) {
+    if (
+      !window.confirm(
+        `Are you sure you want to install version ${updateInfo.version}? The system will restart automatically.`,
+      )
+    ) {
       return;
     }
-    
+
     setIsUpdating(true);
     try {
       const res = await fetch('/api/system/update/apply', { method: 'POST' });
@@ -86,22 +90,34 @@ export function DashboardView() {
   return (
     <div>
       {isUpdating && (
-        <div className="uiap-view-panel" style={{ marginBottom: '1.5rem', background: 'var(--uiap-primary)', color: 'white' }}>
+        <div
+          className="uiap-view-panel"
+          style={{ marginBottom: '1.5rem', background: 'var(--uiap-primary)', color: 'white' }}
+        >
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div className="uiap-spinner" style={{ borderTopColor: 'white' }} />
             <div>
               <h3 style={{ margin: '0 0 0.25rem 0' }}>Downloading & Installing Update...</h3>
-              <p style={{ margin: 0, opacity: 0.9 }}>Please wait. The system will automatically restart when complete.</p>
+              <p style={{ margin: 0, opacity: 0.9 }}>
+                Please wait. The system will automatically restart when complete.
+              </p>
             </div>
           </div>
         </div>
       )}
       {!isUpdating && updateInfo && (
-        <div className="uiap-view-panel" style={{ marginBottom: '1.5rem', borderLeft: '4px solid var(--uiap-primary)' }}>
+        <div
+          className="uiap-view-panel"
+          style={{ marginBottom: '1.5rem', borderLeft: '4px solid var(--uiap-primary)' }}
+        >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <h3 style={{ margin: '0 0 0.25rem 0' }}>🚀 Update Available: v{updateInfo.version}</h3>
-              <p style={{ margin: 0, color: 'var(--uiap-text-muted)' }}>A new version of UIAP Edge is available for installation.</p>
+              <h3 style={{ margin: '0 0 0.25rem 0' }}>
+                🚀 Update Available: v{updateInfo.version}
+              </h3>
+              <p style={{ margin: 0, color: 'var(--uiap-text-muted)' }}>
+                A new version of UIAP Edge is available for installation.
+              </p>
             </div>
             <button className="uiap-btn uiap-btn-primary" onClick={applyUpdate}>
               Install Update

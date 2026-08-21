@@ -25,7 +25,7 @@ export async function getUsers(): Promise<UserRecord[]> {
         is_active: row.is_active,
         requires_2fa: row.requires_2fa,
         totp_secret: row.totp_secret,
-        roles: []
+        roles: [],
       });
     }
     if (row.role_id) {
@@ -51,12 +51,12 @@ export async function createUser(
     password_hash: passwordHash,
     is_active: true,
     requires_2fa: false,
-    totp_secret: null
+    totp_secret: null,
   });
 
   const user = await db('core_users').where({ id }).first();
   await logAuthAction('user.created', actorId, null, { user_id: id, username });
-  
+
   return { ...user, roles: [] };
 }
 
@@ -66,10 +66,8 @@ export async function updateUserStatus(
   actorId: string,
 ): Promise<UserRecord> {
   const db = getDb();
-  
-  const updatedCount = await db('core_users')
-    .where({ id: userId })
-    .update({ is_active: isActive });
+
+  const updatedCount = await db('core_users').where({ id: userId }).update({ is_active: isActive });
 
   if (updatedCount === 0) {
     throw new Error('User not found');
@@ -95,10 +93,10 @@ export async function assignUserRoles(
     await trx('core_user_roles').where({ user_id: userId }).delete();
 
     if (roleIds.length > 0) {
-      const inserts = roleIds.map(roleId => ({
+      const inserts = roleIds.map((roleId) => ({
         id: crypto.randomUUID(),
         user_id: userId,
-        role_id: roleId
+        role_id: roleId,
       }));
       await trx('core_user_roles').insert(inserts);
     }

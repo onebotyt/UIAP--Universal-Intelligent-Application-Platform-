@@ -43,8 +43,8 @@ function createWindow() {
     title: 'UIAP Edge Server',
     webPreferences: {
       nodeIntegration: false,
-      contextIsolation: true
-    }
+      contextIsolation: true,
+    },
   });
 
   if (serverUrl) {
@@ -76,15 +76,15 @@ function createTray() {
   const iconPath = path.join(__dirname, '../assets/icon.png');
   const icon = nativeImage.createEmpty(); // fallback
   tray = new Tray(icon);
-  
+
   tray.setToolTip('UIAP Edge Server');
-  
+
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'Open Dashboard',
       click: () => {
         createWindow();
-      }
+      },
     },
     {
       label: 'Open in Browser',
@@ -92,7 +92,7 @@ function createTray() {
         if (serverUrl) {
           shell.openExternal(serverUrl);
         }
-      }
+      },
     },
     { type: 'separator' },
     {
@@ -104,7 +104,7 @@ function createTray() {
         if (mainWindow && serverUrl) {
           mainWindow.loadURL(serverUrl);
         }
-      }
+      },
     },
     { type: 'separator' },
     {
@@ -114,12 +114,12 @@ function createTray() {
         console.log('[Electron] Shutting down UIAP...');
         await stopBackgroundServices();
         app.quit();
-      }
-    }
+      },
+    },
   ]);
-  
+
   tray.setContextMenu(contextMenu);
-  
+
   tray.on('double-click', () => {
     createWindow();
   });

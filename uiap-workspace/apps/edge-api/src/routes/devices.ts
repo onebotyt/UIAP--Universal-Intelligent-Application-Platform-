@@ -15,7 +15,17 @@ devicesAdminRouter.get(
     try {
       const db = getDb();
       const devices = await db('core_device_registry')
-        .select('id', 'hardware_id', 'name', 'type', 'status', 'enabled', 'last_heartbeat_at', 'created_at', 'updated_at')
+        .select(
+          'id',
+          'hardware_id',
+          'name',
+          'type',
+          'status',
+          'enabled',
+          'last_heartbeat_at',
+          'created_at',
+          'updated_at',
+        )
         .orderBy('created_at', 'desc');
       res.json(devices);
     } catch (error) {
@@ -33,7 +43,17 @@ devicesAdminRouter.get(
     try {
       const db = getDb();
       const device = await db('core_device_registry')
-        .select('id', 'hardware_id', 'name', 'type', 'status', 'enabled', 'last_heartbeat_at', 'created_at', 'updated_at')
+        .select(
+          'id',
+          'hardware_id',
+          'name',
+          'type',
+          'status',
+          'enabled',
+          'last_heartbeat_at',
+          'created_at',
+          'updated_at',
+        )
         .where({ id: req.params.id })
         .first();
 
@@ -76,11 +96,21 @@ devicesAdminRouter.post(
         type,
         credential_hash: hash,
         status: 'REGISTERED',
-        enabled: true
+        enabled: true,
       });
 
       const device = await db('core_device_registry')
-        .select('id', 'hardware_id', 'name', 'type', 'status', 'enabled', 'last_heartbeat_at', 'created_at', 'updated_at')
+        .select(
+          'id',
+          'hardware_id',
+          'name',
+          'type',
+          'status',
+          'enabled',
+          'last_heartbeat_at',
+          'created_at',
+          'updated_at',
+        )
         .where({ id })
         .first();
 
@@ -99,12 +129,10 @@ devicesAdminRouter.post(
   async (req: Request, res: Response) => {
     try {
       const db = getDb();
-      const updatedCount = await db('core_device_registry')
-        .where({ id: req.params.id })
-        .update({
-          enabled: false,
-          status: 'DISABLED'
-        });
+      const updatedCount = await db('core_device_registry').where({ id: req.params.id }).update({
+        enabled: false,
+        status: 'DISABLED',
+      });
 
       if (updatedCount === 0) {
         res.status(404).json({ error: 'Device not found' });
@@ -126,12 +154,10 @@ devicesAdminRouter.post(
   async (req: Request, res: Response) => {
     try {
       const db = getDb();
-      const updatedCount = await db('core_device_registry')
-        .where({ id: req.params.id })
-        .update({
-          enabled: true,
-          status: 'REGISTERED'
-        });
+      const updatedCount = await db('core_device_registry').where({ id: req.params.id }).update({
+        enabled: true,
+        status: 'REGISTERED',
+      });
 
       if (updatedCount === 0) {
         res.status(404).json({ error: 'Device not found' });
