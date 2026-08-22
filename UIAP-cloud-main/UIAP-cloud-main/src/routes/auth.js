@@ -171,4 +171,41 @@ router.put('/profile', requireAuth, upload.single('avatar'), async (req, res) =>
   }
 });
 
+// POST /api/auth/setup (Finalize Org Setup)
+router.post('/setup', requireAuth, async (req, res) => {
+  try {
+    const { plan, dbType, txnRef } = req.body;
+    const userId = req.user.sub;
+    
+    const org = await db('organizations').where({ owner_id: userId }).first();
+    if (!org) {
+      return res.status(404).json({ error: 'Organization not found' });
+    }
+    
+    // Update org plan
+    await db('organizations').where({ id: org.id }).update({ plan });
+    
+    // Create transaction if it's not a local plan and there is a txnRef
+    if (plan !== 'local' && txnRef) {
+      await db('transactions').insert({
+        id: randomUUID(),
+        organization_id: org.id,
+        type: 'setup',
+        target_id: org.id,
+        amount_usd: plan === 'hybrid' ? 29.99 : 9.99,
+        transaction_ref: txnRef,
+        status: 'pending'
+      });
+    } else {
+      // If local, auto-activate
+      await db('organizations').where({ id: org.id }).update({ status: 'active' });
+    }
+    
+    res.json({ message: 'Setup completed successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Setup failed' });
+  }
+});
+
 module.exports = router;

@@ -30,7 +30,17 @@ export function OrganizationsView() {
           <h2 className="dash-title">Organizations</h2>
           <p className="dash-subtitle">Licensed customers running UIAP Edge</p>
         </div>
-        <button className="btn-primary">
+        <button className="btn-primary" onClick={async () => {
+          const name = window.prompt("Enter new organization name:");
+          if (!name) return;
+          const token = localStorage.getItem('uiap_token');
+          await fetch('/dashboard/organizations', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ name, plan: 'cloud' })
+          });
+          window.location.reload();
+        }}>
           <Plus size={16} style={{ marginRight: '6px' }} />
           New organization
         </button>
@@ -52,7 +62,7 @@ export function OrganizationsView() {
                   <h3 className="dash-card-title">{org.name}</h3>
                   <span className="dash-card-slug">Plan: {org.plan_type}</span>
                 </div>
-                <button className="btn-ghost" style={{ padding: '6px 12px' }}>Details</button>
+                <button className="btn-ghost" style={{ padding: '6px 12px' }} onClick={() => alert('Organization details coming in v0.2')}>Details</button>
               </div>
               <p className="dash-card-desc">Status: {org.status}</p>
               <div className="dash-card-footer">

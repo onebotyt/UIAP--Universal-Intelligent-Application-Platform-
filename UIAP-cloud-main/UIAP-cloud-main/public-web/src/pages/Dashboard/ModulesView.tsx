@@ -30,7 +30,19 @@ export function ModulesView() {
           <h2 className="dash-title">Modules</h2>
           <p className="dash-subtitle">Registered UIAP module types</p>
         </div>
-        <button className="btn-primary">
+        <button className="btn-primary" onClick={async () => {
+          const name = window.prompt("Enter module display name:");
+          if (!name) return;
+          const slug = window.prompt("Enter module slug (e.g. uiap.my-module):");
+          if (!slug) return;
+          const token = localStorage.getItem('uiap_token');
+          await fetch('/dashboard/modules', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ slug, display_name: name })
+          });
+          window.location.reload();
+        }}>
           <Plus size={16} style={{ marginRight: '6px' }} />
           New module
         </button>
@@ -53,7 +65,7 @@ export function ModulesView() {
                   <h3 className="dash-card-title">{mod.display_name}</h3>
                   <span className="dash-card-slug">{mod.slug}</span>
                 </div>
-                <button className="btn-ghost" style={{ padding: '6px 12px' }}>Versions</button>
+                <button className="btn-ghost" style={{ padding: '6px 12px' }} onClick={() => alert('Version management coming in v0.2')}>Versions</button>
               </div>
               <p className="dash-card-desc">{mod.description || 'No description provided.'}</p>
               <div className="dash-card-footer">

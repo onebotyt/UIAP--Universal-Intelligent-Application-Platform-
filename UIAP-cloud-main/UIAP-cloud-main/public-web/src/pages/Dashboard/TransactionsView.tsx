@@ -45,16 +45,32 @@ export function TransactionsView() {
             <div key={tx.id} className="dash-card">
               <div className="dash-card-header">
                 <div>
-                  <h3 className="dash-card-title">{tx.organization_name || 'Unknown Org'}</h3>
-                  <span className="dash-card-slug">Amount: ₹{tx.amount}</span>
+                  <h3 className="dash-card-title">{tx.org_name || 'Unknown Org'}</h3>
+                  <span className="dash-card-slug">Amount: ${tx.amount_usd}</span>
                 </div>
               </div>
-              <p className="dash-card-desc">Ref: {tx.utr_reference}</p>
+              <p className="dash-card-desc">Ref: {tx.transaction_ref}</p>
               <div className="dash-card-footer" style={{ justifyContent: 'flex-end', gap: '8px' }}>
-                <button className="btn-ghost" style={{ color: 'var(--red)' }}>
+                <button 
+                  className="btn-ghost" 
+                  style={{ color: 'var(--red)' }}
+                  onClick={async () => {
+                    const token = localStorage.getItem('uiap_token');
+                    await fetch(`/dashboard/transactions/${tx.id}/reject`, { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
+                    setTransactions(transactions.filter(t => t.id !== tx.id));
+                  }}
+                >
                   <X size={14} style={{ marginRight: '4px' }} /> Reject
                 </button>
-                <button className="btn-primary" style={{ padding: '4px 10px' }}>
+                <button 
+                  className="btn-primary" 
+                  style={{ padding: '4px 10px' }}
+                  onClick={async () => {
+                    const token = localStorage.getItem('uiap_token');
+                    await fetch(`/dashboard/transactions/${tx.id}/approve`, { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
+                    setTransactions(transactions.filter(t => t.id !== tx.id));
+                  }}
+                >
                   <Check size={14} style={{ marginRight: '4px' }} /> Approve
                 </button>
               </div>

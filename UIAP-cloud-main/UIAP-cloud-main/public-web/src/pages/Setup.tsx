@@ -18,10 +18,32 @@ export function Setup() {
 
   const handleNext = () => setStep(step + 1);
 
+  const [loading, setLoading] = useState(false);
+
   const handleComplete = async () => {
-    // In a real flow, this would call a /api/setup endpoint to finalize the org settings
-    alert('Setup completed! You are now entering your organization dashboard.');
-    navigate('/dashboard');
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('uiap_token');
+      const res = await fetch('/api/auth/setup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ plan, dbType, txnRef })
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to complete setup');
+      }
+
+      alert('Setup completed! You are now entering your organization dashboard.');
+      navigate('/dashboard');
+    } catch (err) {
+      alert('Error during setup. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -104,7 +126,9 @@ export function Setup() {
           )}
           <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
             <button className="btn-ghost" onClick={() => setStep(2)}>Back</button>
-            <button className="btn-primary" onClick={handleComplete} disabled={plan !== 'local' && !txnRef}>Finish Setup</button>
+            <button className="btn-primary" onClick={handleComplete} disabled={(plan !== 'local' && !txnRef) || loading}>
+              {loading ? 'Saving...' : 'Finish Setup'}
+            </button>
           </div>
         </div>
       )}
