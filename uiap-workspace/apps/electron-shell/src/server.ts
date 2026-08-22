@@ -1,5 +1,6 @@
 import { ChildProcess, fork } from 'child_process';
 import * as path from 'path';
+import * as http from 'http';
 
 let serverProcess: ChildProcess | null = null;
 const API_PORT = 3000;
@@ -9,9 +10,6 @@ export async function startServer(databaseUrl: string): Promise<string> {
 
   return new Promise((resolve, reject) => {
     try {
-      // In production, we run the compiled JS of the edge-api
-      // For development in the workspace, we might need ts-node or just use the dist output
-      // Let's assume we are running the compiled dist/index.js
       const edgeApiPath = path.join(__dirname, '../../edge-api/dist/index.js');
 
       serverProcess = fork(edgeApiPath, [], {
@@ -21,13 +19,26 @@ export async function startServer(databaseUrl: string): Promise<string> {
           DATABASE_URL: databaseUrl,
           UIAP_MODULES_DIR: path.join(__dirname, '../../../modules_data'),
         },
-        stdio: 'inherit', // pipe logs to the electron console
+        stdio: 'inherit',
       });
 
-      // Wait a moment for the server to start (in a real scenario, we'd wait for a specific stdout log)
-      setTimeout(() => {
-        resolve(`http://localhost:${API_PORT}`);
-      }, 3000);
+      const serverUrl = `http://localhost:${API_PORT}`;
+      
+      const checkServer = () => {
+        http.get(`${serverUrl}/api/health/live`, (res) => {
+          if (res.statusCode === 200) {
+            resolve(serverUrl);
+          } else {
+            setTimeout(checkServer, 1000);
+          }
+        }).on('error', () => {
+          setTimeout(checkServer, 1000);
+        });
+      };
+
+      // Start polling
+      checkServer();
+
     } catch (e) {
       reject(e);
     }

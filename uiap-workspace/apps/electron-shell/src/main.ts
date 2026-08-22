@@ -48,10 +48,22 @@ function createWindow() {
   });
 
   if (serverUrl) {
-    mainWindow.loadURL(serverUrl);
+    if (!app.isPackaged) {
+      // Development mode: load Vite dev server for hot-reloading
+      console.log('[Electron] Running in dev mode. Attempting to connect to Vite dev server...');
+      mainWindow.loadURL('http://localhost:5174').catch(() => {
+        // Fallback to 5173 if 5174 isn't used
+        mainWindow!.loadURL('http://localhost:5173').catch(() => {
+          console.log('[Electron] Vite dev server not found, falling back to static serverUrl');
+          mainWindow!.loadURL(serverUrl!);
+        });
+      });
+    } else {
+      // Production mode: load static files from the Node.js Edge API
+      mainWindow.loadURL(serverUrl);
+    }
   } else {
     mainWindow.loadFile(path.join(__dirname, '../public/loading.html')).catch(() => {});
-    // Fallback if loading.html doesn't exist, we will just keep a blank screen.
   }
 
   // Prevent app from closing when X is clicked.
