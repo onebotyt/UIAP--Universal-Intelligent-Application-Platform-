@@ -5,6 +5,11 @@ export function OrganizationsView() {
   const [orgs, setOrgs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Modal State
+  const [showModal, setShowModal] = useState(false);
+  const [newOrgName, setNewOrgName] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   useEffect(() => {
     const fetchOrgs = async () => {
       try {
@@ -23,6 +28,23 @@ export function OrganizationsView() {
     fetchOrgs();
   }, []);
 
+  const handleCreateOrg = async () => {
+    if (!newOrgName) return;
+    setIsSubmitting(true);
+    try {
+      const token = localStorage.getItem('uiap_token');
+      await fetch('/dashboard/organizations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ name: newOrgName, plan: 'cloud' })
+      });
+      window.location.reload();
+    } catch (err) {
+      alert('Failed to create organization');
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="dash-view">
       <div className="dash-view-header">
@@ -30,21 +52,35 @@ export function OrganizationsView() {
           <h2 className="dash-title">Organizations</h2>
           <p className="dash-subtitle">Licensed customers running UIAP Edge</p>
         </div>
-        <button className="btn-primary" onClick={async () => {
-          const name = window.prompt("Enter new organization name:");
-          if (!name) return;
-          const token = localStorage.getItem('uiap_token');
-          await fetch('/dashboard/organizations', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-            body: JSON.stringify({ name, plan: 'cloud' })
-          });
-          window.location.reload();
-        }}>
+        <button className="btn-primary" onClick={() => setShowModal(true)}>
           <Plus size={16} style={{ marginRight: '6px' }} />
           New organization
         </button>
       </div>
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="dash-modal">
+            <h3>Register New Organization</h3>
+            <div className="input-group">
+              <label>Organization Name</label>
+              <input 
+                type="text" 
+                placeholder="e.g. Acme College" 
+                className="dash-input"
+                value={newOrgName}
+                onChange={e => setNewOrgName(e.target.value)}
+              />
+            </div>
+            <div className="dash-modal-footer">
+              <button className="dash-btn-ghost" onClick={() => setShowModal(false)} disabled={isSubmitting}>Cancel</button>
+              <button className="dash-btn-primary" onClick={handleCreateOrg} disabled={!newOrgName || isSubmitting}>
+                {isSubmitting ? 'Creating...' : 'Create'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {loading ? (
         <div className="dash-empty">Loading organizations...</div>
