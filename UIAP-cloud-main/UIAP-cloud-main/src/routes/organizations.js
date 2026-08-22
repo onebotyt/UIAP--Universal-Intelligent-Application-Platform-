@@ -159,7 +159,10 @@ router.delete('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Organization not found' });
     }
 
-    // Delete the organization. OnDelete CASCADE handles related rows (licenses, installations, etc.)
+    // Delete transactions manually because the foreign key lacks onDelete('CASCADE')
+    await db('transactions').where('organization_id', req.params.id).delete();
+
+    // Delete the organization. Other tables (licenses, installations) have CASCADE.
     await db('organizations').where('id', req.params.id).delete();
     
     await logAction(req.admin.email, 'organization.delete', req.params.id);

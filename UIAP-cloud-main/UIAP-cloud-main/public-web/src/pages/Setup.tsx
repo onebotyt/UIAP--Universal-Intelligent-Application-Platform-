@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export function Setup() {
   const [step, setStep] = useState(1);
   const [plan, setPlan] = useState('');
-  const [dbType, setDbType] = useState('postgresql');
+  const [dbType, setDbType] = useState('mysql');
   const [txnRef, setTxnRef] = useState('');
   
   const navigate = useNavigate();
@@ -90,16 +90,24 @@ export function Setup() {
           <div className="input-group">
             <label>Database Type</label>
             <select value={dbType} onChange={e => setDbType(e.target.value)}>
-              <option value="postgresql">PostgreSQL (Cloud Native)</option>
               <option value="mysql">MySQL (cPanel/Shared Hosting)</option>
-              {plan === 'local' && (
-                <option value="sqlite">SQLite (Local Storage)</option>
-              )}
+              <option value="sqlite">SQLite (Local Storage)</option>
             </select>
           </div>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-            Note: Cloud plans support PostgreSQL and MySQL for compatibility. Local Edge plans also allow SQLite.
-          </p>
+          
+          <div style={{ padding: '12px', background: 'rgba(59, 130, 246, 0.05)', borderRadius: '8px', border: '1px solid rgba(59, 130, 246, 0.1)' }}>
+            {dbType === 'mysql' && (
+              <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text)' }}>
+                <strong>MySQL:</strong> High security and robust data handling, but application may require higher RAM.
+              </p>
+            )}
+            {dbType === 'sqlite' && (
+              <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text)' }}>
+                <strong>SQLite:</strong> Faster application performance and lightweight, but lower security for multi-user scaling.
+              </p>
+            )}
+          </div>
+
           <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
             <button className="btn-ghost" onClick={() => setStep(1)}>Back</button>
             <button className="btn-primary" onClick={handleNext}>Next</button>
