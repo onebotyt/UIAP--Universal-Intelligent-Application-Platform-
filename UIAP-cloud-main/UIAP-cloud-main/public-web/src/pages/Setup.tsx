@@ -20,8 +20,8 @@ export function Setup() {
 
   const handleComplete = async () => {
     // In a real flow, this would call a /api/setup endpoint to finalize the org settings
-    alert('Setup completed! Waiting for verification.');
-    navigate('/download');
+    alert('Setup completed! You are now entering your organization dashboard.');
+    navigate('/dashboard');
   };
 
   return (
