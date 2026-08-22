@@ -151,4 +151,23 @@ router.post('/:id/beta', async (req, res) => {
   res.status(201).json(beta || { message: 'Beta access already granted' });
 });
 
+// DELETE /dashboard/organizations/:id
+router.delete('/:id', async (req, res) => {
+  try {
+    const org = await db('organizations').where('id', req.params.id).first();
+    if (!org) {
+      return res.status(404).json({ error: 'Organization not found' });
+    }
+
+    // Delete the organization. OnDelete CASCADE handles related rows (licenses, installations, etc.)
+    await db('organizations').where('id', req.params.id).delete();
+    
+    await logAction(req.admin.email, 'organization.delete', req.params.id);
+    res.json({ message: 'Organization removed successfully' });
+  } catch (err) {
+    console.error('[organizations] delete failed:', err);
+    res.status(500).json({ error: 'Failed to delete organization' });
+  }
+});
+
 module.exports = router;

@@ -60,9 +60,27 @@ export function OrganizationsView() {
               <div className="dash-card-header">
                 <div>
                   <h3 className="dash-card-title">{org.name}</h3>
-                  <span className="dash-card-slug">Plan: {org.plan_type}</span>
+                  <span className="dash-card-slug">Plan: {org.plan_type || org.plan}</span>
                 </div>
-                <button className="btn-ghost" style={{ padding: '6px 12px' }} onClick={() => alert('Organization details coming in v0.2')}>Details</button>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button className="btn-ghost" style={{ padding: '6px 12px' }} onClick={() => alert('Organization details coming in v0.2')}>Details</button>
+                  <button 
+                    className="btn-ghost" 
+                    style={{ padding: '6px 12px', color: 'var(--red)' }}
+                    onClick={async () => {
+                      if (window.confirm(`Are you sure you want to completely remove organization: ${org.name}? This action cannot be undone.`)) {
+                        const token = localStorage.getItem('uiap_token');
+                        await fetch(`/dashboard/organizations/${org.id}`, {
+                          method: 'DELETE',
+                          headers: { Authorization: `Bearer ${token}` }
+                        });
+                        setOrgs(orgs.filter(o => o.id !== org.id));
+                      }
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
               <p className="dash-card-desc">Status: {org.status}</p>
               <div className="dash-card-footer">
