@@ -69,16 +69,14 @@ export function Setup() {
             <label>Database Type</label>
             <select value={dbType} onChange={e => setDbType(e.target.value)}>
               <option value="postgresql">PostgreSQL (Cloud Native)</option>
+              <option value="mysql">MySQL (cPanel/Shared Hosting)</option>
               {plan === 'local' && (
-                <>
-                  <option value="sqlite">SQLite (Local Storage)</option>
-                  <option value="mysql">MySQL</option>
-                </>
+                <option value="sqlite">SQLite (Local Storage)</option>
               )}
             </select>
           </div>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-            Note: Cloud plans enforce PostgreSQL for security and scalability. Local plans allow SQLite or MySQL.
+            Note: Cloud plans support PostgreSQL and MySQL for compatibility. Local Edge plans also allow SQLite.
           </p>
           <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
             <button className="btn-ghost" onClick={() => setStep(1)}>Back</button>
