@@ -41,8 +41,16 @@ async function migrate() {
         t.string('name').notNullable();
         t.string('plan').notNullable().defaultTo('local');
         t.string('status').notNullable().defaultTo('pending_setup');
+        t.string('edge_db_type').defaultTo('mysql');
         t.timestamp('created_at').defaultTo(db.fn.now());
       });
+    } else {
+      const hasEdgeDbType = await db.schema.hasColumn('organizations', 'edge_db_type');
+      if (!hasEdgeDbType) {
+        await db.schema.alterTable('organizations', (t) => {
+          t.string('edge_db_type').defaultTo('mysql');
+        });
+      }
     }
 
     const hasPlans = await db.schema.hasTable('plans');

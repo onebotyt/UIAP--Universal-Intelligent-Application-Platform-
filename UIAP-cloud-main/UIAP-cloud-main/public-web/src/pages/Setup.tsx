@@ -86,9 +86,12 @@ export function Setup() {
 
       {step === 2 && (
         <div className="step-content">
-          <h3>Step 2: Database Configuration</h3>
+          <h3>Step 2: Application Database Mode</h3>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
+            This selection configures the internal database for your UIAP Edge App installed on your local network.
+          </p>
           <div className="input-group">
-            <label>Database Type</label>
+            <label>Edge App Database Type</label>
             <select value={dbType} onChange={e => setDbType(e.target.value)}>
               <option value="mysql">MySQL (cPanel/Shared Hosting)</option>
               <option value="sqlite">SQLite (Local Storage)</option>

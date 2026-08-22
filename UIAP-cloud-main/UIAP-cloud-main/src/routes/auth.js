@@ -182,8 +182,11 @@ router.post('/setup', requireAuth, async (req, res) => {
       return res.status(404).json({ error: 'Organization not found' });
     }
     
-    // Update org plan
-    await db('organizations').where({ id: org.id }).update({ plan });
+    // Update org plan and edge DB type
+    await db('organizations').where({ id: org.id }).update({ 
+      plan,
+      edge_db_type: dbType 
+    });
     
     // Create transaction if it's not a local plan and there is a txnRef
     if (plan !== 'local' && txnRef) {
