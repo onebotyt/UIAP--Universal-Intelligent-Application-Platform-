@@ -23,4 +23,4 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /uiap-cloud/ # Change this if you want it deployed to a different folder on cPanel
+        server-dir: ./ # Changed from /uiap-cloud/ to match the FTP account's root path
