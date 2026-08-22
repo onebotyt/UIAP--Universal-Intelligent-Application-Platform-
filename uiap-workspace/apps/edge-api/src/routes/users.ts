@@ -79,3 +79,63 @@ usersRouter.put('/:id/roles', requirePermission('core.users', 'manage'), async (
     next(error);
   }
 });
+
+import multer from 'multer';
+import * as path from 'path';
+import * as fs from 'fs';
+
+// Ensure uploads directory exists
+const uploadDir = path.join(process.cwd(), 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadDir),
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, `avatar-${uniqueSuffix}${path.extname(file.originalname)}`);
+  },
+});
+const upload = multer({ storage });
+
+// PUT /api/users/profile - Update user profile
+usersRouter.put('/profile', upload.single('avatar'), async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const actorId = (req as AuthRequest).user!.id;
+    let avatarUrl = undefined;
+
+    if (req.file) {
+      avatarUrl = `/uploads/${req.file.filename}`;
+    }
+
+    const { updateUserProfile } = await import('@uiap/core');
+    const user = await updateUserProfile(actorId, email, avatarUrl, actorId);
+    res.json({ status: 'ok', data: user });
+  } catch (error: unknown) {
+    next(error);
+  }
+});
+
+// PUT /api/users/password - Update user password
+usersRouter.put('/password', async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const actorId = (req as AuthRequest).user!.id;
+    
+    // Verify current password first
+    const { getUserById, verifyPassword, updateUserPassword } = await import('@uiap/core');
+    const user = await getUserById(actorId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    
+    const isValid = await verifyPassword(currentPassword, user.password_hash);
+    if (!isValid) return res.status(401).json({ error: 'Invalid current password' });
+    
+    await updateUserPassword(actorId, newPassword, actorId);
+    res.json({ status: 'ok', message: 'Password updated successfully' });
+  } catch (error: unknown) {
+    next(error);
+  }
+});
+

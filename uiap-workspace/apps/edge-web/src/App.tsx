@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 
 // Views
 import { DashboardView } from './views/DashboardView';
+import { ProfileView } from './views/ProfileView';
 import { UsersView } from './components/UsersView';
 import { RolesView } from './components/RolesView';
 import { DevicesView } from './views/DevicesView';
@@ -77,6 +78,7 @@ function AppRouter() {
         <Route path="/" element={<AppShell />}>
           {/* Core Routes */}
           <Route index element={<DashboardView />} />
+          <Route path="profile" element={<ProfileView />} />
           <Route path="users" element={<UsersView />} />
           <Route path="roles" element={<RolesView />} />
           <Route path="devices" element={<DevicesView />} />

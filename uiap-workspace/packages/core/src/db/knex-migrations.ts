@@ -139,4 +139,19 @@ export const coreMigrations = [
       await knex.schema.dropTableIfExists('core_users');
     },
   },
+  {
+    name: '002_user_profile_fields',
+    up: async (knex: Knex) => {
+      await knex.schema.alterTable('core_users', (table) => {
+        table.string('email').nullable();
+        table.string('avatar_url').nullable();
+      });
+    },
+    down: async (knex: Knex) => {
+      await knex.schema.alterTable('core_users', (table) => {
+        table.dropColumn('email');
+        table.dropColumn('avatar_url');
+      });
+    },
+  },
 ];

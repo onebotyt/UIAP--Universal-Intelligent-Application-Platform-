@@ -1,4 +1,5 @@
 import { useAuth } from '../auth/AuthContext';
+import { Link } from 'react-router-dom';
 
 interface HeaderProps {
   pageTitle: string;
@@ -24,10 +25,16 @@ export function Header({ pageTitle, onToggleSidebar }: HeaderProps) {
         <span className="uiap-page-title">{pageTitle}</span>
       </div>
       <div className="uiap-header-right">
-        <div className="uiap-user-badge">
-          <div className="uiap-user-avatar">{initials}</div>
+        <Link to="/profile" className="uiap-user-badge" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="uiap-user-avatar" style={{ overflow: 'hidden' }}>
+            {user?.avatar_url ? (
+              <img src={user.avatar_url} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+              initials
+            )}
+          </div>
           <span>{user?.username ?? 'User'}</span>
-        </div>
+        </Link>
         <button className="uiap-logout-btn" onClick={handleLogout}>
           Sign Out
         </button>

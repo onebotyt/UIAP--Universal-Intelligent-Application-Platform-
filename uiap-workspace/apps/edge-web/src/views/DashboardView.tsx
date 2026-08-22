@@ -1,4 +1,35 @@
 import { useState, useEffect } from 'react';
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
+} from 'recharts';
+
+const mockAttendanceData = [
+  { name: 'Mon', present: 400, absent: 24 },
+  { name: 'Tue', present: 300, absent: 139 },
+  { name: 'Wed', present: 200, absent: 800 },
+  { name: 'Thu', present: 278, absent: 39 },
+  { name: 'Fri', present: 189, absent: 48 },
+  { name: 'Sat', present: 239, absent: 38 },
+];
+
+const mockSystemLoad = [
+  { time: '08:00', cpu: 20, memory: 40 },
+  { time: '09:00', cpu: 35, memory: 45 },
+  { time: '10:00', cpu: 65, memory: 50 },
+  { time: '11:00', cpu: 45, memory: 55 },
+  { time: '12:00', cpu: 85, memory: 60 },
+  { time: '13:00', cpu: 60, memory: 58 },
+  { time: '14:00', cpu: 75, memory: 62 },
+];
 
 interface Stats {
   core: string;
@@ -165,10 +196,46 @@ export function DashboardView() {
         </div>
       </div>
 
+
       <div className="uiap-view-panel">
-        <div className="uiap-empty">
-          <h3>Welcome to UIAP Edge</h3>
-          <p>Select a module from the sidebar to get started.</p>
+        <h3 style={{ marginBottom: '1.5rem' }}>Live Analysis</h3>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
+          
+          <div style={{ background: 'var(--uiap-bg)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--uiap-border)' }}>
+            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--uiap-text-muted)' }}>Weekly Attendance Overview</h4>
+            <div style={{ height: '300px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={mockAttendanceData}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--uiap-border)" />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                  <YAxis axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+                  <Legend />
+                  <Bar dataKey="present" name="Present" fill="var(--uiap-primary)" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="absent" name="Absent" fill="var(--uiap-danger)" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div style={{ background: 'var(--uiap-bg)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--uiap-border)' }}>
+            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--uiap-text-muted)' }}>System Load (Today)</h4>
+            <div style={{ height: '300px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={mockSystemLoad}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--uiap-border)" />
+                  <XAxis dataKey="time" axisLine={false} tickLine={false} />
+                  <YAxis axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+                  <Legend />
+                  <Line type="monotone" dataKey="cpu" name="CPU Usage (%)" stroke="var(--uiap-success)" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                  <Line type="monotone" dataKey="memory" name="Memory Usage (%)" stroke="#8884d8" strokeWidth={3} dot={{ r: 4 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

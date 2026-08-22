@@ -12,7 +12,7 @@ export async function getUsers(): Promise<UserRecord[]> {
 
   const usersData = await db('core_users as u')
     .leftJoin('core_user_roles as ur', 'u.id', 'ur.user_id')
-    .select('u.id', 'u.username', 'u.is_active', 'u.requires_2fa', 'u.totp_secret', 'ur.role_id')
+    .select('u.id', 'u.username', 'u.is_active', 'u.requires_2fa', 'u.totp_secret', 'u.email', 'u.avatar_url', 'ur.role_id')
     .orderBy('u.username');
 
   const userMap = new Map<string, UserRecord>();
@@ -25,6 +25,8 @@ export async function getUsers(): Promise<UserRecord[]> {
         is_active: row.is_active,
         requires_2fa: row.requires_2fa,
         totp_secret: row.totp_secret,
+        email: row.email,
+        avatar_url: row.avatar_url,
         roles: [],
       });
     }
@@ -52,6 +54,8 @@ export async function createUser(
     is_active: true,
     requires_2fa: false,
     totp_secret: null,
+    email: null,
+    avatar_url: null,
   });
 
   const user = await db('core_users').where({ id }).first();
@@ -103,4 +107,39 @@ export async function assignUserRoles(
   });
 
   await logAuthAction('user.roles_changed', actorId, null, { user_id: userId, roles: roleIds });
+}
+
+export async function updateUserProfile(
+  userId: string,
+  email: string | null,
+  avatarUrl: string | null,
+  actorId: string,
+): Promise<UserRecord> {
+  const db = getDb();
+  
+  const updateData: any = {};
+  if (email !== undefined) updateData.email = email;
+  if (avatarUrl !== undefined) updateData.avatar_url = avatarUrl;
+  
+  const updatedCount = await db('core_users').where({ id: userId }).update(updateData);
+  if (updatedCount === 0) throw new Error('User not found');
+  
+  const user = await db('core_users').where({ id: userId }).first();
+  await logAuthAction('user.profile_updated', actorId, null, { user_id: userId, email });
+  
+  return { ...user, roles: [] };
+}
+
+export async function updateUserPassword(
+  userId: string,
+  passwordPlain: string,
+  actorId: string,
+): Promise<void> {
+  const passwordHash = await hashPassword(passwordPlain);
+  const db = getDb();
+  
+  const updatedCount = await db('core_users').where({ id: userId }).update({ password_hash: passwordHash });
+  if (updatedCount === 0) throw new Error('User not found');
+  
+  await logAuthAction('user.password_changed', actorId, null, { user_id: userId });
 }

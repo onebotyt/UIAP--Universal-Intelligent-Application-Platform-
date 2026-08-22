@@ -8,6 +8,8 @@ export interface User {
   is_active: boolean;
   requires_2fa: boolean;
   totp_secret: string | null;
+  email?: string | null;
+  avatar_url?: string | null;
 }
 
 export interface Permission {

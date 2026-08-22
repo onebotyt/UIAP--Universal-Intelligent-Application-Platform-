@@ -10,7 +10,7 @@ export function Download() {
         <h3>Windows Installer (64-bit)</h3>
         <p>Requires Windows 10 or higher. Connects directly to your R307 fingerprint scanner.</p>
         {/* Update this GitHub URL to match your actual repository and release path */}
-        <a href="https://github.com/UIAP-Platform/uiap-workspace/releases/latest/download/UIAP-Edge-v0.1.0.exe" className="btn-primary" style={{ display: 'block', padding: '1rem', fontSize: '1.2rem', marginTop: '2rem' }}>
+        <a href="https://github.com/onebotyt/UIAP--Universal-Intelligent-Application-Platform-/releases/latest/download/UIAP-Edge-v0.1.0.exe" className="btn-primary" style={{ display: 'block', padding: '1rem', fontSize: '1.2rem', marginTop: '2rem' }}>
           ⬇ Download UIAP-Edge-v0.1.0.exe
         </a>
       </div>

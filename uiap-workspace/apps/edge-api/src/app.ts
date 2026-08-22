@@ -158,6 +158,9 @@ export function createApp(options?: AppOptions): express.Express {
   const webDistPath = path.join(__dirname, '../../edge-web/dist');
   app.use(express.static(webDistPath));
 
+  // Serve local uploads for profile pictures etc.
+  app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
   // Handle SPA fallback for non-API routes
   app.use((req, res, next) => {
     if (req.method !== 'GET' || req.path.startsWith('/api')) {
