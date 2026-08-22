@@ -23,4 +23,4 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ./ # Changed from /uiap-cloud/ to match the FTP account's root path
+        server-dir: /uiap-cloud/
